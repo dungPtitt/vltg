@@ -1,0 +1,325 @@
+.box_job,
+.job_detail {
+  width: 100%;
+}
+.buoi_da_chon {
+  width: 22px;
+  height: 22px;
+  background: url(/images/check-calmvc.svg);
+  background-size: 100% 100%;
+  content: "";
+  display: block;
+  position: absolute;
+  top: -10px;
+  left: 4px;
+}
+.folder_job {
+  margin-top: 10px;
+  background: #4c5bd4;
+  border-radius: 0 20px 0 0;
+  display: inline-block;
+  padding: 15px 41px 15px 23px;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 20px;
+  color: #fff;
+}
+.modal_login_top {
+  background: url(/images/bg-popup.png);
+  width: 100%;
+  height: 197px;
+  padding: 25px 23px;
+  margin-bottom: 20px;
+}
+.modal_top_txt {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 35px;
+  color: #fff;
+  width: 61%;
+  margin-top: 38px;
+}
+.btn_login {
+  width: 170px;
+  height: 43px;
+  color: #fff;
+  font-weight: 400;
+  background: #ffa800;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.login_inp {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  height: 35px;
+  width: 80%;
+  border: solid 1px #aaaaaa;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.login_inp img {
+  width: 20px;
+  height: 20px;
+  margin: 0px 10px;
+}
+.login_inp input {
+  width: 100%;
+}
+.detail_inf {
+  padding-left: 5px;
+  max-width: 300px;
+  text-overflow: ellipsis;
+}
+.frame_box {
+  margin: 10px;
+}
+.frame_box_lf {
+  display: flex;
+  column-gap: 10px;
+}
+.mark {
+  background-color: #ffa800;
+  color: white;
+}
+.avt_cty {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  font-weight: bold;
+}
+.btn_add_job,
+.btn_save_job {
+  width: 165px;
+  height: 45px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  font-family: Roboto, sans-serif;
+  font-style: normal;
+  cursor: pointer;
+}
+.btn_save_job {
+  background: #fff;
+  border: 1px solid #626262;
+  box-sizing: border-box;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #484848;
+}
+.city_address {
+  overflow: hidden;
+  max-width: 200px;
+}
+.btn_add_job {
+  background: #ffa800;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  color: #fff;
+  border: none;
+}
+.frame_box_btn {
+  display: flex;
+}
+.frame_box_btn > button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.jd_detail_rg_list p {
+  font-size: 16px;
+  line-height: 24px;
+  color: #222;
+  margin-bottom: 20px;
+}
+.jd_detail_rg_list span {
+  color: #6b7278;
+  font-size: 15px;
+}
+.tudo {
+  background: #edf3fd;
+  border-radius: 5px;
+  color: #307df1;
+  padding: 5px 11px;
+  font-size: 15px;
+}
+.job_salary {
+  font-weight: 500 !important;
+  color: red !important;
+}
+.jd_detail_rg_list img {
+  margin-right: 20px;
+}
+.title {
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 45px;
+  color: #595959;
+  margin-left: 10px;
+}
+.jd_title {
+  background: #4c5bd4;
+  border-radius: 5px 5px 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 35px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  color: #fff;
+}
+.detail_title {
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 24px;
+  color: #043379;
+  display: inline;
+  border-bottom: solid 2px #307df1;
+  margin-bottom: 15px;
+}
+.job_content {
+  border-bottom: 0.5px solid #e3e3e3;
+  padding-bottom: 20px;
+  margin-bottom: 30px;
+  word-break: break-word;
+}
+.detail_txt {
+  margin: 5px;
+}
+.btn_contact {
+  display: flex;
+  font-size: 16px;
+  width: max-content;
+  cursor: pointer;
+  color: #fff;
+  background: #4c5bd4;
+  border-color: #007bff;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+.box_share {
+  display: flex;
+  align-items: center;
+}
+.box_share img {
+  margin: 15px 5px;
+}
+.key_word {
+  margin: 20px;
+}
+.ntd_keyword > div:first-child {
+  margin-bottom: 30px;
+}
+.btn {
+  margin-right: 10px;
+  background: #fafafa;
+  border: 0.3px solid #dbdbdb;
+  box-sizing: border-box;
+  border-radius: 20px;
+  margin-bottom: 8px;
+  padding: 0.5em 1.5em;
+  color: #646464;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.5;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+    border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+@media screen and (max-width: 767px) {
+  .about_job {
+    width: 100%;
+  }
+  .frame_box {
+    display: flex;
+    flex-direction: column;
+  }
+  .frame_box_btn {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .folder_job {
+    display: block;
+    width: 100%;
+    border-radius: 0;
+    padding: 10px 13px;
+  }
+
+  .jd_detail_rg {
+    padding: 20px 30px;
+  }
+}
+@media screen and (min-width: 768px) {
+  .about_job {
+    width: 100%;
+  }
+
+  .frame_box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+  }
+  .frame_box_btn {
+    flex-direction: column;
+    justify-content: center;
+    padding-right: 30px;
+  }
+  .jd_job {
+    width: 92%;
+    margin: 0 auto;
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-radius: 5px;
+  }
+  .jd_content {
+    padding: 23px 30px;
+  }
+  .jd_detail_rg_box {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+  }
+  .avt_cty {
+    width: 150px;
+    height: 150px;
+    margin-right: 20px;
+  }
+  .frame_box_lf p {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 25px;
+    color: #484848;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .about_job {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .jd_detail_rg {
+    width: 40%;
+  }
+  .jd_detail_rg_box {
+    flex-direction: column;
+  }
+  .jd_content {
+    margin: 0 auto;
+    width: 90%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+  .jd_detail_lf {
+    width: 50%;
+  }
+}

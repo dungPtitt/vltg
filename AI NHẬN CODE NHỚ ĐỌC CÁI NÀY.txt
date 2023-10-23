@@ -1,0 +1,1 @@
+add CKEDITOR5 bằng câu lệnh: npm add file:/ckeditor5

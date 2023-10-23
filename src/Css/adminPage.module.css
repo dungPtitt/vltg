@@ -1,0 +1,32 @@
+.admin_lf {
+  margin-right: 30px;
+  width: 15%;
+}
+.admin_lf div {
+  cursor: pointer;
+}
+.admin_lf > div:first-child {
+  text-align: center;
+  background-color: #5c9ccc;
+  color: white;
+}
+.admin_rg {
+  width: 85%;
+}
+.ant-tabs-tab {
+  white-space: normal !important;
+}
+.ckeditor {
+  height: 100vh;
+  /* overflow: scroll; */
+}
+.ckeditor > div {
+  height: 50vh;
+  overflow: scroll;
+}
+.ckeditor .ck-toolbar {
+  position: fixed;
+  top: 0; /* Hoặc bất kỳ vị trí nào bạn muốn */
+  left: 0; /* Hoặc bất kỳ vị trí nào bạn muốn */
+  width: 100%;
+}

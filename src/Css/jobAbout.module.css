@@ -1,0 +1,77 @@
+.tb_head {
+  background: #4c5bd4;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+}
+.tb_body td,
+.tb_head th {
+  padding: 20px;
+  text-align: center;
+}
+.delete_small {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: unset;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  background: #ea4860;
+  border-radius: 20px;
+}
+.day_active {
+  background: #307df14f !important;
+  color: #307df1 !important;
+}
+.frame_ca {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+}
+.frame_ca span {
+  background: #47474717;
+  padding: 4px;
+  border-radius: 50%;
+  color: #474747;
+  font-size: 14px;
+  margin: 5px;
+}
+.btn_delete {
+  display: flex;
+  align-items: center;
+  padding: 5px 15px;
+  margin: 20px 0;
+  background: #dbdbdb;
+  border-radius: 20px;
+  min-width: 73px;
+  color: #474747;
+  font-weight: 600;
+  cursor: pointer;
+}
+@media screen and (max-width: 767px) {
+  .tb_head,
+  .hidden_job,
+  .tb_body {
+    display: none;
+  }
+  .show_job {
+    display: inline-flex;
+    flex-direction: column;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .tb_head,
+  .hidden_job,
+  .tb_body {
+    display: none;
+  }
+}
+@media screen and (min-width: 1024px) {
+  .delete_small {
+    display: none;
+  }
+}

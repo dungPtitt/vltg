@@ -1,0 +1,332 @@
+.gt_qr {
+  width: 100%;
+  background: url(/images/bg-gt.jpg);
+  background-size: 100% 100%;
+}
+.gt_content {
+  width: 48%;
+  padding: 68px 35px 70px;
+}
+.box_btn > div button {
+  font-size: 16px;
+  margin-top: 22px;
+  width: 209px;
+  background: #fff;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 40px;
+}
+.box_btn > div div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.btn_warning {
+  min-width: max-content;
+  border: none;
+  font-family: Roboto, sans-serif;
+  padding: 0 30px;
+  background: #ffa800;
+  border-radius: 15px;
+  margin-top: 29px;
+  margin-bottom: 32px;
+  font-weight: 600;
+  text-align: center;
+  height: 43px;
+  color: #fff;
+}
+.btn_primary {
+  color: white;
+  display: inline-block;
+  font-weight: 400;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 1.5;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  border-color: #007bff;
+  background: #4c5bd4;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+.dky_inp_box {
+  display: flex;
+  margin: 20px;
+  width: 100%;
+}
+.dky_inp_box > div {
+  background: #fff;
+  width: 45px;
+  display: flex;
+  align-items: center;
+  padding: 0.375rem 0.75rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  text-align: center;
+  white-space: nowrap;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem 0 0 0.25rem;
+  border-right: none;
+}
+.dky_inp_box > input {
+  width: 100%;
+  font-size: 16px;
+  padding: 20px 10px;
+  display: block;
+  height: 45px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0 0.25rem 0.25rem 0;
+  border-left: none;
+}
+.title {
+  font-size: 20px;
+  margin-bottom: 7px;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 151.19%;
+  color: #2187e9;
+  margin-bottom: 17px;
+}
+.ct_item {
+  margin-top: 20px;
+}
+.ct_img {
+  height: auto;
+  overflow: hidden;
+  width: 90%;
+  margin-top: 42px;
+  height: 342px;
+  z-index: 1;
+}
+.ct_img img {
+  height: 100%;
+  object-fit: contain;
+}
+.hotline {
+  border-top: 1px solid #ffa800;
+  border-bottom: 1px solid #ffa800;
+  background: rgba(255, 168, 0, 0.1);
+  height: 73px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 17px;
+  line-height: 170%;
+  color: #222;
+  display: flex;
+  align-items: center;
+}
+.content_txt {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 166.19%;
+  letter-spacing: 0.03em;
+  color: #222;
+  text-align: justify;
+}
+.hotline span {
+  margin-left: 20px;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 23px;
+  color: #2187e9;
+}
+.ct_tkuv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.tkuv_container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  margin: 20px;
+}
+.tkuv_item {
+  border: 2px solid #eceaec;
+  padding: 15px;
+}
+.box_item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dky_frame > div {
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 5px;
+}
+.ct_dky {
+  padding: 28px 140px;
+  display: block;
+  background: url(/images/bg-gt-dk-tl.png);
+  background-size: 100% 100%;
+}
+.dky_frame {
+  display: flex;
+  justify-content: space-between;
+}
+.dky_box_rg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.carousel_container {
+  width: 80%;
+  margin: 0 auto;
+}
+.carousel_item {
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  padding: 20px;
+}
+.carousel_item img {
+  width: 100%;
+  object-fit: cover;
+  object-position: bottom;
+}
+.dt_list {
+  margin: 0 auto;
+  /* width: 64%; */
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.ct_dt {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  text-align: center;
+  align-items: center;
+}
+@media screen and (max-width: 767px) {
+  .tkuv_container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .gt_qr {
+    background: url(/images/bg-gt-mb.jpg);
+  }
+  .box_btn img {
+    display: none;
+  }
+  .ct_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+  }
+  .ct_img {
+    margin-bottom: 100px;
+  }
+  .dky_box_rg {
+    flex-direction: column-reverse;
+  }
+  .ct_dt {
+    width: 100%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .box_btn img {
+    display: none;
+  }
+  /* .ct-img {
+    width: 50%;
+    height: 230px;
+  } */
+  .gt_qr {
+    width: 100%;
+    background: url(/images/bg-gt-tl.jpg);
+    background-size: 100% 100%;
+  }
+  .box_btn > div {
+    display: flex;
+    flex-direction: column;
+  }
+  .ct_item {
+    display: flex;
+    align-items: center;
+  }
+
+  .ct_content {
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .ct_tkuv {
+    display: flex;
+    flex-direction: column;
+  }
+  .ct_dt {
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .ct_tkuv {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .gt_qr {
+    width: 100%;
+    background: url(/images/bg-gt-tl.jpg);
+    background-size: 100% 100%;
+  }
+  .box_btn > div {
+    display: flex;
+  }
+  .ct_item {
+    display: flex;
+    align-items: center;
+    margin: 20px;
+  }
+
+  .ct_content {
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .gt_ct > .ct_item:nth-child(2) {
+    flex-direction: row-reverse;
+  }
+  .ct_img {
+    width: 70%;
+    margin-top: 42px;
+    height: 342px;
+    z-index: 1;
+  }
+  .gt_ct {
+    width: 80%;
+    margin: 0 auto;
+  }
+  .ct_dky {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    column-gap: 30px;
+    justify-content: space-between;
+  }
+  .dky_lf {
+    width: 58%;
+  }
+  .dky_rg {
+    width: 58%;
+  }
+}
