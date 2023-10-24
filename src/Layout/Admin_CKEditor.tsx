@@ -1,10 +1,8 @@
 // Admin_CKEditor.jsx / Admin_CKEditor.tsx
-
+"use client";
 import styles from "@/Css/adminPage.module.css";
-import React, { useEffect, useState } from "react";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "ckeditor5-custom-build/build/ckeditor";
-import { axiosSauDN } from "@/utils/axios.config";
+import React, { useEffect, useRef } from "react";
+// import { CKEditor } from "@ckeditor/ckeditor5-react";
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const Admin_CKEditor = ({
@@ -13,9 +11,17 @@ const Admin_CKEditor = ({
   secondContent,
   setSecondContent,
 }: any) => {
+  const editorRef: any = useRef();
+  const { CKEditor, ClassicEditor }: any = editorRef.current || {};
+  useEffect(() => {
+    editorRef.current = {
+      CKEditor: require("@ckeditor/ckeditor5-react").CKEditor, // v3+
+      ClassicEditor: require("ckeditor5-custom-build/build/ckeditor"),
+    };
+  }, []);
   return (
     <div className={styles.ckeditor}>
-      <div>
+      <div className="editor">
         <CKEditor
           config={{
             heading: {
@@ -66,7 +72,7 @@ const Admin_CKEditor = ({
           }}
           editor={ClassicEditor}
           data={mainContent}
-          onChange={(event, editor) => {
+          onChange={(event: any, editor: any) => {
             setMainContent(editor.getData());
           }}
         />
@@ -122,7 +128,7 @@ const Admin_CKEditor = ({
           }}
           editor={ClassicEditor}
           data={secondContent}
-          onChange={(event, editor) => {
+          onChange={(event: any, editor: any) => {
             setSecondContent(editor.getData());
           }}
         />

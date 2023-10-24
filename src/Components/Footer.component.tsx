@@ -7,16 +7,18 @@ import {
   LIST_MENU,
   LIST_MXH,
 } from "@/constants/footer.constant";
+import Link from "next/link";
+import Image from "next/image";
 function Footer() {
   const [show, setShow] = useState("");
   return (
     <footer className={styles.footer}>
       <div className={styles.footer_block1}>
         {LIST_KEYWORDS.map((keyword, index: number) => (
-          <a key={index} href={keyword.link} target="blank">
+          <Link key={index} href={keyword.link} target="blank">
             {keyword.label}
             {index < LIST_KEYWORDS.length - 1 && ","}
-          </a>
+          </Link>
         ))}
       </div>
       <div className={styles.footer_block2}>
@@ -27,7 +29,12 @@ function Footer() {
               onClick={() => (show == "about" ? setShow("") : setShow("about"))}
               className="lg:hidden"
             >
-              <img src="/images/arr_down.svg" alt="down" />
+              <Image
+                width={15}
+                height={15}
+                src="/images/arr_down.svg"
+                alt="down"
+              />
             </div>
           </div>
 
@@ -37,9 +44,9 @@ function Footer() {
             {LIST_MENU.aboutTimViec365.map((list, index) => (
               <div key={index} className="w-full">
                 {list.map((item) => (
-                  <a key={item.link} href={item.link} target="blank">
+                  <Link key={item.link} href={item.link} target="blank">
                     {item.label}
-                  </a>
+                  </Link>
                 ))}
               </div>
             ))}
@@ -55,7 +62,12 @@ function Footer() {
                 }
                 className="lg:hidden"
               >
-                <img src="/images/arr_down.svg" alt="down" />
+                <Image
+                  width={15}
+                  height={15}
+                  src="/images/arr_down.svg"
+                  alt="down"
+                />
               </div>
             </div>
             <div
@@ -66,9 +78,9 @@ function Footer() {
               {LIST_MENU.forUV.map((list, index) => (
                 <div key={index} className="w-full">
                   {list.map((item) => (
-                    <a key={item.label} href={item.link} target="blank">
+                    <Link key={item.label} href={item.link} target="blank">
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               ))}
@@ -83,7 +95,12 @@ function Footer() {
                 }
                 className="lg:hidden"
               >
-                <img src="/images/arr_down.svg" alt="down" />
+                <Image
+                  width={15}
+                  height={15}
+                  src="/images/arr_down.svg"
+                  alt="down"
+                />
               </div>
             </div>
             <div
@@ -94,9 +111,9 @@ function Footer() {
               {LIST_MENU.forNTD.map((list, index) => (
                 <div key={index} className="w-full">
                   {list.map((item) => (
-                    <a key={item.link} href={item.link} target="blank">
+                    <Link key={item.link} href={item.link} target="blank">
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               ))}
@@ -111,7 +128,12 @@ function Footer() {
                 }
                 className="lg:hidden"
               >
-                <img src="/images/arr_down.svg" alt="down" />
+                <Image
+                  width={15}
+                  height={15}
+                  src="/images/arr_down.svg"
+                  alt="down"
+                />
               </div>
             </div>
             <div
@@ -122,9 +144,9 @@ function Footer() {
               {LIST_MENU.utilities.map((list, index) => (
                 <div key={index} className="w-full">
                   {list.map((item) => (
-                    <a key={item.link} href={item.link} target="blank">
+                    <Link key={item.link} href={item.link} target="blank">
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               ))}
@@ -139,7 +161,12 @@ function Footer() {
                 }
                 className="lg:hidden"
               >
-                <img src="/images/arr_down.svg" alt="down" />
+                <Image
+                  width={15}
+                  height={15}
+                  src="/images/arr_down.svg"
+                  alt="down"
+                />
               </div>
             </div>
             <div
@@ -150,9 +177,9 @@ function Footer() {
               {LIST_MENU.areas.map((list, index) => (
                 <div key={index} className="w-full">
                   {list.map((item) => (
-                    <a key={item.link} href={item.link} target="blank">
+                    <Link key={item.link} href={item.link} target="blank">
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               ))}
@@ -167,7 +194,12 @@ function Footer() {
                 }
                 className="lg:hidden"
               >
-                <img src="/images/arr_down.svg" alt="down" />
+                <Image
+                  width={15}
+                  height={15}
+                  src="/images/arr_down.svg"
+                  alt="down"
+                />
               </div>
             </div>
             <div
@@ -178,9 +210,9 @@ function Footer() {
               {LIST_MENU.professtion.map((list, index) => (
                 <div key={index} className="w-full">
                   {list.map((item) => (
-                    <a key={item.link} href={item.link} target="blank">
+                    <Link key={item.link} href={item.link} target="blank">
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               ))}
@@ -193,7 +225,12 @@ function Footer() {
                 onClick={() => (show == "vltt" ? setShow("") : setShow("vltt"))}
                 className="lg:hidden"
               >
-                <img src="/images/arr_down.svg" alt="down" />
+                <Image
+                  width={15}
+                  height={15}
+                  src="/images/arr_down.svg"
+                  alt="down"
+                />
               </div>
             </div>
             <div
@@ -204,9 +241,9 @@ function Footer() {
               {LIST_MENU.tags.map((list, index) => (
                 <div key={index} className="w-full">
                   {list.map((item) => (
-                    <a key={item.link} href={item.link} target="blank">
+                    <Link key={item.link} href={item.link} target="blank">
                       {item.label}
-                    </a>
+                    </Link>
                   ))}
                 </div>
               ))}
@@ -222,37 +259,40 @@ function Footer() {
             <p>KẾT NỐI VỚI TIMVIEC365.VN</p>
             <div className={styles.wrap_block_connect}>
               {LIST_MXH.map((mxh) => (
-                <a
+                <Link
                   target="blank"
                   key={mxh.alt}
                   href={mxh.link}
                   className={styles.wrap_icon_connect}
                 >
-                  <img src={mxh.src} alt={mxh.alt} />
-                </a>
+                  <Image width={15} height={15} src={mxh.src} alt={mxh.alt} />
+                </Link>
               ))}
             </div>
             <div className="flex">
-              <a
+              <Link
                 target="blank"
                 href="https://www.dmca.com/Protection/Status.aspx?ID=5b1070f1-e6fb-4ba4-8283-84c7da8f8398&cdnrdr=1&refurl=https://vieclamtheogio.timviec365.vn/"
               >
-                <img
-                  style={{ height: "40px", marginRight: "5px" }}
+                <Image
+                  width={110}
+                  height={40}
+                  className="mr-2"
                   src="/images/DK_bocongthuong.png"
                   alt="bct"
                 />
-              </a>
-              <a
+              </Link>
+              <Link
                 href="http://online.gov.vn/Home/WebDetails/35979"
                 target="blank"
               >
-                <img
-                  style={{ height: "40px" }}
+                <Image
+                  height={40}
+                  width={40}
                   src="/images/dmca.png"
                   alt="dmca"
                 />
-              </a>
+              </Link>
             </div>
           </div>
           <div className={styles.wrap_address}>
@@ -260,12 +300,12 @@ function Footer() {
             <p className={styles.wrap_address_header}>
               CÔNG TY CỔ PHẦN THANH TOÁN HƯNG HÀ
             </p>
-            <a
+            <Link
               className={styles.wrap_address_txt}
               href="https://goo.gl/maps/stYYuH5Ln5U2"
             >
               VP 1: Tầng 4, B50, Lô 6, KĐT Định Công - Hoàng Mai - Hà Nội
-            </a>
+            </Link>
             <p className={styles.wrap_address_txt}>
               VP2: Thôn Thanh Miếu, Xã Việt Hưng, Huyện Văn Lâm, Tỉnh Hưng Yên
             </p>
@@ -280,45 +320,45 @@ function Footer() {
 
         <div className={styles.wrap_qr}>
           <p className={styles.wrap_qr_header}>TẢI APP ĐỂ TÌM VIỆC SIÊU TỐC</p>
-          <div className="grid grid-cols-2 gap-x-3 md:grid-cols-4 lg:hidden">
-            <a
+          <div className="grid grid-cols-2 gap-x-3 md:grid-cols-4 gap-y-4 lg:hidden">
+            <Link
               target="blank"
               href="https://play.google.com/store/apps/details?id=timviec365vn.timviec365_vn"
             >
-              <button className={btnStyles.btn_download}>
+              <button className={btnStyles.btn_download + " text-sm	w-full "}>
                 Tải app Timviec365 UV{" "}
                 <img className="ml-3" src="/images/download.svg" alt="" />
               </button>
-            </a>
+            </Link>
             <div>
-              <a
+              <Link
                 target="blank"
                 href="https://play.google.com/store/apps/details?id=vn.timviec365.company"
-                className={btnStyles.btn_download}
+                className={btnStyles.btn_download + " text-sm"}
               >
                 Tải app Timviec365 NTD{" "}
                 <img className="ml-3" src="/images/download.svg" alt="" />
-              </a>
+              </Link>
             </div>
             <div>
-              <a
+              <Link
                 target="blank"
                 href="https://play.google.com/store/apps/details?id=vn.timviec365.cv.cv365_vn"
-                className={btnStyles.btn_download}
+                className={btnStyles.btn_download + " text-sm"}
               >
                 Tải app CV365{" "}
                 <img className="ml-3" src="/images/download.svg" alt="" />
-              </a>
+              </Link>
             </div>
             <div>
-              <a
+              <Link
                 target="blank"
                 href="https://play.google.com/store/apps/details?id=vn.timviec365.chat_365"
-                className={btnStyles.btn_download}
+                className={btnStyles.btn_download + " text-sm"}
               >
                 Tải app Chat365{" "}
                 <img className="ml-3" src="/images/download.svg" alt="" />
-              </a>
+              </Link>
             </div>
           </div>
           <div className={styles.wrap_qr_block}>
@@ -344,7 +384,7 @@ function Footer() {
                 src="/images/qr_app_cv_new.png"
                 alt="cv"
               />
-              <p className={styles.qr_text}>App Timviec365 UV</p>
+              <p className={styles.qr_text}>App CV365</p>
             </div>
             <div className={styles.wrap_qr_child}>
               <img
@@ -352,7 +392,7 @@ function Footer() {
                 src="/images/qr_chat_365.png"
                 alt="chat365"
               />
-              <p className={styles.qr_text}>App Timviec365 UV</p>
+              <p className={styles.qr_text}>App Chat 365</p>
             </div>
           </div>
         </div>

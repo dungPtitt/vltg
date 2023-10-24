@@ -10,7 +10,7 @@ import districtDataJson from "@/utils/quan_huyen.json";
 import { Input, Select } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Admin_CKEditor from "./Admin_CKEditor";
 
 function Admin_QH_DS() {
@@ -129,12 +129,15 @@ function Admin_QH_DS() {
               }
             />
           </div>
-          <Admin_CKEditor
+          <Suspense fallback={<></>}>
+            <Admin_CKEditor
             mainContent={mainContent}
             setMainContent={setMainContent}
             secondContent={secondContent}
             setSecondContent={setSecondContent}
-          />
+            />
+          </Suspense>
+
           <div className="flex justify-center ">
             <button
               onClick={handleUpdate}

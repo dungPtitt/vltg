@@ -213,7 +213,7 @@
 }
 .flex {
   display: flex;
-  align-self: flex-start;
+  align-items: flex-start;
 }
 .footer_right {
   width: 57%;

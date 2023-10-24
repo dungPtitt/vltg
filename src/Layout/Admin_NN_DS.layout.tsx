@@ -7,7 +7,7 @@ import {
 } from "@/utils/generalFunction";
 import { Input } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Admin_CKEditor from "./Admin_CKEditor";
 import { useRouter } from "next/navigation";
 import btnStyles from "@/Css/button.module.css";
@@ -132,12 +132,14 @@ function Admin_NN_DS() {
               }
             />
           </div>
-          <Admin_CKEditor
+          <Suspense fallback={<></>}>
+            <Admin_CKEditor
             mainContent={mainContent}
             setMainContent={setMainContent}
             secondContent={secondContent}
             setSecondContent={setSecondContent}
-          />
+            />
+          </Suspense>
           <div className="flex justify-center ">
             <button
               onClick={handleUpdate}

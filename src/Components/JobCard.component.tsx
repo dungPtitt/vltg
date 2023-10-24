@@ -1,6 +1,8 @@
 "use client";
 import styles from "@/Css/homePage.module.css";
 import { renderPayrollMethods } from "@/constants/EditProfile.constant";
+import { basePath } from "@/constants/Head.constant";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
@@ -10,18 +12,15 @@ function JobCard({ job }: any) {
     return job ? job.id_vieclam : 0;
   }, []);
   return (
-    <div
-      className={styles.about_job}
-      onClick={() => {
-        router.push(`/${job.alias}-${id}.html`);
-      }}
-    >
+    <div className={styles.about_job}>
       <div className="h-20 w-20 flex justify-center items-center">
         <img className={styles.img} src={job?.ntd_avatar} alt="photo" />
       </div>
       <div className="job_detail">
         <h3 className={styles.td + ` cursor-pointer hover:underline`}>
-          {job?.vi_tri}
+          <Link href={`${basePath}/${job.alias}-${id}.html`}>
+            {job?.vi_tri}
+          </Link>
         </h3>
         <p className="flex">
           <img className="mr-2.5" src="/images/map.svg" alt="dot" />{" "}

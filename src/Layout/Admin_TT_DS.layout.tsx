@@ -3,7 +3,7 @@ import btnStyles from "@/Css/button.module.css";
 import { axiosSauDN } from "@/utils/axios.config";
 import { Input, Select } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Admin_CKEditor from "./Admin_CKEditor";
 import {
   notifyError,
@@ -127,12 +127,14 @@ function Admin_TT_DS() {
               }
             />
           </div>
-          <Admin_CKEditor
+          <Suspense fallback={<></>}>
+            <Admin_CKEditor
             mainContent={mainContent}
             setMainContent={setMainContent}
             secondContent={secondContent}
             setSecondContent={setSecondContent}
-          />
+            />
+          </Suspense>
           <div className="flex justify-center ">
             <button
               onClick={handleUpdate}

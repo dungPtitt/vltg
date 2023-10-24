@@ -3,7 +3,7 @@ import Head from "next/head";
 const now = new Date();
 const month = now.getMonth() + 1;
 const year = now.getFullYear();
-const basePath = "http://localhost:3000/";
+export const basePath = "http://localhost:3000";
 export const HeadHomePage = () => {
   return (
     <>
@@ -155,7 +155,7 @@ export const HeadListJob = ({ url }) => {
         as="font"
         crossorigin="anonymous"
       />
-      <link rel="canonical" href={basePath + url} />
+      <link rel="canonical" href={basePath+"/" + url} />
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
       <link rel="preload" as="style" href="../css/select2.min.css" />
       <link
@@ -379,8 +379,8 @@ export const HeadSearchByProfession = ({ profession, pathUrl }) => {
       />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="vi_VN" />
-      <link rel="canonical" href={basePath + pathUrl} />
-      <link rel="amphtml" href={basePath + pathUrl} />
+      <link rel="canonical" href={basePath +"/"+ pathUrl} />
+      <link rel="amphtml" href={basePath +"/"+ pathUrl} />
 
       <link
         rel="preload"

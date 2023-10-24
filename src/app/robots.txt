@@ -1,9 +1,0 @@
-User-agent:*
-Disallow:/admin
-Disallow:/ung-vien/edit
-Allow:/chi-tiet-viec-lam
-Allow:/danh-cho-doanh-nghiep
-Allow:/danh-sach-nganh-nghe
-Allow:/danh-sach-ung-vien 
-
-Allow:/ung-vien/[id]

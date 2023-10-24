@@ -18,7 +18,7 @@ function Vllc() {
   return (
     <div className={styles.vllc}>
       <div>
-        <div className="flex ml-5 items-center text-lg font-semibold my-3">
+        <div className="flex mx-5 items-center text-lg font-semibold py-3 border-b border-blue-700">
           <img className="mr-3" src="/images/vltglc.svg" alt="ico" />
           <h1> VIỆC LÀM THEO GIỜ LƯƠNG HẤP DẪN</h1>
         </div>

@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  background: #f2f2f2;
 }
 .inc_search {
   display: flex;
@@ -257,6 +258,7 @@
   line-height: 30px;
   text-transform: uppercase;
   margin-bottom: 7px;
+  font-family: Roboto, sans-serif;
 }
 .main1_content_xl {
   font-weight: 900;
@@ -282,6 +284,7 @@
   display: inline;
 }
 .main1_content_l {
+  font-family: Roboto, sans-serif;
   font-weight: 700;
   font-size: 30px;
   line-height: 24px;
@@ -308,8 +311,21 @@
   display: flex;
   justify-content: space-around;
 }
+.main_why_title {
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 24px;
+  color: #2187e9;
+  margin-bottom: 37px;
+}
 .why_list {
   width: 23%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 .why_content {
@@ -525,6 +541,15 @@
   justify-content: space-between;
 }
 @media screen and (max-width: 767px) {
+  .vllc > div:first-child {
+    width: 100%;
+  }
+  .vllc > div:chi {
+    width: 100%;
+  }
+  .vllc {
+    flex-direction: column-reverse;
+  }
   .banner_main {
     width: 100%;
   }
@@ -566,6 +591,11 @@
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) {
+  .wrap_qr {
+    position: relative;
+    left: -10%;
+    width: 90vw;
+  }
   .box_vltg_latest {
     display: grid;
     grid-template-columns: repeat(2, 1fr);

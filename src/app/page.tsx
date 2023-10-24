@@ -1,5 +1,4 @@
 "use client";
-import HomePage from "@/Page";
 import React, { useState, useEffect } from "react";
 import Header from "@/Layout/Header.layout";
 import styles from "@/Css/homePage.module.css";
@@ -15,6 +14,7 @@ import BlockCVDep from "@/Components/BlockCVDep";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { HeadHomePage, HeadListJob } from "../constants/Head.constant";
+import BlockDownApp from "@/Components/BlockDownApp";
 
 export default function Home() {
   const router = useRouter();
@@ -36,13 +36,13 @@ export default function Home() {
         <Vllc />
         <BlockTVLTG />
         <div className={styles.main_why}>
-          <h2 className="text-blue-500 text-2xl font-bold mb-9 text-center">
+          <h2 className={styles.main_why_title}>
             Lý do nên lựa chọn tìm việc theo giờ tại
             vieclamtheogio.timviec365.vn
           </h2>
           <div className={styles.box_why}>
             <div className={styles.why_list}>
-              <Image height={250} width={250} src="/images/ff1.png" alt="/" />
+              <Image height={342} width={342} src="/images/ff1.png" alt="/" />
               <div className={styles.why_content}>
                 <h3 className={styles.why_title}>Thu Nhập Cao</h3>
                 <p>
@@ -53,7 +53,7 @@ export default function Home() {
             </div>
 
             <div className={styles.why_list}>
-              <Image height={250} width={250} src="/images/ff2.png" alt="/" />
+              <Image height={342} width={342} src="/images/ff2.png" alt="/" />
               <div className={styles.why_content}>
                 <h3 className={styles.why_title}>Uy tín</h3>
                 <p>
@@ -65,7 +65,7 @@ export default function Home() {
             </div>
 
             <div className={styles.why_list}>
-              <Image height={250} width={250} src="/images/ff3.png" alt="" />
+              <Image height={342} width={342} src="/images/ff3.png" alt="" />
               <div className={styles.why_content}>
                 <h3 className={styles.why_title}>Linh hoạt về giờ làm việc</h3>
                 <p>
@@ -76,7 +76,7 @@ export default function Home() {
             </div>
 
             <div className={styles.why_list}>
-              <Image height={250} width={250} src="/images/ff4.png" alt="" />
+              <Image height={342} width={342} src="/images/ff4.png" alt="" />
               <div className={styles.why_content}>
                 <h3 className={styles.why_title}>Chăm sóc khách hàng 24/7</h3>
                 <p>
@@ -88,38 +88,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className={styles.inc_main}>
-          <div className={styles.img_main}>
-            <div className={styles.img_ct}>
-              <p>
-                Tải ngay app vieclamtheogio.vn trên điện thoại để trải nghiệm
-                tốt nhất!
-              </p>
-              <div className={styles.btn_down_app}>
-                <Image
-                  height={250}
-                  width={250}
-                  src="/images/qr_vltg_new.png"
-                  alt=""
-                />
-                <div>
-                  <button className={styles.btn_warning}>
-                    {" "}
-                    <a href="#"></a>Tải app trên Appstore
-                  </button>
-                  <button className={styles.btn_warning}>
-                    <a href="#"></a>Tải app trên CHplay
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={styles.key_word}>
-            <TuKhoaCongViecLQ />
-            <DiaDiemLQ />
-          </div>
-          <BlockCVDep />
+        <BlockDownApp />
+        <div className="bg-white w-full px-44 py-12">
+          <TuKhoaCongViecLQ />
+          <DiaDiemLQ />
         </div>
+
+        <BlockCVDep />
         <Footer />
       </div>
     </>

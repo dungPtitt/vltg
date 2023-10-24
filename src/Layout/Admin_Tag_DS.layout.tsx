@@ -2,7 +2,7 @@
 import { axiosSauDN } from "@/utils/axios.config";
 import { Input } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 // import Admin_CKEditor from "./Admin_CKEditor";
 import {
   convertNameToSlug,
@@ -133,12 +133,14 @@ function Admin_Tag_DS() {
               }
             />
           </div>
-          <Admin_CKEditor
+          <Suspense fallback={<></>}>
+            <Admin_CKEditor
             mainContent={mainContent}
             setMainContent={setMainContent}
             secondContent={secondContent}
             setSecondContent={setSecondContent}
-          />
+            />
+          </Suspense>
           <div className="flex justify-center ">
             <button
               onClick={handleUpdate}

@@ -2,6 +2,7 @@
   width: 100%;
   background: url(/images/bg-gt.jpg);
   background-size: 100% 100%;
+  padding: 40px 0;
 }
 .gt_content {
   width: 48%;
@@ -312,10 +313,10 @@
     height: 342px;
     z-index: 1;
   }
-  .gt_ct {
+  /* .gt_ct {
     width: 80%;
     margin: 0 auto;
-  }
+  } */
   .ct_dky {
     display: flex;
     width: 100%;

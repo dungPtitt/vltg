@@ -15,6 +15,12 @@ import {
 } from "@/utils/generalFunction";
 import dayjs from "dayjs";
 import Loading from "@/Components/Loading";
+import {
+  gender,
+  married,
+  renderGender,
+  renderMarried,
+} from "@/constants/EditProfile.constant";
 
 function UvTTLH() {
   const [codeCity, setCodeCity] = useState<string | number>("");
@@ -56,7 +62,7 @@ function UvTTLH() {
       axiosSauDN
         .post("/manageAccountCandidate/updateInfoCandidate", duLieuMoi)
         .then((res) => notifySuccess("Cập nhập thông tin thành công!!"))
-        .catch((err) => console.log("UvTTLH",err));
+        .catch((err) => console.log("UvTTLH", err));
     }
   };
   const handleChangPhoto = (e: any) => {
@@ -72,7 +78,6 @@ function UvTTLH() {
       .then((res) => notifySuccess("Thay đổi avatar thành công !"))
       .catch((err) => console.log("ChangeAvatar", err));
   };
-
 
   if (!duLieuNguoiDung) {
     return <Loading />;
@@ -177,10 +182,7 @@ function UvTTLH() {
                 value={duLieuMoi.married}
                 style={{ width: "100%" }}
                 onChange={(e) => setDuLieuMoi({ ...duLieuMoi, married: e })}
-                options={[
-                  { value: 0, label: "Độc thân" },
-                  { value: 1, label: "Đã kết hôn" },
-                ]}
+                options={married}
               />
             </div>
             <div className="mt-6">
@@ -315,13 +317,13 @@ function UvTTLH() {
               <p className="font-bold mb-2.5">
                 Giới tính:{" "}
                 <span className="font-normal">
-                  {duLieuNguoiDung.gender == 1 ? "Nam" : "Nữ"}
+                  {renderGender[duLieuNguoiDung.gender]}
                 </span>
               </p>
               <p className="font-bold mb-2.5">
                 Hôn nhân:{" "}
                 <span className="font-normal">
-                  {duLieuNguoiDung.married == 1 ? "Độc thân" : "Đã kết hôn"}
+                  {renderMarried[duLieuNguoiDung.married]}
                 </span>
               </p>
               <p className="font-bold mb-2.5">

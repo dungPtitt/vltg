@@ -16,10 +16,18 @@ export const convertTimeStamp = (value: any) => {
 };
 
 export const convertTimeHM = (e: any) => {
-  let convert = "";
+  if (e.split(":").length == 2) {
+    console.log("convertTimeHM-----:-----", e);
+    return e;
+  }
+  if (e.split("-").length == 2) {
+    console.log("convertTimeHM----------", e);
+
+    return e.replace("-", ":");
+  }
   const time = new Date(e);
-  convert = `${time.getHours()}:${time.getMinutes()}`;
-  return convert;
+  console.log("convertTimeHM----------", e, "---------------", time);
+  return `${time.getHours()}:${time.getMinutes()}`;
 };
 export const convertAllTimeToHM = (times: string) => {
   let result: any = times;
@@ -141,4 +149,13 @@ export const convertNameToSlug = (name: any) => {
 };
 export const convertNameToQuery = (query: string) => {
   return query.replaceAll(" ", "+");
+};
+
+type Image = {
+  src: string;
+  alt: string;
+};
+export const handleImageError = (e: any) => {
+  e.currentTarget.src = "/images/no-avartar-user.png"; // Đường dẫn của ảnh mặc định
+  e.currentTarget.alt = "avatar";
 };

@@ -1,6 +1,8 @@
 "use client";
 
+import { basePath } from "@/constants/Head.constant";
 import { convertNameToSlug } from "@/utils/generalFunction";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 function DiaDiemLQ() {
@@ -31,16 +33,16 @@ function DiaDiemLQ() {
   ];
   return (
     <div>
-      <p>Địa điểm liên quan</p>
+      <p className="font-semibold">Địa điểm liên quan</p>
       <div>
         {keyWords.map((keyword, index) => (
-          <span
+          <Link
             key={index}
-            onClick={() => router.push(keyword.router)}
+            href={`${basePath}/${keyword.router}`}
             className="text-red-500 hover:underline cursor-pointer text-base font-medium mr-5"
           >
             {keyword.label}
-          </span>
+          </Link>
         ))}
       </div>
     </div>

@@ -6,6 +6,9 @@ import { axiosSauDN, deleteToken } from "@/utils/axios.config";
 import Image from "next/image";
 import Cookies from "js-cookie";
 import { Popover } from "antd";
+import Link from "next/link";
+import { basePath } from "@/constants/Head.constant";
+import { handleImageError } from "@/utils/generalFunction";
 export function Header() {
   const router = useRouter();
   const [userData, setUserData] = useState<any>();
@@ -34,6 +37,7 @@ export function Header() {
           alt="Avatar"
           src={userData?.linkAvatar}
         />
+
         <p className="text-lg text-blue-700">{userData?.userName}</p>
       </div>
       <div>
@@ -75,64 +79,76 @@ export function Header() {
     <header className={styles.header + " w-full"}>
       <div className={styles.header_back}>
         <div>
-          <a href="https://timviec365.vn/" target="blank">
+          <Link href="https://timviec365.vn/" target="blank">
             <img src="/images/back.svg" alt="" />
-          </a>
+          </Link>
         </div>
-        <span className="hidden md:block"> Quay lại Timviec365.vn</span>
+        <span className="hidden md:block ml-1"> Quay lại Timviec365.vn</span>
       </div>
 
-      <div className="w-3/5">
+      <div>
         <div className={styles.list_menu}>
-          <div onClick={() => router.push("/")}>
-            <img src="/images/logo_mb.png" alt="logo" className={styles.a} />
-          </div>
-
           <div className={styles.navbars_items}>
+            <Link href={basePath} className="mr-10">
+              <Image
+                width={131}
+                height={42}
+                className="w-44 h-10"
+                src="/images/logo_mb.png"
+                alt="logo"
+              />
+            </Link>
             <div className="block lg:hidden">
               <img src="/images/btn-nav.svg" alt="" />
             </div>
             <div className={styles.navbars_list}>
-              <p
-                onClick={() => router.push("/danh-cho-doanh-nghiep.html")}
+              <Link
+                href={`${basePath}/danh-cho-doanh-nghiep.html`}
                 data-toggle="tooltip"
                 className={styles.a}
               >
                 Dành cho Nhà tuyển dụng
-              </p>
-              <div className="ml-5">
-                <p onClick={() => router.push("/")} className={styles.a}>
+              </Link>
+              <div className="ml-2 underline">
+                <Link
+                  href={basePath}
+                  onClick={() => router.push("/")}
+                  className={styles.a}
+                >
                   Dành cho người tìm việc
-                </p>
+                </Link>
               </div>
               {userData?.idTimViec365 ? (
                 <div>
                   <Popover placement="bottom" content={boxProfile}>
                     <Image
-                      width={50}
-                      height={50}
-                      alt="Avatar"
+                      width={35}
+                      height={35}
+                      alt=""
                       src={userData.linkAvatar}
+                      // onError={(e) =>
+                      //   (e.currentTarget.src = `${basePath}/images/no-avartar-user.png`)
+                      // }
                     />
                   </Popover>
                 </div>
               ) : (
                 <div className={styles.box_dn_dky}>
-                  <a
+                  <Link
                     href="https://timviec365.vn/dang-nhap.html"
                     target="blank"
                     className={styles.a + " mr-2"}
                   >
                     Đăng nhập
-                  </a>
+                  </Link>
                   /
-                  <a
+                  <Link
                     href="https://timviec365.vn/dang-ky.html"
                     target="blank"
                     className={styles.a + " ml-2"}
                   >
                     Đăng ký
-                  </a>
+                  </Link>
                 </div>
               )}
             </div>

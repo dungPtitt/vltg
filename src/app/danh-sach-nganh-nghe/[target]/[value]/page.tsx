@@ -49,7 +49,7 @@ function DanhSachNganhNghe({ params }: any) {
         schedules.some((sc) => target?.includes(convertNameToSlug(sc.label)))
       ) {
         setChonHead(1);
-    
+
         setNoiTimKiem([...schedules]);
         axiosTruocDN
           .post("/viecLam/thongKeDanhSachViecLam", {
@@ -62,7 +62,6 @@ function DanhSachNganhNghe({ params }: any) {
       } else if (
         profession.some((pf) => target?.includes(convertNameToSlug(pf.label)))
       ) {
-      
         setNoiTimKiem([...profession]);
         setLuaChonShow(1);
         setChonHead(2);
@@ -97,7 +96,7 @@ function DanhSachNganhNghe({ params }: any) {
     } catch (error) {
       console.log("errr", error);
     }
-  }, []);
+  }, [page]);
   return (
     <>
       {chonHead == 1 && <HeadListJob url={pathName} />}
@@ -134,11 +133,6 @@ function DanhSachNganhNghe({ params }: any) {
               ))}
           </div>
         </div>
-        <BlockDownApp />
-        <div className="w-9/12 mt-3">
-          <TuKhoaCongViecLQ />
-          <DiaDiemLQ />
-        </div>
         <Pagination
           total={total}
           showQuickJumper
@@ -152,9 +146,15 @@ function DanhSachNganhNghe({ params }: any) {
             }
           }}
         />
-        <div className="flex flex-col items-center overflow-hidden">
+        <BlockDownApp />
+        <div className="w-9/12 mt-3">
+          <TuKhoaCongViecLQ />
+          <DiaDiemLQ />
+        </div>
+
+        <div className="flex flex-col items-center overflow-hidden w-full">
           <div
-            className="w-4/5 p-20"
+            className="w-4/5 "
             dangerouslySetInnerHTML={{ __html: blog?.jc_bv }}
           ></div>
           <div

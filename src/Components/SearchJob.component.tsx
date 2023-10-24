@@ -1,14 +1,8 @@
 "use client";
-import React, { useState } from "react";
-
+import React, { useState, useRef, useEffect } from "react";
 import styles from "@/Css/boxSearch.module.css";
 import { Input, Popover } from "antd";
-import {
-  cityOption,
-  districtOption,
-  quan_huyen,
-  tinh_thanh,
-} from "@/utils/vi_tri";
+import { cityOption, quan_huyen, tinh_thanh } from "@/utils/vi_tri";
 import { useRouter } from "next/navigation";
 import {
   convertNameToSlug,
@@ -22,9 +16,13 @@ import {
   renderProfession,
   tagCv,
 } from "@/constants/EditProfile.constant";
+import Link from "next/link";
+import { basePath } from "@/constants/Head.constant";
 
 function SearchJob() {
   const router = useRouter();
+  const [visible, setVisible] = useState(false);
+  const buttonRef: any = useRef(null);
   const [showChoiceCity, setShowChoiceCity] = useState(false);
   const [choiceCity, setChoiceCity] = useState<string>("Chọn tỉnh thành");
   const [codeCity, setCodeCity] = useState<number>(0);
@@ -33,6 +31,22 @@ function SearchJob() {
     key: "",
     // idKey:0,
   });
+  /* useEffect(() => {
+    document.addEventListener("click", handleDocumentClick);
+
+    return () => {
+      document.removeEventListener("click", handleDocumentClick);
+    };
+  }, [visible]);
+  const handleDocumentClick = (event: MouseEvent) => {
+    if (
+      visible &&
+      buttonRef.current &&
+      !buttonRef.current.contains(event.target as Node)
+    ) {
+      setVisible(false);
+    }
+  }; */
   const contentCity = (
     <div className={styles.box_choice_city}>
       <div className={styles.nd_box_key}>
@@ -184,8 +198,6 @@ function SearchJob() {
       searchOption.city &&
       searchOption.district
     ) {
-
-
       router.push(
         `/viec-lam-${convertNameToSlug(searchOption.key)}${
           searchOption.idKey < 10 ? "-theo-gio" : ""
@@ -200,8 +212,6 @@ function SearchJob() {
     }
     //Tìm kiếm theo city và district
     if (!searchOption.key && searchOption.city && searchOption.district) {
-  
-
       router.push(
         `/viec-lam-theo-gio-tai-${convertNameToSlug(
           searchOption.districtName
@@ -209,7 +219,6 @@ function SearchJob() {
           searchOption.district
         }q${searchOption.city}.html`
       );
-
 
       return;
     }
@@ -237,7 +246,7 @@ function SearchJob() {
   };
   const contentKey = (
     <div className="flex justify-between" style={{ maxWidth: "1000px" }}>
-      <div className="border-r border-gray-400 mr-5 pr-5">
+      <div className=" mr-5 pr-5 w-1/3">
         <p className="text-gray-300 text-xs">Tìm kiếm phổ biến</p>
         <div className="grid grid-cols-2">
           {searchOption.key &&
@@ -249,13 +258,13 @@ function SearchJob() {
               )
               .map((nn) => (
                 <div
-                  onClick={() =>
+                  onClick={() => {
                     setSearchOption({
                       ...searchOption,
                       key: nn.label,
                       idKey: nn.value,
-                    })
-                  }
+                    });
+                  }}
                   className="cursor-pointer "
                   key={nn.value}
                 >
@@ -270,13 +279,13 @@ function SearchJob() {
           {tagCv.map((tag) => (
             <button
               className="m-3"
-              onClick={() =>
+              onClick={() => {
                 setSearchOption({
                   ...searchOption,
                   key: tag.label,
                   idKey: tag.value,
-                })
-              }
+                });
+              }}
               key={tag.value}
             >
               {" "}
@@ -290,21 +299,26 @@ function SearchJob() {
   return (
     <div className={styles.inc_search}>
       <div className={styles.box_search}>
-        <div
-          onClick={() => router.push("/")}
-          className="logo-search cursor-pointer"
-        >
+        <Link href={basePath} className="logo-search cursor-pointer">
           <img
             className="hidden lg:block"
             src="/images/logovltg.svg"
             alt="logo"
           />
-        </div>
+        </Link>
         <div className={styles.new_search}>
-          <Popover trigger="click" placement="bottomLeft" content={contentKey}>
+          <Popover
+            trigger="click"
+            placement="bottomLeft"
+            content={contentKey}
+            overlayStyle={{
+              width: "60%",
+            }}
+          >
             <Input
-              className="w-full"
+              className="w-full h-14 lg:rounded-l-full mr-0.5"
               value={searchOption.key}
+              placeholder="Nhập tên công việc"
               onChange={(e) =>
                 setSearchOption({
                   ...searchOption,
@@ -322,16 +336,22 @@ function SearchJob() {
               }
             />
           </Popover>
-
           <Popover
             className="w-full"
             placement="bottomRight"
             content={contentCity}
             trigger="click"
+            overlayStyle={{
+              width: "60%",
+              position: "relative",
+              left: "20%",
+            }}
           >
             <div
+              // ref={buttonRef}
               className={styles.choice_city}
               onClick={() => {
+                setVisible(true);
                 setShowChoiceCity(!showChoiceCity);
               }}
             >
@@ -351,19 +371,13 @@ function SearchJob() {
           <div className="text-white my-5">Tìm kiếm phổ biến</div>
           <div className="flex justify-center">
             {LIST_PROPOSE.map((item) => (
-              <div
+              <Link
+                href={`${basePath}/viec-lam-${convertNameToSlug(
+                  renderProfession[item.link]
+                )}${
+                  item.link < 10 ? `-theo-gio-${item.link}` : `-${item.link}nn`
+                }.html`}
                 className="cursor-pointer flex flex-col items-center justify-center mx-4"
-                onClick={() =>
-                  router.push(
-                    `/viec-lam-${convertNameToSlug(
-                      renderProfession[item.link]
-                    )}${
-                      item.link < 10
-                        ? `-theo-gio-${item.link}`
-                        : `-${item.link}nn`
-                    }.html`
-                  )
-                }
                 key={item.img}
               >
                 <Image
@@ -374,7 +388,7 @@ function SearchJob() {
                   src={item.img}
                 />
                 <p className="text-sm text-white mt-3">{item.label}</p>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
