@@ -15,14 +15,16 @@ import NtdUpdateProfile from "@/Layout/NtdUpdateProfile.layout";
 import { deleteToken } from "@/utils/axios.config";
 import { Popover } from "antd";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 function NtdProfilePage() {
   const router = useRouter();
   const [showTinTD, setShowTinTD] = useState<boolean>(false);
   const [showQLTK, setShowQLTK] = useState<boolean>(false);
   const [showNavbars, setShowNavbars] = useState<boolean>(false);
   const [showOption, setShowOption] = useState<string>("qlc");
+  const [fullPath, setFullPath] = useState<any>("");
   const content = (
     <div>
       <div className={styles.navbars_content}>
@@ -61,10 +63,8 @@ function NtdProfilePage() {
                 >
                   Tin đã đăng
                 </div>
-                <div
-                  onClick={() => router.push("/danh-sach-ung-vien")}
-                  className="cursor-pointer"
-                >
+                <div className="cursor-pointer">
+                  <Link href={`/ung-vien-tim-viec-lam-theo-gio.html`}></Link>
                   Tìm kiếm ứng viên theo giờ
                 </div>
               </div>
@@ -129,6 +129,12 @@ function NtdProfilePage() {
       </div>
     </div>
   );
+  useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
+  });
   return (
     <div className={styles.ntd_profile_page}>
       <div className="lg:flex w-full">

@@ -7,6 +7,7 @@ import UvProfile from "@/Layout/UvProfile.layout";
 import UvVLDL from "@/Layout/UvVLDL.layout";
 import UvVLDUT from "@/Layout/UvVLDUT.layout";
 import Image from "next/image";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 function UserProfile() {
@@ -67,12 +68,11 @@ function UserProfile() {
                   >
                     Quản lý hồ sơ
                   </div>
-                  <div
-                    onClick={() => router.push("/viec-lam-theo-gio-moi-nhat")}
+                  <Link href={"/viec-lam-theo-gio-moi-nhat.html"}
                     className="flex justify-between pl-3 cursor-pointer items-center h-8 hover:bg-blue-950"
                   >
                     Tìm việc làm
-                  </div>
+                  </Link>
                 </div>
               )}
             </div>

@@ -4,7 +4,7 @@ import Footer from "@/Components/Footer.component";
 import SearchJob from "@/Components/SearchJob.component";
 import styles from "@/Css/jobDetail.module.css";
 import btnStyles from "@/Css/button.module.css";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Header from "@/Layout/Header.layout";
 import { useEffect, useState } from "react";
 import { axiosSauDN, axiosTruocDN, checkToken } from "@/utils/axios.config";
@@ -34,6 +34,7 @@ import Image from "next/image";
 import Loading from "@/Components/Loading";
 import { HeadJobDetai } from "@/constants/Head.constant";
 import axios from "axios";
+import Link from "next/link";
 
 function ChiTietCViec({ id }: any) {
   const router = useRouter();
@@ -49,7 +50,13 @@ function ChiTietCViec({ id }: any) {
   const [chonCaLam, setChonCalam] = useState();
   const [chiTietCaLam, setChiTietCaLam] = useState<any>({});
   const [indexCaLam, setIndexChonCalam] = useState(0);
+  const [fullPath, setFullPath] = useState<any>("");
+  const pathname = usePathname();
   useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
     try {
       if (checkToken()) {
         axiosSauDN
@@ -190,7 +197,7 @@ function ChiTietCViec({ id }: any) {
         Cookies.set("token_base365", res.data.data.access_token);
         notifySuccess("Đăng nhập thành công!");
         Cookies.set("UT", "0");
-        setOpenModalLogin(false);
+        router.push(pathname);
       })
       .catch((err) => notifyWarning("Thông tin đăng nhập không chính xác!"));
   };
@@ -202,6 +209,7 @@ function ChiTietCViec({ id }: any) {
   return (
     <>
       <HeadJobDetai
+        fullPath={fullPath}
         job={chiTietViecLam.vi_tri}
         company={chiTietViecLam.ntd_userName}
       />
@@ -211,44 +219,46 @@ function ChiTietCViec({ id }: any) {
         <div className={styles.about_job}>
           <div className={styles.folder_job}>
             <div>
-              <span className="cursor-pointer" onClick={() => router.push("/")}>
+              <Link href={"/"} className="cursor-pointer">
                 Việc Làm Theo Giờ
-              </span>{" "}
+              </Link>{" "}
               /{" "}
-              <span
+              <Link
+                href={`/viec-lam-${convertNameToSlug(
+                  renderProfession[chiTietViecLam.nganh_nghe]
+                )}-${chiTietViecLam.nganh_nghe}.html`}
                 className="cursor-pointer"
-                onClick={() =>
-                  router.push(
-                    `/viec-lam-${convertNameToSlug(
-                      renderProfession[chiTietViecLam.nganh_nghe]
-                    )}-${chiTietViecLam.nganh_nghe}.html`
-                  )
-                }
               >
                 {renderProfession[chiTietViecLam.nganh_nghe]}{" "}
-              </span>
+              </Link>
               / {chiTietViecLam.vi_tri}
             </div>
           </div>
           <div className={styles.box_job}>
             <div className={styles.title}>{chiTietViecLam.vi_tri}</div>
             <div className={styles.frame_box}>
-              <div className={styles.frame_box_lf}>
+              <div className={styles.frame_box_lf + " items-center"}>
                 <Image
                   height={150}
                   width={150}
-                  src="/images/1694491780-user-scaled_image_picker2196780498065297467.jpg"
+                  className="lazyload"
+                  src="/images/no-avartar-user.png"
+                  data-src={
+                    chiTietViecLam.linkAvatar
+                      ? chiTietViecLam.linkAvatar
+                      : "/images/no-avartar-user.png"
+                  }
+                  onError={(e: any) => {
+                    e.target.onerror = null;
+                    e.target.src = "/images/img_new/avt_daidien1.png";
+                  }}
                   alt="photo"
                 />
                 <div>
-                  <div
-                    onClick={() =>
-                      router.push(
-                        `/${convertNameToSlug(chiTietViecLam.ntd_userName)}-co${
-                          chiTietViecLam.id_ntd
-                        }.html`
-                      )
-                    }
+                  <Link
+                    href={`/${convertNameToSlug(
+                      chiTietViecLam.ntd_userName
+                    )}-co${chiTietViecLam.id_ntd}.html`}
                     className="flex text-blue-500 cursor-pointer "
                   >
                     <Image
@@ -257,8 +267,8 @@ function ChiTietCViec({ id }: any) {
                       src="/images/ico-cty.svg"
                       alt="cty"
                     />{" "}
-                    {chiTietViecLam.ntd_userName}
-                  </div>
+                    <span className="ml-2">{chiTietViecLam.ntd_userName}</span>
+                  </Link>
                   <p>
                     <span style={{ fontWeight: "bold" }}>Địa chỉ: </span>{" "}
                     {chiTietViecLam.ntd_address}
@@ -492,18 +502,14 @@ function ChiTietCViec({ id }: any) {
                   <div className={styles.jd_title}>Từ khóa liên quan</div>
                   <div className={styles.key_word}>
                     {tagCv.map((tag) => (
-                      <button
-                        key={tag.value}
-                        onClick={() =>
-                          router.push(
-                            `/viec-lam-${convertNameToSlug(
-                              renderProfession[tag.value]
-                            )}-${tag.value}.html`
-                          )
-                        }
-                        className={styles.btn}
-                      >
-                        {tag.label}
+                      <button key={tag.value} className={styles.btn}>
+                        <Link
+                          href={`/viec-lam-${convertNameToSlug(
+                            renderProfession[tag.value]
+                          )}-${tag.value}.html`}
+                        >
+                          {tag.label}
+                        </Link>
                       </button>
                     ))}
                   </div>
@@ -638,16 +644,10 @@ function ChiTietCViec({ id }: any) {
                   <div className={styles.jd_title}>Từ khóa liên quan</div>
                   <div className={styles.key_word}>
                     {tagCv.map((tag) => (
-                      <button
-                        key={tag.value}
-                        onClick={() =>
-                          router.push(
-                            `/viec-lam-${tag.label}-${tag.value}.html`
-                          )
-                        }
-                        className={styles.btn}
-                      >
-                        {tag.label}
+                      <button key={tag.value} className={styles.btn}>
+                        <Link href={`/viec-lam-${tag.label}-${tag.value}.html`}>
+                          {tag.label}
+                        </Link>
                       </button>
                     ))}
                   </div>

@@ -1,9 +1,9 @@
 "use client";
 
-import { basePath } from "@/constants/Head.constant";
 import { convertNameToSlug } from "@/utils/generalFunction";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 function DiaDiemLQ() {
   const router = useRouter();
@@ -31,15 +31,22 @@ function DiaDiemLQ() {
       router: `/viec-lam-theo-gio-tai-${convertNameToSlug("Cần Thơ")}-48.html`,
     },
   ];
+  const [fullPath, setFullPath] = useState<any>("");
+  useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
+  }, []);
   return (
     <div>
-      <p className="font-semibold">Địa điểm liên quan</p>
+      <p className="font-semibold text-yellow-700">Địa điểm liên quan</p>
       <div>
         {keyWords.map((keyword, index) => (
           <Link
             key={index}
-            href={`${basePath}/${keyword.router}`}
-            className="text-red-500 hover:underline cursor-pointer text-base font-medium mr-5"
+            href={`${keyword.router}`}
+            className="text-yellow-500 hover:underline cursor-pointer text-base font-medium mr-5"
           >
             {keyword.label}
           </Link>

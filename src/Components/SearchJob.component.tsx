@@ -2,7 +2,12 @@
 import React, { useState, useRef, useEffect } from "react";
 import styles from "@/Css/boxSearch.module.css";
 import { Input, Popover } from "antd";
-import { cityOption, quan_huyen, tinh_thanh } from "@/utils/vi_tri";
+import {
+  cityOption,
+  proposeDistrict,
+  quan_huyen,
+  tinh_thanh,
+} from "@/utils/vi_tri";
 import { useRouter } from "next/navigation";
 import {
   convertNameToSlug,
@@ -17,16 +22,15 @@ import {
   tagCv,
 } from "@/constants/EditProfile.constant";
 import Link from "next/link";
-import { basePath } from "@/constants/Head.constant";
+// import { fullPath } from "@/constants/Head.constant";
 
 function SearchJob() {
   const router = useRouter();
-  const [visible, setVisible] = useState(false);
-  const buttonRef: any = useRef(null);
   const [showChoiceCity, setShowChoiceCity] = useState(false);
   const [choiceCity, setChoiceCity] = useState<string>("Chọn tỉnh thành");
   const [codeCity, setCodeCity] = useState<number>(0);
   const [searchCity, setSearchCity] = useState<string>("");
+
   const [searchOption, setSearchOption] = useState<any>({
     key: "",
     // idKey:0,
@@ -52,9 +56,9 @@ function SearchJob() {
       <div className={styles.nd_box_key}>
         <div className={`${styles.box_district}`}>
           <div className="nd_box_left col-7 col-lg-8 ">
-            <p className="text-lg ">Địa điểm phổ biến</p>
+            <p className="text-base ">Địa điểm phổ biến</p>
           </div>
-          {choiceCity != "Chọn tỉnh thành" ? (
+          {codeCity != 0 ? (
             <div className={styles.box_key_district}>
               {/* Show district */}
               {quan_huyen
@@ -79,10 +83,60 @@ function SearchJob() {
                 ))}
             </div>
           ) : (
-            <div>{/* Show đề xuất */}</div>
+            <div className={styles.box_key_district}>
+              <div>
+                <strong>Hồ Chí Minh</strong>
+                {proposeDistrict.map((dt) => (
+                  <div
+                    className="cursor-pointer"
+                    key={dt.district}
+                    onClick={() => {
+                      setSearchOption({ ...searchOption, ...dt });
+                      setChoiceCity(`${cityOption[dt.city - 1].label}`);
+                    }}
+                  >
+                    {dt.districtName}
+                  </div>
+                ))}
+              </div>
+              <div>
+                <strong>Hà Nội</strong>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSearchOption({
+                      ...searchOption,
+                      district: 82,
+                      city: 1,
+                      districtName: "Quận Hà Đông",
+                      cityName: "Hà Nội",
+                    });
+                    setChoiceCity(`${cityOption[0].label}`);
+                  }}
+                >
+                  Quận Hà Đông
+                </div>
+              </div>
+              <div>
+                <strong>Đà Nẵng</strong>
+                <div
+                  className="cursor-pointer"
+                  onClick={() => {
+                    setSearchOption({
+                      ...searchOption,
+                      district: 425,
+                      city: 26,
+                    });
+                    setChoiceCity(`${cityOption[25].label}`);
+                  }}
+                >
+                  Quận Sơn Trà
+                </div>
+              </div>
+            </div>
           )}
         </div>
-        <div className="box_key_city_right ml-10" id="city_lq">
+        <div className="box_key_city_right ml-10 lg:mr-16" id="city_lq">
           <p className={styles.text}>Danh sách địa điểm</p>
           <input
             type="text"
@@ -245,61 +299,70 @@ function SearchJob() {
     }
   };
   const contentKey = (
-    <div className="flex justify-between" style={{ maxWidth: "1000px" }}>
-      <div className=" mr-5 pr-5 w-1/3">
-        <p className="text-gray-300 text-xs">Tìm kiếm phổ biến</p>
-        <div className="grid grid-cols-2">
-          {searchOption.key &&
-            profession
-              .filter((pf) =>
-                toLowerCaseNonAccentVietnamese(pf.label).includes(
-                  toLowerCaseNonAccentVietnamese(searchOption.key)
-                )
-              )
-              .map((nn) => (
-                <div
+    <>
+      {showChoiceCity ? (
+        contentCity
+      ) : (
+        <div className="flex justify-between" style={{ maxWidth: "1000px" }}>
+          <div className=" mr-5 pr-5 w-2/5">
+            <p className="text-gray-300 text-xs">Tìm kiếm phổ biến</p>
+            <div className="grid grid-cols-2 w-full">
+              {searchOption.key &&
+                profession
+                  .filter((pf) =>
+                    toLowerCaseNonAccentVietnamese(pf.label).includes(
+                      toLowerCaseNonAccentVietnamese(searchOption.key)
+                    )
+                  )
+                  .map((nn) => (
+                    <div
+                      onClick={() => {
+                        setShowChoiceCity(true);
+                        setSearchOption({
+                          ...searchOption,
+                          key: nn.label,
+                          idKey: nn.value,
+                        });
+                      }}
+                      className="cursor-pointer "
+                      key={nn.value}
+                    >
+                      {nn.label}
+                    </div>
+                  ))}
+            </div>
+          </div>
+          <div>
+            <p className="text-gray-300 text-xs">Từ khóa phổ biến</p>
+            <div className="grid grid-cols-3 ">
+              {tagCv.map((tag) => (
+                <button
+                  className="m-3"
                   onClick={() => {
+                    setShowChoiceCity(true);
                     setSearchOption({
                       ...searchOption,
-                      key: nn.label,
-                      idKey: nn.value,
+                      key: tag.label,
+                      idKey: tag.value,
                     });
                   }}
-                  className="cursor-pointer "
-                  key={nn.value}
+                  key={tag.value}
                 >
-                  {nn.label}
-                </div>
+                  {" "}
+                  {tag.label}
+                </button>
               ))}
+            </div>
+          </div>
         </div>
-      </div>
-      <div>
-        <p className="text-gray-300 text-xs">Từ khóa phổ biến</p>
-        <div className="grid grid-cols-3 ">
-          {tagCv.map((tag) => (
-            <button
-              className="m-3"
-              onClick={() => {
-                setSearchOption({
-                  ...searchOption,
-                  key: tag.label,
-                  idKey: tag.value,
-                });
-              }}
-              key={tag.value}
-            >
-              {" "}
-              {tag.label}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
+      )}
+    </>
   );
+  console.log("SearJob", searchOption);
   return (
     <div className={styles.inc_search}>
       <div className={styles.box_search}>
-        <Link href={basePath} className="logo-search cursor-pointer">
+        <Link href="/" className="logo-search cursor-pointer">
           <img
             className="hidden lg:block"
             src="/images/logovltg.svg"
@@ -316,7 +379,8 @@ function SearchJob() {
             }}
           >
             <Input
-              className="w-full h-14 lg:rounded-l-full mr-0.5"
+              onClick={() => setShowChoiceCity(false)}
+              className="w-full h-11 md:h-14 lg:rounded-l-full mr-0.5 text-lg mb-3"
               value={searchOption.key}
               placeholder="Nhập tên công việc"
               onChange={(e) =>
@@ -350,12 +414,8 @@ function SearchJob() {
             <div
               // ref={buttonRef}
               className={styles.choice_city}
-              onClick={() => {
-                setVisible(true);
-                setShowChoiceCity(!showChoiceCity);
-              }}
             >
-              <span>{choiceCity}</span>
+              <p>{choiceCity}</p>
             </div>
           </Popover>
 
@@ -367,12 +427,12 @@ function SearchJob() {
             <img className="lg:hidden ml-4" src="/images/search-plus-tl.svg" />
           </div>
         </div>
-        <div>
-          <div className="text-white my-5">Tìm kiếm phổ biến</div>
+        <div className="hidden lg:block">
+          <div className=" text-white my-5">Tìm kiếm phổ biến</div>
           <div className="flex justify-center">
             {LIST_PROPOSE.map((item) => (
               <Link
-                href={`${basePath}/viec-lam-${convertNameToSlug(
+                href={`/viec-lam-${convertNameToSlug(
                   renderProfession[item.link]
                 )}${
                   item.link < 10 ? `-theo-gio-${item.link}` : `-${item.link}nn`

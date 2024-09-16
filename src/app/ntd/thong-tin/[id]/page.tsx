@@ -21,12 +21,18 @@ import {
 import Image from "next/image";
 import { HeadDefault } from "@/constants/Head.constant";
 import Loading from "@/Components/Loading";
+import Link from "next/link";
 function TTNTD({ params }: any) {
   const { id } = params;
   const router = useRouter();
   const [thongTinNTD, setThongTinNTD] = useState<any>({});
   const [danhSachViecLam, setDanhSachViecLam] = useState<any>([]);
+  const [fullPath, setFullPath] = useState<any>("");
   useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
     axiosTruocDN
       .post("/viecLam/getInfoCompany", { id_ntd: id })
       .then((res) => {
@@ -40,7 +46,7 @@ function TTNTD({ params }: any) {
   }
   return (
     <>
-      <HeadDefault title={thongTinNTD?.userName} />
+      <HeadDefault fullPath={fullPath} title={thongTinNTD?.userName} />
       <div>
         <Header />
         <SearchJob />
@@ -135,17 +141,14 @@ function TTNTD({ params }: any) {
                     </div>
                     <div className="px-5">
                       <div className="text-center md:text-start mb-3">
-                        <h3
-                          className="cursor-pointer mt-3 font-semibold text-lg hover:underline"
-                          onClick={() =>
-                            router.push(
-                              `/${convertNameToSlug(job.vi_tri)}-${
-                                job.id_vieclam
-                              }.html`
-                            )
-                          }
-                        >
-                          {job.vi_tri}
+                        <h3 className="cursor-pointer mt-3 font-semibold text-lg hover:underline">
+                          <Link
+                            href={`/${convertNameToSlug(job.vi_tri)}-${
+                              job.id_vieclam
+                            }.html`}
+                          >
+                            {job.vi_tri}
+                          </Link>
                         </h3>
                       </div>
                       <div className="lg:grid grid-cols-2">
@@ -212,17 +215,15 @@ function TTNTD({ params }: any) {
                         </p>
                       </div>
                       <p className="my-4">{job.mo_ta}</p>
-                      <button
-                        onClick={() =>
-                          router.push(
-                            `/${convertNameToSlug(job.vi_tri)}-${
-                              job.id_vieclam
-                            }.html`
-                          )
-                        }
-                        className={btnStyle.btn_primary}
-                      >
-                        Xem chi tiết
+                      <button className={btnStyle.btn_primary}>
+                        <Link
+                          href={`/${convertNameToSlug(job.vi_tri)}-${
+                            job.id_vieclam
+                          }.html`}
+                        >
+                          {" "}
+                          Xem chi tiết
+                        </Link>
                       </button>
                     </div>
                   </div>

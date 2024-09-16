@@ -17,11 +17,10 @@
   font-size: 15px;
   line-height: 33px;
   color: #fff;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   gap: 0 5px;
-  visibility: hidden;
 }
 .header_back:hover {
   text-decoration: underline;
@@ -35,7 +34,6 @@
   align-items: center;
   margin: 5px;
   color: white;
-  padding-right: 20px;
 }
 .navbars_list {
   display: none;
@@ -64,7 +62,16 @@
   height: 39px;
   margin-left: 20px;
 }
+.navBar_second {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
 @media screen and (max-width: 767px) {
+  .header_back {
+    display: hidden;
+  }
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   .list_menu {
@@ -72,12 +79,18 @@
     width: 100%;
     justify-content: space-between;
   }
+  .header_back {
+    display: hidden;
+  }
 }
 @media screen and (min-width: 1024px) {
   .header_back {
-    visibility: visible;
+    display: flex;
   }
   .navbars_list {
     display: flex;
+  }
+  .list_menu {
+    display: hidden;
   }
 }

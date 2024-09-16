@@ -3,7 +3,7 @@ import {
   renderProfession,
   renderSchedules,
 } from "@/constants/EditProfile.constant";
-import { basePath } from "@/constants/Head.constant";
+
 import { axiosTruocDN } from "@/utils/axios.config";
 import { convertNameToSlug } from "@/utils/generalFunction";
 import { cityOption } from "@/utils/vi_tri";
@@ -14,15 +14,21 @@ import { useEffect, useState } from "react";
 function UserPLVL() {
   const router = useRouter();
   const [data, setData] = useState<any>();
+  const [fullPath, setFullPath] = useState<any>("");
+
   useEffect(() => {
     axiosTruocDN
       .post("/viecLam/thongKeViecLam")
       .then((res) => setData(res.data.data))
       .catch((err) => console.log("plvl", err));
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
   }, []);
 
   return (
-    <div className={styles.plvl}>
+    <div className={styles.plvl + " bg-white p-5"}>
       <div>
         <div className={styles.plvl_title}>
           <Image width={36} height={36} src="/images/lvl.svg" alt="lvl" />
@@ -32,7 +38,7 @@ function UserPLVL() {
           {data?.totalHinhThuc?.map((quantity: any, index: any) => (
             <div key={index} className={styles.list_viec}>
               <Link
-                href={`${basePath}/viec-lam-${convertNameToSlug(
+                href={`/viec-lam-${convertNameToSlug(
                   renderSchedules[index + 1]
                 )}-${index + 1}.html`}
               >
@@ -43,7 +49,7 @@ function UserPLVL() {
           ))}
         </div>
       </div>
-      <div>
+      <div className="mt-3">
         <div className={styles.plvl_title}>
           <Image width={36} height={36} src="/images/lvl.svg" alt="lvl" />
           <h2>TÌM VIỆC THEO GIỜ THEO NGÀNH NGHỀ</h2>
@@ -51,7 +57,7 @@ function UserPLVL() {
         <div>
           {data?.totaNganhNghe?.map((nn: any) => (
             <Link
-              href={`${basePath}/viec-lam-${convertNameToSlug(
+              href={`/viec-lam-${convertNameToSlug(
                 renderProfession[nn.jc_id]
               )}-theo-gio-${nn.jc_id}.html`}
               key={nn.jc_id}
@@ -74,7 +80,7 @@ function UserPLVL() {
           {data?.totaTinhThanh?.map((tt: any) => (
             <div key={tt.cit_id} className={styles.list_viec}>
               <Link
-                href={`${basePath}/viec-lam-theo-gio-tai-${convertNameToSlug(
+                href={`/viec-lam-theo-gio-tai-${convertNameToSlug(
                   cityOption[Number(tt.cit_id) - 1].label
                 )}-${tt.cit_id}.html`}
               >

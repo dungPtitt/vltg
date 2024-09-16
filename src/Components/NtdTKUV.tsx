@@ -5,6 +5,7 @@ import {
 } from "@/constants/EditProfile.constant";
 import { axiosTruocDN } from "@/utils/axios.config";
 import { convertNameToSlug } from "@/utils/generalFunction";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 function NTDTKUV() {
@@ -103,6 +104,13 @@ function NTDTKUV() {
       },
     ],
   });
+  const [fullPath, setFullPath] = useState<any>("");
+  useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
+  }, []);
   // useEffect(() => {
   //   axiosTruocDN
   //     .post("/manageAccountCompany/thongKeUngVien")
@@ -122,17 +130,15 @@ function NTDTKUV() {
         <div>
           {data?.totalHinhThuc?.map((quantity: any, index: any) => (
             <div key={index} className={styles.list_viec}>
-              <div
-                onClick={() =>
-                  router.push(
-                    `/ung-vien-${convertNameToSlug(
-                      renderSchedules[index + 1]
-                    )}-theo-gio-i${index + 1}.html`
-                  )
-                }
-              >
-                {renderSchedules[index + 1]}{" "}
-                <span className={styles.salary}>({quantity})</span>
+              <div>
+                <Link
+                  href={`/ung-vien-${convertNameToSlug(
+                    renderSchedules[index + 1]
+                  )}-theo-gio-i${index + 1}.html`}
+                >
+                  {renderSchedules[index + 1]}{" "}
+                  <span className={styles.salary}>({quantity})</span>
+                </Link>
               </div>
             </div>
           ))}
@@ -148,18 +154,13 @@ function NTDTKUV() {
         </div>
         <div>
           {data?.totaNganhNghe?.map((nn: any) => (
-            <div
-              onClick={() =>
-                router.push(
-                  `/ung-vien-${convertNameToSlug(
-                    renderProfession[nn.jc_id]
-                  )}-theo-gio-u${nn.jc_id}t0.html`
-                )
-              }
-              key={nn.jc_id}
-              className={styles.list_viec}
-            >
+            <div key={nn.jc_id} className={styles.list_viec}>
               <div>
+                <Link
+                  href={`/ung-vien-${convertNameToSlug(
+                    renderProfession[nn.jc_id]
+                  )}-theo-gio-u${nn.jc_id}t0.html`}
+                ></Link>
                 {renderProfession[nn.jc_id]}
                 <span className={styles.salary}> ({nn.total})</span>
               </div>
@@ -178,15 +179,12 @@ function NTDTKUV() {
         <div>
           {data?.totaTinhThanh?.map((tt: any) => (
             <div key={tt.cit_id} className={styles.list_viec}>
-              <div
-                onClick={() =>
-                  router.push(
-                    `/ung-vien-theo-gio-tai-${convertNameToSlug(tt.name)}-u0c${
-                      tt._id
-                    }.html`
-                  )
-                }
-              >
+              <div>
+                <Link
+                  href={`/ung-vien-theo-gio-tai-${convertNameToSlug(
+                    tt.name
+                  )}-u0c${tt._id}.html`}
+                ></Link>
                 {tt.name} <span className={styles.salary}> ({tt.total})</span>
               </div>
             </div>

@@ -18,27 +18,31 @@ import BlockDownApp from "@/Components/BlockDownApp";
 
 export default function Home() {
   const router = useRouter();
-  const [HOST, setHOST] = useState<any>();
+  const [fullPath, setFullPath] = useState<any>("");
   useEffect(() => {
     // Code xử lý sau khi trang đã load xong
     const linkElement: any = document.querySelector("link[rel='stylesheet']");
     if (linkElement && linkElement.media !== "all") {
       linkElement.media = "all";
     }
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
   }, []);
   return (
     <>
-      <HeadHomePage />
+      <HeadHomePage fullPath={fullPath} />
       <div className={styles.home_page}>
         <Header />
         <SearchJob />
         <Vlmn check={false} />
         <Vllc />
+
         <BlockTVLTG />
         <div className={styles.main_why}>
           <h2 className={styles.main_why_title}>
-            Lý do nên lựa chọn tìm việc theo giờ tại
-            vieclamtheogio.timviec365.vn
+            Lý do nên lựa chọn tìm việc tại Việc làm theo giờ
           </h2>
           <div className={styles.box_why}>
             <div className={styles.why_list}>
@@ -46,7 +50,7 @@ export default function Home() {
               <div className={styles.why_content}>
                 <h3 className={styles.why_title}>Thu Nhập Cao</h3>
                 <p>
-                  Việc làm theo giờ 365 giúp bạn lựa chọn công việc có thu nhập
+                  Việc làm theo giờ giúp bạn lựa chọn công việc có thu nhập
                   cao, phù hợp với giờ giấc, năng lực bản thân.
                 </p>
               </div>
@@ -57,7 +61,7 @@ export default function Home() {
               <div className={styles.why_content}>
                 <h3 className={styles.why_title}>Uy tín</h3>
                 <p>
-                  Các nhà tuyển dụng trên Việc làm theo giờ 365 uy tín, trên
+                  Các nhà tuyển dụng trên Việc làm theo giờ uy tín, trên
                   khắp các tỉnh thành tại Việt Nam. Mang đến những tin tuyển
                   dụng chất lượng nhất.
                 </p>
@@ -88,13 +92,13 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <BlockDownApp />
-        <div className="bg-white w-full px-44 py-12">
+        {/* <BlockDownApp /> */}
+        {/* <div className="bg-white w-full px-44 py-12">
           <TuKhoaCongViecLQ />
           <DiaDiemLQ />
-        </div>
+        </div> */}
 
-        <BlockCVDep />
+        {/* <BlockCVDep /> */}
         <Footer />
       </div>
     </>

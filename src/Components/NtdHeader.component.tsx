@@ -1,11 +1,19 @@
 import styles from "@/Css/uvProfile.module.css";
 import { axiosSauDN, deleteToken } from "@/utils/axios.config";
 import { notifyError } from "@/utils/generalFunction";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 function NtdHeader() {
   const [dataNTD, setDataNTD] = useState<any>();
   const router = useRouter();
+  const [fullPath, setFullPath] = useState<any>("");
+  useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
+  }, []);
   useEffect(() => {
     axiosSauDN
       .post("/manageAccountCompany/getInfoCompany")
@@ -21,9 +29,9 @@ function NtdHeader() {
   return (
     <div className="flex justify-end mt-2">
       <div className={styles.uv_header_rg}>
-        <div className="cursor-pointer" onClick={() => router.push("/")}>
+        <div className="cursor-pointer">
           {" "}
-          Trang chủ
+          <Link href="/">Trang chủ</Link>
         </div>
         <a
           href="https://timviec365.vn/bang-gia-dich-vu.html"
@@ -34,13 +42,10 @@ function NtdHeader() {
           Bảng giá
         </a>
         <div className="cursor-pointer"> Đăng tin</div>
-        <div
-          className="cursor-pointer"
-          onClick={() => router.push("/danh-sach-ung-vien")}
-        >
+        <Link href={`/danh-sach-ung-vien.html`} className="cursor-pointer">
           {" "}
           Tìm kiếm ứng viên
-        </div>
+        </Link>
         <a
           className="cursor-pointer"
           target="blank"

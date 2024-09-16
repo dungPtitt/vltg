@@ -43,6 +43,13 @@ function DanhSachNganhNghe({ params }: any) {
   const [chonHead, setChonHead] = useState<Number>(0);
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
+  const [fullPath, setFullPath] = useState<any>("");
+  useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
+  },[]);
   useEffect(() => {
     try {
       if (
@@ -99,15 +106,17 @@ function DanhSachNganhNghe({ params }: any) {
   }, [page]);
   return (
     <>
-      {chonHead == 1 && <HeadListJob url={pathName} />}
+      {chonHead == 1 && <HeadListJob url={pathName} fullPath={fullPath}/>}
       {chonHead == 2 && (
         <HeadSearchByProfession
+          hostName={fullPath}
           profession={renderProfession[value]}
           pathUrl={pathName}
         />
       )}
       {chonHead == 3 ? (
         <HeadSearchByAdress
+        fullPath={fullPath}
           city={cityOption[Number(value) - 1].label}
           district={""}
         />

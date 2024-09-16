@@ -24,11 +24,20 @@ function TimKiemViecLam({ params }: any) {
   });
 
   const [duLieuViecLam, setDuLieuViecLam] = useState<any>([]);
+  const [fullPath, setFullPath] = useState<any>("");
 
   useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
     try {
       axiosTruocDN
-        .post("/viecLam/thongKeDanhSachViecLam", searchOption)
+        .post("/viecLam/thongKeDanhSachViecLam", {
+          ...searchOption,
+          page,
+          pageSize,
+        })
         .then((res) => {
           setTotal(res.data.data.total);
           setDuLieuViecLam([...res.data.data.data]);
@@ -39,10 +48,15 @@ function TimKiemViecLam({ params }: any) {
   }, [key, city, district, page]);
   return (
     <>
-      {HeadSearchByProfessionAndAdress(
+      <HeadSearchByProfessionAndAdress
+        fullPath={fullPath}
+        city={cityOption[Number(city) - 1].label}
+        profession={renderProfession[key]}
+      />
+      {/* {<HeadSearchByProfessionAndAdress(
         renderProfession[key],
         cityOption[Number(city) - 1].label
-      )}
+      )/>} */}
       <div className="flex flex-col items-center">
         <Header />
         <SearchJob />

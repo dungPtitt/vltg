@@ -11505,3 +11505,12 @@ export const districtOption = [
   { value: 772, label: "Huyện Châu Thành", parent: 52 },
   { value: 773, label: "Huyện Phụng Hiệp", parent: 53 },
 ];
+export const proposeDistrict = [
+  { districtName: "Quận Thủ Đức", district: 617, city: 45,cityName:"Hồ Chí Minh" },
+  { districtName: "Quận 9", district: 618, city: 45,cityName:"Hồ Chí Minh" },
+  { districtName: "Quận Gò Vấp", district: 619, city: 45,cityName:"Hồ Chí Minh" },
+  { districtName: "Quận 6", district: 630, city: 45,cityName:"Hồ Chí Minh" },
+  { districtName: "Quận 3", district: 625, city: 45,cityName:"Hồ Chí Minh" },
+  { districtName: "Quận7", district: 633, city: 45,cityName:"Hồ Chí Minh" },
+  { districtName: "Quận 12", district: 616, city: 45,cityName:"Hồ Chí Minh" },
+];

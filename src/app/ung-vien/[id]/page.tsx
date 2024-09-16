@@ -34,7 +34,13 @@ function UVDetail({ params }: any) {
   const [arrDay, setArrDay] = useState<number[]>([]);
   const [diemLoc, setDiemLoc] = useState(0);
   const [showModalXemTT, setShowModalXemTT] = useState(false);
+  const [fullPath, setFullPath] = useState<any>("");
+
   useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
     try {
       axiosSauDN
         .post("/manageAccountCompany/ntdXemChiTietUngVien", {
@@ -97,7 +103,7 @@ function UVDetail({ params }: any) {
 
   return (
     <>
-      <HeadDefault title={"Chi tiết ứng viên"} />
+      <HeadDefault fullPath={fullPath} title={"Chi tiết ứng viên"} />
       <div className="flex flex-col items-center bg-gray-100">
         <Header />
         <SearchJob />

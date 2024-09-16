@@ -272,7 +272,7 @@
   width: 25%;
   height: auto;
   display: flex;
-  justify-content: flex-end;
+  justify-content: end;
 }
 
 .qr_cv {

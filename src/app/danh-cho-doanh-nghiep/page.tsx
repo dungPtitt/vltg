@@ -4,13 +4,27 @@ import styles from "@/Css/forNtd.module.css";
 import Header from "@/Layout/Header.layout";
 import { HeadDefault } from "@/constants/Head.constant";
 import { LIST_DT, LIST_TKUV } from "@/constants/forNtd.constant";
+import {
+  convertNameToSlug,
+  decodeUnicodeString,
+} from "@/utils/generalFunction";
 import { Carousel } from "antd";
+import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 function ForNtdPage() {
   const router = useRouter();
+  const [fullPath, setFullPath] = useState<any>("");
+  useEffect(() => {
+    const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
+  }, []);
   return (
     <>
-      <HeadDefault title={"Giới thiệu"} />{" "}
+      <HeadDefault title={"Giới thiệu"} fullPath={"fullPath"} />{" "}
       <div>
         <Header />
         <div className={styles.gt_qr}>
@@ -31,16 +45,39 @@ function ForNtdPage() {
                 <div className="flex gap-x-5 ">
                   <div>
                     <img className="w-36" src="/images/qr_vltg_new.png" />
-                    <button>Tải App trên IOS</button>
+                    <button>
+                      {" "}
+                      <Link
+                        className="hover:underline"
+                        href={`https://apps.apple.com/vn/app/việc-làm-theo-giờ-timviec365/id1615489458`}
+                      >
+                        Tải App trên IOS
+                      </Link>
+                    </button>
                   </div>
                   <div>
                     <img className="w-36" src="/images/qr_vltg_new.png" />
-                    <button>Tải App trên Android</button>
+                    <button>
+                      {" "}
+                      <Link
+                        className="hover:underline"
+                        href={`https://play.google.com/store/apps/details?id=vn.timviec365.vieclamtheogio_vn`}
+                      >
+                        Tải App trên Android
+                      </Link>
+                    </button>
                   </div>
                 </div>
-                <button className={styles.btn_warning}>
-                  Đăng tuyển miễn phí ngay
-                </button>
+                <div className="flex w-1/2 justify-center">
+                  <button className={styles.btn_warning}>
+                    <Link
+                      className="hover:underline"
+                      href={"https://timviec365.vn/dang-nhap.html"}
+                    >
+                      Đăng tuyển miễn phí ngay
+                    </Link>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -58,50 +95,61 @@ function ForNtdPage() {
                 Tuyển được người chỉ sau 4h. Từ bây giờ việc tìm kiếm nhân sự
                 ngắn hạn sẽ không còn là vấn đề của bạn nữa.
               </p>
-              <button className={styles.btn_primary}>
-                Đăng tuyển miễn phí ngay
-              </button>
+              <div className="flex sm:justify-center md:justify-start w-full ">
+                <button className={styles.btn_primary}>
+                  <Link href={"https://timviec365.vn/dang-nhap.html"}>
+                    Đăng tuyển miễn phí ngay
+                  </Link>
+                </button>
+              </div>
             </div>
           </div>
-          <div className={styles.ct_item}>
-            <div className={styles.ct_img}>
-              <img src="/images/img_gt2.png" alt="" />
-            </div>
-            <div className={styles.ct_content}>
-              <p className={styles.title}>
-                Tìm kiếm sàng lọc ứng viên chất lượng
-              </p>
-              <p className={styles.content_txt}>
-                Công cụ sàng lọc đơn giản, dữ liệu ứng viên phong phú, chúng tôi
-                có: đầu bếp, phục vụ, lễ tân, nhân viên bán hàng, giao hàng, pha
-                chế và rất nhiều ngành nghề khác!
-              </p>
-              <button
-                onClick={() =>
-                  router.push("/ung-vien-tim-viec-lam-theo-gio.html")
-                }
-                className={styles.btn_primary}
-              >
-                Tìm ứng viên theo giờ chất lượng
-              </button>
+          <div
+            className={styles.ct_item_sang_loc + " justify-center items-center"}
+          >
+            <div className="flex ">
+              <div className={styles.ct_img_sang_loc}>
+                <img src="/images/img_gt2.png" alt="" />
+              </div>
+              <div className={styles.ct_content}>
+                <p className={styles.title}>
+                  Tìm kiếm sàng lọc ứng viên chất lượng
+                </p>
+                <p className={styles.content_txt}>
+                  Công cụ sàng lọc đơn giản, dữ liệu ứng viên phong phú, chúng
+                  tôi có: đầu bếp, phục vụ, lễ tân, nhân viên bán hàng, giao
+                  hàng, pha chế và rất nhiều ngành nghề khác!
+                </p>
+                <button className={styles.btn_primary}>
+                  <Link href={`/ung-vien-tim-viec-lam-theo-gio.html`}>
+                    Tìm ứng viên theo giờ chất lượng
+                  </Link>
+                </button>
+              </div>
             </div>
           </div>
-          <div className={styles.ct_item}>
-            <div className={styles.ct_img}>
-              <img className="max-w-lg" src="/images/img_gt3.png" alt="" />
+          <div className={styles.ct_item_ho_tro}>
+            <div className={styles.ct_img_ho_tro}>
+              <img src="/images/img_gt3.png" alt="" />
             </div>
-            <div className={styles.ct_content}>
+            <div className={styles.ct_content_ho_tro}>
               <p className={styles.title}>Hỗ trợ 24/7</p>
               <p className={styles.content_txt}>
                 Đội ngũ chăm sóc khách hàng 24/7 luôn sẵn sàng hỗ trợ bạn để
                 giải quyết các vấn đề cấp bách, giúp công việc của bạn luôn trôi
                 chảy.
               </p>
-              <div className={styles.hotline}>
-                <img className="w-6 mr-3" src="/images/ico-phone.svg" alt="" />
-                <p>
-                  Hotline: <span> 1900633682 - Ấn phím 1</span>
-                </p>
+              <div className={styles.box_hotline}>
+                <div className={styles.hotline}>
+                  <img
+                    className="w-6 mr-3"
+                    src="/images/ico-phone.svg"
+                    alt=""
+                  />
+                  <p>
+                    Hotline: <span> 1900633682 - Ấn phím 1</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>
@@ -115,11 +163,16 @@ function ForNtdPage() {
             <div className={styles.tkuv_container}>
               {LIST_TKUV.map((e, index) => (
                 <div key={index} className={styles.tkuv_item}>
-                  <div className={styles.box_item}>
+                  <Link
+                    href={`/ung-vien-${convertNameToSlug(e.job)}-theo-gio-u${
+                      e.value
+                    }t0.html`}
+                    className={styles.box_item}
+                  >
                     <img src={e.url} />
                     <div className={styles.job_name}>{e.job}</div>
                     <div className={styles.job_count}>{e.count}</div>
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>
@@ -186,7 +239,11 @@ function ForNtdPage() {
                 </p>
               </div>
               <div>
-                <button className={styles.btn_warning}> Đăng ký ngay</button>
+                <button className={styles.btn_warning}>
+                  <a target="blank" href="https://timviec365.vn/dang-ky.html">
+                    Đăng ký ngay
+                  </a>{" "}
+                </button>
               </div>
             </div>
           </div>
@@ -194,24 +251,119 @@ function ForNtdPage() {
         <div className={styles.carousel_container}>
           <Carousel autoplay slidesToShow={3}>
             <div className={styles.carousel_item}>
-              {" "}
-              <img src="/images/jinx1.jpg" alt="jinx" />
+              <div>
+                <div>
+                  <p className="font-semibold text-xl text-blue-500 text-center">
+                    Đơn giản, dễ sử dụng và rất hiệu quả để tuyển nhân viên chất
+                    lượng cho quán
+                  </p>
+                  <div className="flex items-center m-5">
+                    <div className="w-20 h-20 rounded-full">
+                      <img
+                        className="w-20 h-20"
+                        src="/images/box-ng1.png"
+                        alt="box1"
+                      />
+                    </div>
+
+                    <p className="text-blue-800 font-extrabold">
+                      The CoffeHouse
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className={styles.carousel_item}>
               {" "}
-              <img src="/images/jinx2.jpg" alt="jinx" />
+              <div>
+                <div>
+                  <p className="font-semibold text-xl text-blue-500 text-center">
+                    Đơn giản, dễ sử dụng và rất hiệu quả để tuyển nhân viên chất
+                    lượng cho quán
+                  </p>
+                  <div className="flex items-center m-5">
+                    <div className="w-20 h-20 rounded-full">
+                      <img
+                        className="w-20 h-20"
+                        src="/images/box-ng2.png"
+                        alt="box1"
+                      />
+                    </div>
+
+                    <p className="text-blue-800 font-extrabold">
+                      The CoffeHouse
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className={styles.carousel_item}>
               {" "}
-              <img src="/images/jinx3.jpg" alt="jinx" />
+              <div>
+                <div>
+                  <p className="font-semibold text-xl text-blue-500 text-center">
+                    Đơn giản, dễ sử dụng và rất hiệu quả để tuyển nhân viên chất
+                    lượng cho quán
+                  </p>
+                  <div className="flex items-center m-5">
+                    <div className="w-20 h-20 rounded-full">
+                      <img
+                        className="w-20 h-20"
+                        src="/images/box-ng2.png"
+                        alt="box1"
+                      />
+                    </div>
+
+                    <p className="text-blue-800 font-extrabold">
+                      The CoffeHouse
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className={styles.carousel_item}>
               {" "}
-              <img src="/images/jinx4.jpg" alt="jinx" />
+              <div>
+                <div>
+                  <p className="font-semibold text-xl text-blue-500 text-center">
+                    Đơn giản, dễ sử dụng và rất hiệu quả để tuyển nhân viên chất
+                    lượng cho quán
+                  </p>
+                  <div className="flex items-center m-5">
+                    <div className="w-20 h-20 rounded-full">
+                      <img
+                        className="w-20 h-20"
+                        src="/images/box-ng3.png"
+                        alt="box1"
+                      />
+                    </div>
+
+                    <p className="text-blue-800 font-extrabold">
+                      The CoffeHouse
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
             <div className={styles.carousel_item}>
               {" "}
-              <img src="/images/jinx5.jpg" alt="jinx" />
+              <div>
+                <p className="font-semibold text-xl text-blue-500 text-center">
+                  Đơn giản, dễ sử dụng và rất hiệu quả để tuyển nhân viên chất
+                  lượng cho quán
+                </p>
+                <div className="flex items-center m-5">
+                  <div className="w-20 h-20 rounded-full">
+                    <img
+                      className="w-20 h-20"
+                      src="/images/box-ng2.png"
+                      alt="box1"
+                    />
+                  </div>
+
+                  <p className="text-blue-800 font-extrabold">The CoffeHouse</p>
+                </div>
+              </div>
             </div>
           </Carousel>
         </div>

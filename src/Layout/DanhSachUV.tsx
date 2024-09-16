@@ -127,7 +127,11 @@ function DanhSachUv() {
       check_ntd_save_uv: false,
     },
   ]);
-  useEffect(() => {
+  const [fullPath, setFullPath] = useState<any>("");
+  useEffect(() => {const hostname = window.location.hostname;
+    const port = window.location.port;
+    localStorage.setItem("hostname", hostname + port);
+    setFullPath(`${hostname}:${port}`);
     try {
       axiosSauDN
         .post("/manageAccountCompany/thongKeDanhSachUngVien", {
@@ -146,7 +150,7 @@ function DanhSachUv() {
   }, [page]);
   return (
     <>
-      <HeadDefault title={"Danh sách ứng viên"} />
+      <HeadDefault fullPath={fullPath} title={"Danh sách ứng viên"} />
       <div className="flex flex-col items-center">
         <Header />
         <SearchUV />

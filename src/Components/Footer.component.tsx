@@ -9,19 +9,21 @@ import {
 } from "@/constants/footer.constant";
 import Link from "next/link";
 import Image from "next/image";
+import TuKhoaCongViecLQ from "./TuKhoaCongViecLQ";
+import DiaDiemLQ from "./DiaDiemLQ";
 function Footer() {
   const [show, setShow] = useState("");
   return (
     <footer className={styles.footer}>
-      <div className={styles.footer_block1}>
+      {/* <div className={styles.footer_block1}>
         {LIST_KEYWORDS.map((keyword, index: number) => (
           <Link key={index} href={keyword.link} target="blank">
             {keyword.label}
             {index < LIST_KEYWORDS.length - 1 && ","}
           </Link>
         ))}
-      </div>
-      <div className={styles.footer_block2}>
+      </div> */}
+      {/* <div className={styles.footer_block2}>
         <div className="lg:mr-8 ">
           <div className="flex justify-between w-full">
             <p>Về Timviec365</p>
@@ -250,9 +252,9 @@ function Footer() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
-      <div className={styles.footer_block3}>
+      {/* <div className={styles.footer_block3}>
         <div className="flex w-full">
           <div className={styles.wrap_365}>
             <img src="/images/365timviec.png" alt="" />
@@ -396,7 +398,12 @@ function Footer() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+      <div>
+          <TuKhoaCongViecLQ />
+          <DiaDiemLQ />
+        </div>
+      <script src="/js/lazyLoad.js" />
     </footer>
   );
 }

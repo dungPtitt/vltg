@@ -1,13 +1,19 @@
 import Head from "next/head";
+import { useEffect } from "react";
 
 const now = new Date();
 const month = now.getMonth() + 1;
 const year = now.getFullYear();
-export const basePath = "http://localhost:3000";
-export const HeadHomePage = () => {
+const getHostName = () => {
+  let hostName = "";
+  useEffect(() => {
+    hostName = window.localStorage.getItem("hostname");
+  }, []);
+};
+export const HeadHomePage = ({ fullPath }) => {
   return (
     <>
-      <link rel="canonical" href={basePath} />
+      <link rel="canonical" href={fullPath} />
       {/* <link rel="amphtml" href="https://vieclamtheogio.timviec365.vn/amp" /> */}
       <meta charset="UTF-8" />
       <meta
@@ -20,7 +26,14 @@ export const HeadHomePage = () => {
         name="google-site-verification"
         content="tkR0DL2EWeg8OJfQypncyEWVoR3Mvl-Vbk4yl-8q1sQ"
       />
-      <meta name="robots" content="noindex,nofollow" />
+      <meta
+        name="robots"
+        content={
+          fullPath == "vieclamtheogio.timviec365.vn"
+            ? "index,follow"
+            : "noindex,nofollow"
+        }
+      />
       <meta
         name="description"
         content=" Việc làm theo giờ mới nhất. Tổng hợp danh sách việc làm theo giờ lương cao từ các công ty hàng đầu dành cho người tìm việc. Tham khảo ngay tại Timviec365.vn"
@@ -87,18 +100,25 @@ export const HeadHomePage = () => {
     </>
   );
 };
-export const HeadDefault = ({ title }) => {
+export const HeadDefault = ({ title, fullPath }) => {
   return (
     <>
       <meta charset="UTF-8" />
-      <link rel="canonical" href="https://vieclamtheogio.timviec365.vn/" />
+      <link rel="canonical" href={fullPath} />
 
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <meta name="robots" content="noindex,nofollow" />
+      <meta
+        name="robots"
+        content={
+          fullPath == "vieclamtheogio.timviec365.vn"
+            ? "index,follow"
+            : "noindex,nofollow"
+        }
+      />
       <title>{title}</title>
       <link
         rel="preload"
@@ -132,7 +152,7 @@ export const HeadDefault = ({ title }) => {
     </>
   );
 };
-export const HeadListJob = ({ url }) => {
+export const HeadListJob = ({ url, fullPath }) => {
   return (
     <>
       <meta charset="UTF-8" />
@@ -141,7 +161,14 @@ export const HeadListJob = ({ url }) => {
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <meta name="robots" content="noindex,nofollow" />
+      <meta
+        name="robots"
+        content={
+          fullPath == "vieclamtheogio.timviec365.vn"
+            ? "index,follow"
+            : "noindex,nofollow"
+        }
+      />
       <title>Danh sách việc làm</title>
       <link
         rel="preload"
@@ -155,7 +182,7 @@ export const HeadListJob = ({ url }) => {
         as="font"
         crossorigin="anonymous"
       />
-      <link rel="canonical" href={basePath+"/" + url} />
+      <link rel="canonical" href={fullPath + "/" + url} />
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
       <link rel="preload" as="style" href="../css/select2.min.css" />
       <link
@@ -181,7 +208,7 @@ export const HeadListJob = ({ url }) => {
     </>
   );
 };
-export const HeadJobDetai = ({ job, company }) => {
+export const HeadJobDetai = ({ job, company, fullPath }) => {
   const title = job;
   return (
     <>
@@ -191,7 +218,14 @@ export const HeadJobDetai = ({ job, company }) => {
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <meta name="robots" content="noindex,nofollow" />
+      <meta
+        name="robots"
+        content={
+          fullPath == "vieclamtheogio.timviec365.vn"
+            ? "index,follow"
+            : "noindex,nofollow"
+        }
+      />
       <title>{title}</title>
       <meta
         name="description"
@@ -260,7 +294,7 @@ export const HeadJobDetai = ({ job, company }) => {
     </>
   );
 };
-export const HeadCompanyDetail = (company) => {
+export const HeadCompanyDetail = ({ company, fullPath }) => {
   return (
     <>
       {" "}
@@ -271,7 +305,14 @@ export const HeadCompanyDetail = (company) => {
       />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
       <title>{company}</title>
-      <meta name="robots" content="noindex,nofollow" />
+      <meta
+        name="robots"
+        content={
+          fullPath == "vieclamtheogio.timviec365.vn"
+            ? "index,follow"
+            : "noindex,nofollow"
+        }
+      />
       <meta
         name="description"
         content={` ${company} đang có nhu cầu tuyển dụng nhân viên`}
@@ -334,7 +375,7 @@ export const HeadCompanyDetail = (company) => {
     </>
   );
 };
-export const HeadSearchByProfession = ({ profession, pathUrl }) => {
+export const HeadSearchByProfession = ({ hostName, profession, pathUrl }) => {
   const title = `Tìm việc ${profession?.toLowerCase()} mới nhất - T${month}/${year}`;
   return (
     <>
@@ -344,7 +385,14 @@ export const HeadSearchByProfession = ({ profession, pathUrl }) => {
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <meta name="robots" content="noindex,nofollow" />
+      <meta
+        name="robots"
+        content={
+          hostName == "vieclamtheogio.timviec365.vn"
+            ? "index,follow"
+            : "noindex,nofollow"
+        }
+      />
       <title>{title}</title>
       <meta
         name="description"
@@ -379,8 +427,8 @@ export const HeadSearchByProfession = ({ profession, pathUrl }) => {
       />
       <meta property="og:type" content="website" />
       <meta property="og:locale" content="vi_VN" />
-      <link rel="canonical" href={basePath +"/"+ pathUrl} />
-      <link rel="amphtml" href={basePath +"/"+ pathUrl} />
+      <link rel="canonical" href={hostName + "/" + pathUrl} />
+      <link rel="amphtml" href={hostName + "/" + pathUrl} />
 
       <link
         rel="preload"
@@ -413,7 +461,7 @@ export const HeadSearchByProfession = ({ profession, pathUrl }) => {
     </>
   );
 };
-export const HeadSearchByAdress = ({ city, district }) => {
+export const HeadSearchByAdress = ({ city, district, fullPath }) => {
   const title = `Tìm việc làm theo giờ tại ${
     district ? district : ""
   } ${city} mới nhất - T
@@ -427,7 +475,14 @@ export const HeadSearchByAdress = ({ city, district }) => {
       />
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-      <meta name="robots" content="noindex,nofollow" />
+      <meta
+        name="robots"
+        content={
+          fullPath == "vieclamtheogio.timviec365.vn"
+            ? "index,follow"
+            : "noindex,nofollow"
+        }
+      />
 
       <title>{title}</title>
       <meta
@@ -516,7 +571,11 @@ export const HeadSearchByAdress = ({ city, district }) => {
     </>
   );
 };
-export const HeadSearchByProfessionAndAdress = (profession, city) => {
+export const HeadSearchByProfessionAndAdress = ({
+  profession,
+  city,
+  fullPath,
+}) => {
   const title = ` Việc làm ${profession.toLowerCase()} tại ${city} - Timviec365.vn `;
   return (
     <>
@@ -528,7 +587,14 @@ export const HeadSearchByProfessionAndAdress = (profession, city) => {
       <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
       <title>{title}</title>
-      <meta name="robots" content="noindex,nofollow" />
+      <meta
+        name="robots"
+        content={
+          fullPath == "vieclamtheogio.timviec365.vn"
+            ? "index,follow"
+            : "noindex,nofollow"
+        }
+      />
       <meta
         name="description"
         content={` Danh sách việc ${profession.toLowerCase()} tại ${city}. Tham khảo ngay danh sách tin tuyển dụng ${profession.toLowerCase()} tại ${city} trên timviec365.vn`}

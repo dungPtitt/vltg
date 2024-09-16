@@ -159,3 +159,83 @@ export const handleImageError = (e: any) => {
   e.currentTarget.src = "/images/no-avartar-user.png"; // Đường dẫn của ảnh mặc định
   e.currentTarget.alt = "avatar";
 };
+/* export function makeML(content, search = '', replace = '') {
+  if (content != '') {
+      const $ = cheerio.load(`'${content}'`);
+      const h2s = $('h2,h3,h4,.h2-class,.h3-class');
+      const patterns = [/^\d+\.\d+\.\d+\.\s/i, /^\d+\.\d+\.\s/i, /^\d+\.\s/i];
+      let ml = [];
+      let u = 0,
+          j = 0,
+          i = 0;
+
+      if (h2s.length > 0) {
+          h2s.map((index, h2) => {
+              let text = $(h2).text().replace(/\s+/g, ' ').trim();
+              patterns.forEach((pattern) => {
+                  text = text.replace(pattern, '');
+              });
+              let id = renderTitle(text);
+              if (id == search) {
+                  id = replace;
+              }
+              $(h2).attr('id', id);
+              if ($(h2).is('h2') || $(h2).hasClass('h2-class')) {
+                  i++;
+                  ml.push(
+                      <li key={index}>
+                          <a className="ul_h2" href={`#${id}`}>{`${i}. ${text}`}</a>
+                      </li>
+                  );
+                  j = 0;
+              }
+              if ($(h2).is('h3') || $(h2).hasClass('h3-class')) {
+                  j++;
+                  ml.push(
+                      <li key={index}>
+                          <a className="ul_h3" href={`#${id}`}>{`${i}.${j}. ${text}`}</a>
+                      </li>
+                  );
+                  u = 0;
+              }
+              if ($(h2).is('h4')) {
+                  u++;
+                  ml.push(
+                      <li key={index}>
+                          <a className="ul_h4" href={`#${id}`}>{`${i}.${j}.${u}. ${text}`}</a>
+                      </li>
+                  );
+              }
+          });
+          return (
+              <nav className="table-of-contents">
+                  <p className="tt_phu_luc tt-pl">
+                      <span>Mục lục:</span>
+                  </p>
+                  <ul>{ml}</ul>
+              </nav>
+          );
+      }
+  }
+}
+
+export function makeML_content(content, search = '', replace = '') {
+  if (content != '') {
+      const $ = cheerio.load(`${content}`);
+      const h2s = $('h2,h3,h4,.h2-class,.h3-class');
+      const patterns = [/^\d+\.\d+\.\d+\.\s/i, /^\d+\.\d+\.\s/i, /^\d+\.\s/i];
+      h2s.each((index, h2) => {
+          let text = $(h2).text().replace(/\s+/g, ' ').trim();
+          patterns.forEach((pattern) => {
+              text = text.replace(pattern, '');
+          });
+          let id = renderTitle(text);
+          if (id == search && id != '') {
+              id = replace;
+          }
+          $(h2).attr('id', id);
+      });
+      const html = $.html();
+      return <div dangerouslySetInnerHTML={{ __html: html }} />;
+  }
+} */
