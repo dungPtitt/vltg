@@ -41,7 +41,7 @@ function TTNTD({ params }: any) {
       })
       .catch((err) => console.log("chi tiet nha tuyen dung", err));
   }, []);
-  if (!thongTinNTD.idTimViec365) {
+  if (!thongTinNTD._id) {
     return <Loading />;
   }
   return (

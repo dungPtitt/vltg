@@ -28,7 +28,10 @@ function UvProfile() {
   useEffect(() => {
     axiosSauDN
       .post("/manageAccountCandidate/getInfoCandidate")
-      .then((res) => setUserData(res.data.data.data))
+      .then((res) => {
+        console.log("ress>>", res);
+        setUserData(res.data.data.data)
+      })
       .catch((err) => console.log("UvProfile", err));
   }, []);
   return (

@@ -35,6 +35,7 @@ function NtdUpdateProfile() {
     if (newAvatar != duLieuNTD.linkAvatar) {
       handleUpdateAvatar();
     }
+    console.log("duLieuNTD::", duLieuNTD);
     if (
       !duLieuNTD.userName ||
       !duLieuNTD.com_size ||

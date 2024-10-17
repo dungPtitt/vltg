@@ -68,7 +68,14 @@ function AdminPage() {
     } else {
       axiosTruocDN
         .post("/admin/loginAdmin", dataLogin)
-        .then((res) => setCheckLogin(true))
+        .then((res) => {
+          setCheckLogin(true);
+          console.log("res>>>>", res);
+          // localStorage.setItem(
+          //   "accessToken",
+          //   JSON.stringify(res?.data?.data?.data?.access_token)
+          // );
+        })
         .catch((err) => notifyError("Kiểm tra thông tin đăng nhập!"));
     }
   };
@@ -94,7 +101,7 @@ function AdminPage() {
       {checkLogin ? (
         <div className={styles.admin_page}>
           <div className="flex justify-end m-2">
-            Xin chào! {dataAdmin.adm_loginname} |{" "}
+            Xin chào! {dataAdmin?.adm_loginname} |{" "}
             <span
               onClick={() =>
                 handleActiveKey(

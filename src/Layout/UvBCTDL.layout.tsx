@@ -9,7 +9,7 @@ function UvBCTDL() {
     try {
       axiosSauDN
         .post("/manageAccountCandidate/getInfoCandidate")
-        .then((res) => setArrDay([...res.data.data.data.uv_day.split(",")]));
+        .then((res) => setArrDay([...res.data?.data?.data?.uv_day.split(",")]));
     } catch (error) {
       console.log("errr", error);
     }

@@ -47,14 +47,15 @@ function UVDetail({ params }: any) {
           id_uv: id,
         })
         .then((res) => {
-          setArrDay(res.data.data.data.uv_day?.split(","));
-          setThongTinUV(res.data.data.data);
-          setUVLienQuan(res.data.data.listUVLienQuan);
+          setArrDay(res?.data?.data?.data?.uv_day?.split(","));
+          setThongTinUV(res?.data?.data?.data);
+          setUVLienQuan(res?.data?.data?.listUVLienQuan);
         });
     } catch (error) {
       console.log("thontinUV err", error);
     }
   }, []);
+  console.log("thongTinUV:::", thongTinUV);
   const handleLuuUV = (id: number) => {
     axiosSauDN
       .post(`/manageAccountCompany/ntdSaveUv`, { id_uv: id })
@@ -88,7 +89,7 @@ function UVDetail({ params }: any) {
   const handleXemTTLH = () => {
     axiosSauDN
       .post("/manageAccountCompany/ntdXemUv", {
-        id_uv: thongTinUV.idTimViec365,
+        id_uv: thongTinUV._id,
       })
       .then((res) =>
         notifySuccess("Vui lòng load lại trang hoặc vào trang NTD để xem!")
@@ -97,7 +98,7 @@ function UVDetail({ params }: any) {
         console.log("handleXemTTLH", err), notifyError("Vui lòng thử lại sau!");
       });
   };
-  if (!thongTinUV.idTimViec365) {
+  if (!thongTinUV._id) {
     return <Loading />;
   }
 
@@ -110,15 +111,18 @@ function UVDetail({ params }: any) {
         <div className="w-full lg:w-4/5">
           <div className={style.box_uv}>
             <div className="flex items-center ">
-              <div className={style.use_avatar}>
+              <div
+                className={style.use_avatar}
+              >
                 <Image
                   height={200}
                   width={200}
-                  src={thongTinUV.linkAvatar}
+                  // src={thongTinUV.linkAvatar}
+                  src={thongTinUV?.linkAvatar ? thongTinUV?.linkAvatar : "/images/no-avartar-user.png"}
                   alt="avt"
                 />
               </div>
-              <div className="ml-3">
+              <div className="ml-8">
                 <p className={style.user_name}>{thongTinUV.userName}</p>
                 <p className={style.cty_name}>{thongTinUV.uv_cong_viec} </p>
                 <div className="flex">
@@ -130,7 +134,7 @@ function UVDetail({ params }: any) {
                       src="/images/mahoso.svg"
                       alt="mahoso"
                     />{" "}
-                    Mã hồ sơ: {thongTinUV.idTimViec365}
+                    Mã hồ sơ: {thongTinUV._id}
                   </div>
                   <div className="ml-3 pr-3 flex items-center border-r border-gray-400 max-w-xs">
                     <Image
@@ -159,7 +163,7 @@ function UVDetail({ params }: any) {
               {thongTinUV.check_save_uv ? (
                 <button
                   className={btnStyle.btn_warning}
-                  onClick={() => handleXoaUV(thongTinUV.idTimViec365)}
+                  onClick={() => handleXoaUV(thongTinUV._id)}
                 >
                   <Image
                     height={15}
@@ -173,7 +177,7 @@ function UVDetail({ params }: any) {
               ) : (
                 <button
                   className={btnStyle.btn_default}
-                  onClick={() => handleLuuUV(thongTinUV.idTimViec365)}
+                  onClick={() => handleLuuUV(thongTinUV._id)}
                 >
                   <Image
                     height={15}
@@ -284,7 +288,7 @@ function UVDetail({ params }: any) {
                 </p>
                 <p className="mb-2.5">
                   Nơi mong muốn làm việc:
-                  {thongTinUV.uv_dia_diem.split(",").map((value: string) => (
+                  {thongTinUV?.uv_dia_diem?.split(",").map((value: string) => (
                     <span key={value} className={style.itemBlue}>
                       {tinh_thanh[Number(value) - 1]?.cit_name}
                     </span>
@@ -292,7 +296,7 @@ function UVDetail({ params }: any) {
                 </p>
                 <p className="mb-2.5">
                   Ngành nghề:{" "}
-                  {thongTinUV.uv_nganh_nghe.split(",").map((value: string) => (
+                  {thongTinUV?.uv_nganh_nghe?.split(",").map((value: string) => (
                     <span key={value} className={style.itemBlue}>
                       {renderProfession[Number(value)]}
                     </span>
@@ -363,9 +367,9 @@ function UVDetail({ params }: any) {
               </div>
             </div>
           </div>
-          <BlockCVDep />
-          <Footer />
+          {/* <BlockCVDep /> */}
         </div>
+        <Footer />
         <Modal
           open={showModalXemTT}
           footer={null}

@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
-const baseURL = "http://210.245.108.202:3013/api/vltg";
+const baseURL = "http://localhost:3011/api/vltg";
 export const axiosTruocDN = axios.create({
   baseURL,
   headers: {
@@ -17,8 +17,9 @@ export const axiosSauDN = axios.create({
   },
 });
 axiosSauDN.interceptors.request.use((config: any) => {
-  let accessToken = Cookies.get("token_base365");
-  return { ...config, headers: { Authorization: `Bearer ${accessToken}` } };
+  let token = Cookies.get("accessToken");
+  // let token = localStorage.getItem("accessToken");
+  return { ...config, headers: { Authorization: `Bearer ${token}` } };
 });
 
 export const axiosLocal = axios.create({
@@ -36,15 +37,18 @@ export const privateAxiosUpload = axios.create({
   },
 });
 privateAxiosUpload.interceptors.request.use((config: any) => {
-  let accessToken = Cookies.get("token_base365");
+  // let accessToken = localStorage.getItem("accessToken");
+  let accessToken = Cookies.get("accessToken");
   return { ...config, headers: { Authorization: `Bearer ${accessToken}` } };
 });
 
 export const deleteToken = () => {
-  Cookies.remove("token_base365");
+  Cookies.remove("accessToken");
+  Cookies.remove("UT");
 };
 export const checkToken = () => {
-  const check = Cookies.get("token_base365");
+  // let check = localStorage.getItem("accessToken");
+  let check = Cookies.get("accessToken");
   if (check) {
     return true;
   }

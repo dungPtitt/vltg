@@ -104,6 +104,7 @@ function DanhSachNganhNghe({ params }: any) {
       console.log("errr", error);
     }
   }, [page]);
+  console.log("blog:::", blog);
   return (
     <>
       {chonHead == 1 && <HeadListJob url={pathName} fullPath={fullPath}/>}
@@ -155,13 +156,13 @@ function DanhSachNganhNghe({ params }: any) {
             }
           }}
         />
-        <BlockDownApp />
+        {/* <BlockDownApp />
         <div className="w-9/12 mt-3">
           <TuKhoaCongViecLQ />
           <DiaDiemLQ />
-        </div>
+        </div> */}
 
-        <div className="flex flex-col items-center overflow-hidden w-full">
+        {/* <div className="flex flex-col items-center overflow-hidden w-full">
           <div
             className="w-4/5 "
             dangerouslySetInnerHTML={{ __html: blog?.jc_bv }}
@@ -170,7 +171,7 @@ function DanhSachNganhNghe({ params }: any) {
             className="w-4/5"
             dangerouslySetInnerHTML={{ __html: blog?.key_ndgy }}
           ></div>
-        </div>
+        </div> */}
 
         <Footer />
       </div>

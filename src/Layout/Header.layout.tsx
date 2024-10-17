@@ -14,17 +14,29 @@ export function Header() {
   const [recall, setRecall] = useState(false);
   const [userType, setUserType] = useState<any>(Cookies.get("UT"));
   const [fullPath, setFullPath] = useState<any>("");
+  const checkLogin = () => {
+    let token = Cookies.get("accessToken");
+    if (token) {
+      return true
+    }
+    return false;
+  }
   useEffect(() => {
-    if (userType == 0) {
+    console.log("usertype", userType);
+    if (userType == "0") {
       axiosSauDN
         .post("/manageAccountCandidate/getInfoCandidate")
-        .then((res) => setUserData(res.data.data.data))
+        .then((res) => {
+          console.log("ress>>", res);
+          setUserData(res.data.data.data);
+        })
         .catch((err) => deleteToken());
-    } else if (userType == 1) {
+    } else if (userType == "1") {
       axiosSauDN
         .post("/manageAccountCompany/getInfoCompany")
         .then((res) => setUserData(res.data.data.data))
         .catch((err) => deleteToken());
+      console.log("userData", userData);
     }
     const hostname = window.location.hostname;
     const port = window.location.port;
@@ -33,15 +45,18 @@ export function Header() {
   }, []);
   const boxProfile = (
     <div>
-      <div className="flex items-center border-b-2 border-gray-400">
+      
+      {/* <div className="w-full border-t-2 border-blue-500 py-2 hover:border-l-3-yellow-600"> */}
+      <div className="flex items-center border-blue-500 border-b-2 border-gray-400">
+      {/* <div className={styles.sub_avatar}> */}
         <Image
-          className="w-10 mr-4"
-          width={50}
-          height={50}
+          // className="w-10 border-blue-500 mr-4 mb-3"
+          className={styles.sub_avatar}
+          width={30}
+          height={30}
           alt="Avatar"
-          src={userData?.linkAvatar}
+          src={userData?.linkAvatar ? userData?.linkAvatar : "/images/no-avartar-user.png"}
         />
-
         <p className="text-lg text-blue-700">{userData?.userName}</p>
       </div>
       <div>
@@ -86,21 +101,22 @@ export function Header() {
         data-toggle="tooltip"
         className={styles.a}
       >
-        Dành cho Nhà tuyển dụng
+        Dành cho người tuyển dụng
       </Link>
       <div className="ml-2 underline">
         <Link href="/" className={styles.a}>
           Dành cho người tìm việc
         </Link>
       </div>
-      {userData?.idTimViec365 ? (
+      {userData?._id ? (
+       
         <div>
           <Popover placement="bottom" content={boxProfile}>
             <Image
               width={35}
               height={35}
               alt=""
-              src={userData.linkAvatar}
+              src={userData?.linkAvatar ? userData?.linkAvatar : "/images/no-avartar-user.png"}
               // onError={(e) =>
               //   (e.currentTarget.src = `${basePath}/images/no-avartar-user.png`)
               // }
@@ -110,7 +126,7 @@ export function Header() {
       ) : (
         <div>
           <Link
-            href="https://timviec365.vn/dang-nhap.html"
+            href="localhost:3000"
             target="blank"
             className={styles.a + " mr-2"}
           >
@@ -118,7 +134,7 @@ export function Header() {
           </Link>
           /
           <Link
-            href="https://timviec365.vn/dang-ky.html"
+            href="localhost:3000"
             target="blank"
             className={styles.a + " ml-2"}
           >
@@ -186,21 +202,21 @@ export function Header() {
                 data-toggle="tooltip"
                 className={styles.a}
               >
-                Dành cho Nhà tuyển dụng
+                Dành cho người tuyển dụng
               </Link>
               <div className="ml-2 underline">
                 <Link href="/" className={styles.a}>
                   Dành cho người tìm việc
                 </Link>
               </div>
-              {userData?.idTimViec365 ? (
-                <div>
+              {checkLogin() ? (
+                <div className={styles.box_avatar}>
                   <Popover placement="bottom" content={boxProfile}>
                     <Image
                       width={35}
                       height={35}
                       alt=""
-                      src={userData.linkAvatar}
+                      src={userData?.linkAvatar ? userData?.linkAvatar : "/images/no-avatar4.jpg"}
                     
                     />
                   </Popover>
@@ -208,15 +224,16 @@ export function Header() {
               ) : (
                 <div className={styles.box_dn_dky}>
                   <Link
-                    href="https://timviec365.vn/dang-nhap.html"
-                    target="blank"
+                      href="/dang-nhap"
+                    // href="#"
+                    // target="blank"
                     className={styles.a + " mr-2"}
                   >
                     Đăng nhập
                   </Link>
                   /
                   <Link
-                    href="https://timviec365.vn/dang-ky.html"
+                    href="/dang-ky"
                     target="blank"
                     className={styles.a + " ml-2"}
                   >

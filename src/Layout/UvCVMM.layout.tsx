@@ -46,8 +46,8 @@ function UvCVMM() {
     axiosSauDN
       .post("/manageAccountCandidate/getCongViecMongMuon")
       .then((res) => {
-        setDuLieuMoi(res.data.data);
-        setDuLieuCVMM(res.data.data);
+        setDuLieuMoi(res.data.data.data);
+        setDuLieuCVMM(res.data.data.data);
       })
       .catch((err) => console.log("UvCVMM", err));
   }, []);
@@ -63,7 +63,7 @@ function UvCVMM() {
       setAdressValues(selected);
     }
   };
-  console.log("duLieuCVMM", duLieuCVMM);
+  console.log("duLieuCVMM>>", duLieuCVMM);
   const capNhapCongViec = () => {
     if (jobValues.length == 0) {
       notifyWarning("Vui lòng chọn ít nhất 1 ngành nghề!");
@@ -220,7 +220,7 @@ function UvCVMM() {
             <div>
               <p className="font-bold mb-2.5">
                 Ngành nghề:{" "}
-                {duLieuCVMM.nganh_nghe?.split(",").map((nn) => (
+                {duLieuCVMM?.nganh_nghe?.split(",").map((nn) => (
                   <span key={nn} className={styles.btn_primary}>
                     {renderProfession[Number(nn)]}
                   </span>
@@ -231,7 +231,7 @@ function UvCVMM() {
               <p className="font-bold mb-2.5">
                 Cấp bậc mong muốn:{" "}
                 <span className="font-normal">
-                  {renderPosition[duLieuCVMM.lever]}
+                  {renderPosition[duLieuCVMM?.lever]}
                 </span>
               </p>
             </div>
@@ -239,14 +239,14 @@ function UvCVMM() {
               <p className="font-bold mb-2.5">
                 Hình thức:{" "}
                 <span className="font-normal">
-                  {renderSchedules[duLieuCVMM.hinh_thuc]}
+                  {renderSchedules[duLieuCVMM?.hinh_thuc]}
                 </span>
               </p>
             </div>
             <div>
               <p className="font-bold mb-2.5">
                 Địa điểm mong muốn:{" "}
-                {duLieuCVMM.dia_diem?.split(",").map((dd) => (
+                {duLieuCVMM?.dia_diem?.split(",").map((dd) => (
                   <span key={dd} className={styles.btn_primary}>
                     {tinh_thanh.find((tt) => tt.cit_id == Number(dd))?.cit_name}
                   </span>
@@ -257,7 +257,7 @@ function UvCVMM() {
               <p className="font-bold mb-2.5">
                 Mức lương:{" "}
                 <span className="font-normal">
-                  {renderSalaryLevel[duLieuCVMM.luong]}
+                  {renderSalaryLevel[duLieuCVMM?.luong]}
                 </span>
               </p>
             </div>

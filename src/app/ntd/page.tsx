@@ -18,6 +18,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import Cookies from "js-cookie";
+
 function NtdProfilePage() {
   const router = useRouter();
   const [showTinTD, setShowTinTD] = useState<boolean>(false);
@@ -64,7 +66,7 @@ function NtdProfilePage() {
                   Tin đã đăng
                 </div>
                 <div className="cursor-pointer">
-                  <Link href={`/ung-vien-tim-viec-lam-theo-gio.html`}></Link>
+                  <Link href={`/ung-vien-tim-viec-lam-theo-gio`}></Link>
                   Tìm kiếm ứng viên theo giờ
                 </div>
               </div>
@@ -118,7 +120,8 @@ function NtdProfilePage() {
       <div className={styles.box_logout}>
         <button
           onClick={() => {
-            deleteToken();
+            Cookies.remove("accessToken");
+            Cookies.remove("UT");
             router.push("/");
           }}
           className={styles.btn_warning + " flex items-center"}
@@ -170,10 +173,10 @@ function NtdProfilePage() {
             {showOption === "tdd" && (
               <NtdTongTin setShowOption={setShowOption} />
             )}
+            {showOption === "uvmut" && <NtdUVMUT />}
+            {showOption === "uvtudl" && <NtdUVTuDL />}
             {showOption === "uvdx" && <NtdUVDX />}
             {showOption === "uvdl" && <NtdUVDL />}
-            {showOption === "uvtudl" && <NtdUVTuDL />}
-            {showOption === "uvmut" && <NtdUVMUT />}
             {showOption === "cntt" && <NtdUpdateProfile />}
             {showOption === "dmk" && <ChangePassword />}
             {/* <NtdNewJob /> */}

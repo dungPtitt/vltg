@@ -3,7 +3,7 @@ import {
   renderProfession,
   renderSchedules,
 } from "@/constants/EditProfile.constant";
-import { axiosTruocDN } from "@/utils/axios.config";
+import { axiosSauDN, axiosTruocDN } from "@/utils/axios.config";
 import { convertNameToSlug } from "@/utils/generalFunction";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -111,20 +111,23 @@ function NTDTKUV() {
     localStorage.setItem("hostname", hostname + port);
     setFullPath(`${hostname}:${port}`);
   }, []);
-  // useEffect(() => {
-  //   axiosTruocDN
-  //     .post("/manageAccountCompany/thongKeUngVien")
-  //     .then((res) => setData(res.data.data))
-  //     .catch((err) => console.log("plvl", err));
-  // }, []);
+  useEffect(() => {
+    axiosSauDN
+      .post("/manageAccountCompany/thongKeUngVien")
+      .then((res) => {
+        setData(res.data.data);
+        console.log("plvl::", res.data.data);
+      })
+      .catch((err) => console.log("plvl", err));
+  }, []);
   return (
     <div className={styles.plvl}>
       <div className="mt-5">
         <div className={styles.plvl_title}>
-          <img
+          {/* <img
             src="https://vieclamtheogio.timviec365.vn/images/lvl.svg"
             alt="lvl"
-          />
+          /> */}
           <h2>ỨNG VIÊN THEO GIỜ</h2>
         </div>
         <div>
@@ -146,10 +149,10 @@ function NTDTKUV() {
       </div>
       <div>
         <div className={styles.plvl_title}>
-          <img
+          {/* <img
             src="https://vieclamtheogio.timviec365.vn/images/lvl.svg"
             alt="lvl"
-          />
+          /> */}
           <h2>TÌM ỨNG VIÊN THEO GIỜ THEO NGÀNH NGHỀ</h2>
         </div>
         <div>
@@ -170,10 +173,10 @@ function NTDTKUV() {
       </div>
       <div>
         <div className={styles.plvl_title}>
-          <img
+          {/* <img
             src="https://vieclamtheogio.timviec365.vn/images/lvl.svg"
             alt="lvl"
-          />
+          /> */}
           <h2>TÌM ỨNG VIÊN THEO TỈNH THÀNH</h2>
         </div>
         <div>

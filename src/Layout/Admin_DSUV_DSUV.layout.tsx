@@ -16,9 +16,9 @@ function Admin_DSUV_DSUV() {
     for (let i = 0; i < data.length; i++) {
       exportData.push({
         // key: (pageShow - 1) * pageSize + i + 1,
-        key: data[i].idTimViec365,
+        key: data[i]._id,
         stt: (pageShow - 1) * pageSize + i + 1,
-        id: data[i].idTimViec365,
+        id: data[i]._id,
         avatar: data[i].avatarUser,
         userName: data[i].userName,
         userPhone: data[i].phone,
@@ -136,7 +136,7 @@ function Admin_DSUV_DSUV() {
       .post("/admin/deleteUngVien", { moduleId: 95, arrId: [id] })
       .then((res) => {
         setDanhSachUngVien([
-          ...danhSachUngVien.filter((uv: any) => uv.idTimViec365 != id),
+          ...danhSachUngVien.filter((uv: any) => uv._id != id),
         ]);
       })
       .catch((err) => console.log("DSUV", err)); */

@@ -13,6 +13,7 @@ import {
 import { ToastContainer } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+
 function UVCard({ data }: any) {
   moment.locale("vi");
   const time = moment(data.updatedAt * 1000)
@@ -50,18 +51,19 @@ function UVCard({ data }: any) {
       <div className="flex justify-between">
         <div className="flex items-center w-1/2 pl-5 py-3">
           <Link
-            href={`/ung-vien-${convertNameToSlug(dataUV.userName)}-${
-              dataUV.idTimViec365
-            }.html`}
+            href={`/ung-vien/${
+              dataUV._id
+              }`}
+            className="flex justify-between"
           >
             <Image
-              className="cursor-pointer "
+              className="cursor-pointer border-2 border-blue-500 rounded-full w-10 h-10"
               width={55}
               height={55}
-              src={dataUV?.linkAvatar}
+              src={dataUV?.linkAvatar ? dataUV?.linkAvatar : "/images/no-avartar-user.png"}
               alt="/"
             />
-            <p className="text-lg font-semibold text-blue-700 cursor-pointer hover:underline">
+            <p className="text-lg font-semibold text-blue-700 cursor-pointer hover:underline ml-5 mt-2">
               {dataUV.userName}
             </p>
           </Link>
@@ -80,7 +82,7 @@ function UVCard({ data }: any) {
           <div className="flex items-center">
             {dataUV.check_ntd_save_uv ? (
               <button
-                onClick={() => handleXoaUV(dataUV.idTimViec365)}
+                onClick={() => handleXoaUV(dataUV._id)}
                 className="flex items-center"
               >
                 <Image
@@ -94,7 +96,7 @@ function UVCard({ data }: any) {
               </button>
             ) : (
               <button
-                onClick={() => handleLuuUV(dataUV.idTimViec365)}
+                onClick={() => handleLuuUV(dataUV._id)}
                 className="flex items-center"
               >
                 <Image
@@ -110,8 +112,8 @@ function UVCard({ data }: any) {
           </div>
         </div>
       </div>
-      <div className="pl-20 py-3 bg-gray-100">
-        <div className="flex">
+      <div className="pl-8 py-3 bg-gray-100">
+        <div className="flex ">
           <Image
             className="mr-3"
             height={15}

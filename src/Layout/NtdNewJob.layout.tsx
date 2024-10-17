@@ -29,7 +29,7 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
   const [codeCity, setCodeCity] = useState(1);
   const [salaryLevel, setSalaryLevel] = useState(1);
   const [lichTuyenDung, setLichTuyenDung] = useState<TypeAdminWorkShifts[]>([
-    { day: [], ca_fist: "", ca_last: "" },
+    { day: [], ca_start_time: "", ca_end_time: "" },
   ]);
   const [tinMoi, setTinMoi] = useState<any>({
     ht_luong: 1,
@@ -94,7 +94,7 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
     setLichTuyenDung([...lichTuyenDung]);
   };
   const handleReset = () => {
-    setLichTuyenDung([{ day: [], ca_fist: "", ca_last: "" }]);
+    setLichTuyenDung([{ day: [], ca_start_time: "", ca_end_time: "" }]);
     setTinMoi({ ht_luong: 1, tra_luong: 1 });
     setSalaryLevel(1);
   };
@@ -130,8 +130,8 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
         for (let i = 0; i < lichTuyenDung.length; i++) {
           if (
             lichTuyenDung[i].day.length == 0 ||
-            !lichTuyenDung[i].ca_last ||
-            !lichTuyenDung[i].ca_fist
+            !lichTuyenDung[i].ca_end_time ||
+            !lichTuyenDung[i].ca_start_time
           ) {
             notifyWarning(`Nhập đầy đủ thông tin ca ${i + 1}`);
             return;
@@ -146,9 +146,16 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
             .then((res) => notifySuccess("Đăng tin thành công!"))
 
             .catch((error) =>
-              notifyError(
-                "Có thể tiêu đề tin đã bị trùng. Vui lòng thử lại hoặc báo cho Admin!"
-              )
+              {
+                console.log("error>>>",)
+                if (error.response.status == 410) {
+                  notifyError("Có thể tiêu đề tin đã bị trùng. Vui lòng thử lại hoặc báo cho Admin!");
+                } else if (error.response.status == 400) {
+                  notifyError("thoi gian tuyen dun phai lon hon thoi gian hien tai");
+                } else {
+                  notifyError("Vui lòng nhập đầy đủ thông tin!");
+                }
+              }
             );
         } else {
           axiosSauDN
@@ -169,6 +176,7 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
       notifyError(error.data.error);
     }
   };
+  {console.log("lichTuyenDung::", lichTuyenDung)}
   return (
     <div className={styles.ntd_new_job}>
       {/* Thông tin việc làm */}
@@ -461,7 +469,21 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
               format={["DD/MM/YYYY"]}
             />
           </div>
+          <div className="mt-6">
+            <label className="text-sm font-semibold">
+              <span className="text-red-500">*</span> Nơi làm việc
+            </label>
+            <Input
+              value={tinMoi.address}
+              onChange={(e) => handleTinMoi(e)}
+              placeholder="VD: Số 1, Nguyễn Trãi, Thanh Xuân, Hà Nội"
+              name="address"
+              type="text"
+              required
+            />
+          </div>
         </div>
+        
       </div>
       {/* Lịch làm việc */}
       <div className={styles.llv}>
@@ -470,7 +492,7 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
           <div className="text-sm font-semibold mt-6"> Thời gian:</div>
           {/* Từ */}
           <div className="mt-6 flex items-center">
-            <label className="text-sm font-semibold">Từ:</label>
+            <label className="text-sm font-semibold">Từ::</label>
             <DatePicker
               // value={convertTimeStamp(tinMoi.fist_time)}
               name="fist_time"
@@ -505,10 +527,11 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
                 <label className="text-sm font-semibold">Từ:</label>
                 <TimePicker
                   onChange={(e: any) => {
-                    lichTuyenDung[indexSL].ca_fist = new Date(e).toString();
+                    lichTuyenDung[indexSL].ca_start_time = new Date(e).toString();
                     setLichTuyenDung([...lichTuyenDung]);
                   }}
                   className="w-48 ml-3"
+                  value={dayjs(`${lichTuyenDung[indexSL].ca_start_time}:00`, "HH:mm:ss")}
                   defaultValue={dayjs("00:00:00", "HH:mm:ss")}
                 />
               </div>
@@ -516,10 +539,11 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
                 <label className="text-sm font-semibold">Đến:</label>
                 <TimePicker
                   onChange={(e: any) => {
-                    lichTuyenDung[indexSL].ca_last = new Date(e).toString();
+                    lichTuyenDung[indexSL].ca_end_time = new Date(e).toString();
                     setLichTuyenDung([...lichTuyenDung]);
                   }}
                   className="w-48 ml-3"
+                  value={dayjs(`${lichTuyenDung[indexSL].ca_end_time}:00`, "HH:mm:ss")}
                   defaultValue={dayjs("00:00:00", "HH:mm:ss")}
                 />
                 {indexSL !== 0 && (
@@ -557,7 +581,7 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
         <div className="flex justify-end mt-3">
           <button
             onClick={() => {
-              lichTuyenDung.push({ day: [], ca_fist: "", ca_last: "" });
+              lichTuyenDung.push({ day: [], ca_start_time: "", ca_end_time: "" });
               setLichTuyenDung([...lichTuyenDung]);
             }}
             className={styles.btn_add}

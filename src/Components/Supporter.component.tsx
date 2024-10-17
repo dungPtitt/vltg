@@ -17,7 +17,7 @@ function Supporter() {
         </div>
         <div className={styles.supporter_contact}>
           Email{" "}
-          <span className="underline"> thuytrang.timviec365.vn@gmail.com </span>
+          <span className="underline"> thuytrang.vn@gmail.com </span>
         </div>
       </div>
     </div>

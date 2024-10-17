@@ -37,10 +37,10 @@ function AuthPage() {
             </div>
             <div className={styles.btn_center}>
               <button
-                onClick={() => router.push("/dang-ky/ung-vien")}
+                onClick={() => router.push("/dang-nhap/ung-vien")}
                 className={styles.btn_warning}
               >
-                Đăng ký ứng viên
+                Đăng nhập ứng viên
               </button>
             </div>
           </div>
@@ -67,9 +67,9 @@ function AuthPage() {
             <div className={styles.btn_center}>
               <button
                 className={styles.btn_warning}
-                onClick={() => router.push("/dang-ky/nha-tuyen-dung")}
+                onClick={() => router.push("/dang-nhap/nha-tuyen-dung")}
               >
-                Đăng ký nhà tuyển dụng
+                Đăng nhập nhà tuyển dụng
               </button>
             </div>
           </div>

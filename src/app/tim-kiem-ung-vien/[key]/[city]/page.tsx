@@ -56,7 +56,7 @@ function TimKiemUngVien({ params }: any) {
           <div className="w-full ">
             {danhSachUngVien.length > 0 &&
               danhSachUngVien.map((data: any) => (
-                <UVCard key={data.idTimViec365} data={data} />
+                <UVCard key={data._id} data={data} />
               ))}
           </div>
           <Pagination

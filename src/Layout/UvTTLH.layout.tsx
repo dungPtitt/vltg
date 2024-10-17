@@ -21,6 +21,7 @@ import {
   renderGender,
   renderMarried,
 } from "@/constants/EditProfile.constant";
+import { set } from "date-fns";
 
 function UvTTLH() {
   const [codeCity, setCodeCity] = useState<string | number>("");
@@ -61,7 +62,11 @@ function UvTTLH() {
     } else {
       axiosSauDN
         .post("/manageAccountCandidate/updateInfoCandidate", duLieuMoi)
-        .then((res) => notifySuccess("Cập nhập thông tin thành công!!"))
+        .then((res) => {
+          notifySuccess("Cập nhập thông tin thành công!!");
+          setDuLieuNguoiDung({ ...duLieuMoi });
+          setShowEdit(false);
+        })
         .catch((err) => console.log("UvTTLH", err));
     }
   };
@@ -329,14 +334,14 @@ function UvTTLH() {
               <p className="font-bold mb-2.5">
                 Tỉnh thành:{" "}
                 <span className="font-normal">
-                  {tinh_thanh[duLieuNguoiDung.city].cit_name}
+                  {tinh_thanh[duLieuNguoiDung?.city-1]?.cit_name}
                 </span>
               </p>
               <p className="font-bold mb-2.5">
                 Quận huyện:{" "}
                 <span className="font-normal">
                   {" "}
-                  {quan_huyen[duLieuNguoiDung.district - 66]?.cit_name}
+                  {quan_huyen[duLieuNguoiDung?.district - 66]?.cit_name}
                 </span>
               </p>
             </div>

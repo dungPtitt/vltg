@@ -128,7 +128,7 @@ function UpdateInformation() {
       })
       .catch((err) => notifyError("Vui lòng thử lại sau!"));
   };
-  if (!thongTinUV.idTimViec365) {
+  if (!thongTinUV._id) {
     return <Loading />;
   }
 

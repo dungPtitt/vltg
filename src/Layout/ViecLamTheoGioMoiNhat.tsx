@@ -20,6 +20,7 @@ function ViecLamTheoGioMoiNhat({ checkOneSite }: any) {
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
   useEffect(() => {
+    console.log("key:::", key);
     if (key) {
       axiosTruocDN
         .post("/viecLam/timKiemViecLam", { key, city, district })
@@ -29,8 +30,9 @@ function ViecLamTheoGioMoiNhat({ checkOneSite }: any) {
         })
         .catch((err) => console.log("VLTGMN", err));
     }
-  }, [page]);
-
+  }, [key, city, district, page]);
+  console.log("keyngaoi:::", key);
+  console.log("listData:::", listData);
   return (
     <div className="w-full ">
       <Header />

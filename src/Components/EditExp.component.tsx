@@ -27,10 +27,11 @@ function EditExp({
     id_knlv: -1,
     id_uv_knlv: -1,
     mota: "",
-    time_end: "",
+    time_end: convertDateYMD(dayjs()),
     time_fist: "",
     _id: "",
   });
+  console.log("duLieuKinhNghiem:::", duLieuKinhNghiem);
   useEffect(() => {
     if (kinhNghiem?.id_knlv) {
       setDuLieuKinhNghiem({
@@ -42,6 +43,7 @@ function EditExp({
   }, []);
 
   const taoMoiKinhNghiem = () => {
+    console.log("duLieuKinhNghiem>>", duLieuKinhNghiem);
     if (
       !duLieuKinhNghiem.chucdanh ||
       !duLieuKinhNghiem.cty ||
@@ -57,10 +59,17 @@ function EditExp({
       .then((res) => {
         setRecall(!recall);
         notifySuccess("Thêm mới thành công!");
+        // console.log("res.data.data.data::", res.data.data.data);
+        setKiNangLamViec([...kiNangLamViec, res.data.data.data]);
         setShowEdit(-10);
+        
       })
       .catch((err) => {
         console.log("EditEXP", err);
+        if (err.response.status == 410) {
+          notifyWarning(err.response.data.error.message);
+          return;
+        }
         notifyError("Thêm mới không thành công. Vui lòng thử lại!");
       });
 
@@ -82,6 +91,12 @@ function EditExp({
       .catch((err) =>
         notifyError("Cập nhập không thành công. Vui lòng thử lại!")
       );
+  };
+  const convertDate = (value: any, name: any) => {
+    let convert = "";
+    const time = new Date(value);
+    convert = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`;
+    setDuLieuKinhNghiem({ ...duLieuKinhNghiem, [name]: convert });
   };
   return (
     <div>
@@ -107,14 +122,14 @@ function EditExp({
             <span className="text-red-500">*</span>Từ
           </label>
           <DatePicker
-            style={{ width: "100%" }}
-            value={convertTimestampToDatePicker(duLieuKinhNghiem.time_fist)}
+              name="time_fist"
+              onChange={(e) => convertDate(e, 'time_fist')}
+              className="w-full"
+              // defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
             format={["DD/MM/YYYY"]}
-            onChange={(e) =>
-              setDuLieuKinhNghiem({
-                ...duLieuKinhNghiem,
-                time_fist: convertDateYMD(e),
-              })
+            disabledDate={(current) => 
+              !current || // Vô hiệu hóa các ngày không hợp lệ
+              (duLieuKinhNghiem.time_end && current.isAfter(duLieuKinhNghiem.time_end, 'day')) // Vô hiệu hóa các ngày trước time_fist
             }
           />
         </div>
@@ -123,16 +138,13 @@ function EditExp({
             <span className="text-red-500">*</span>Đến
           </label>
           <DatePicker
-            style={{ width: "100%" }}
-            value={convertTimestampToDatePicker(duLieuKinhNghiem.time_end)}
+              name="time_end"
+              onChange={(e) => convertDate(e, 'time_end')}
+              className="w-full"
+            defaultValue={dayjs()}
             format={["DD/MM/YYYY"]}
-            onChange={(e) =>
-              setDuLieuKinhNghiem({
-                ...duLieuKinhNghiem,
-                time_end: convertDateYMD(e),
-              })
-            }
-          />
+            disabledDate={(current) => current && current > dayjs().endOf('day')}
+            />
         </div>
       </div>
       <div className="mt-6">

@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["cdn.timviec365.vn"],
+    domains: ["cdn.timviec365.vn", "localhost"],
   },
   moment: {
     locale: "vi",

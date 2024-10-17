@@ -10,6 +10,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import Cookies from "js-cookie";
+
 function UserProfile() {
   const router = useRouter();
   const [showQLC, setShowQLC] = useState<boolean>(false);
@@ -47,7 +49,7 @@ function UserProfile() {
           </div>
 
           <div className={styles.navbars_items}>
-            <div>
+            {/* <div>
               <div
                 onClick={() => setShowQLC(!showQLC)}
                 className="flex justify-between px-3 cursor-pointer items-center h-8 hover:bg-blue-950"
@@ -68,22 +70,33 @@ function UserProfile() {
                   >
                     Quản lý hồ sơ
                   </div>
-                  <Link href={"/viec-lam-theo-gio-moi-nhat.html"}
+                  <Link href={"/viec-lam-theo-gio-moi-nhat"}
                     className="flex justify-between pl-3 cursor-pointer items-center h-8 hover:bg-blue-950"
                   >
                     Tìm việc làm
                   </Link>
                 </div>
               )}
-            </div>
+            </div> */}
 
-            <a
+            {/* <a
               href="https://timviec365.vn/blog"
               target="blank"
               className="flex justify-between px-3 cursor-pointer items-center h-8 hover:bg-blue-950"
             >
               Cẩm nang tìm việc theo giờ
-            </a>
+            </a> */}
+            <div
+              onClick={() => setChoiceShow("qlhs")}
+              className="flex justify-between pl-3 cursor-pointer items-center h-8 hover:bg-blue-950"
+            >
+              Quản lý hồ sơ
+            </div>
+            <Link href={"/viec-lam-theo-gio-moi-nhat"}
+              className="flex justify-between pl-3 cursor-pointer items-center h-8 hover:bg-blue-950"
+            >
+              Tìm việc làm
+            </Link>
             <div
               onClick={() => setChoiceShow("vldl")}
               className="flex justify-between px-3 cursor-pointer items-center h-8 hover:bg-blue-950"
@@ -96,7 +109,7 @@ function UserProfile() {
             >
               Việc làm đã ứng tuyển
             </div>
-            <div
+            {/* <div
               onClick={() => setShowQLTK(!showQLTK)}
               className="flex justify-between px-3 cursor-pointer items-center h-8 hover:bg-blue-950"
             >
@@ -107,8 +120,8 @@ function UserProfile() {
                 src="/images/down2.svg"
                 alt="down2"
               />
-            </div>
-            {showQLTK && (
+            </div> */}
+            {/* {showQLTK && (
               <div
                 onClick={() => setChoiceShow("doimatkhau")}
                 className="flex justify-between ml-7 px-3 cursor-pointer items-center h-8 hover:bg-blue-950"
@@ -116,11 +129,26 @@ function UserProfile() {
                 {" "}
                 Đổi mật khẩu
               </div>
-            )}
+            )} */}
+            <div
+              onClick={() => setChoiceShow("doimatkhau")}
+              className="flex justify-between px-3 cursor-pointer items-center h-8 hover:bg-blue-950"
+            >
+              {" "}
+              Đổi mật khẩu
+            </div>
           </div>
+          
         </div>
         <div className={styles.box_logout}>
-          <button className={styles.btn_warning + " flex items-center"}>
+          <button
+            className={styles.btn_warning + " flex items-center"}
+            onClick={() => {
+              Cookies.remove("accessToken");
+              Cookies.remove("UT");
+              router.push("/");
+            }}
+          >
             <Image
               height={15}
               width={15}
@@ -132,11 +160,11 @@ function UserProfile() {
         </div>
       </div>
       <div className={styles.profile_rg}>
-        <UvHeader />
+        {/* <UvHeader /> */}
         <Supporter />
         {choiceShow == "qlhs" && <UvProfile />}
-        {choiceShow == "vldut" && <UvVLDUT />}
         {choiceShow == "vldl" && <UvVLDL />}
+        {choiceShow == "vldut" && <UvVLDUT />}
         {choiceShow == "doimatkhau" && <ChangePassword />}
       </div>
     </div>

@@ -29,7 +29,7 @@
   width: 100%;
   display: flex;
   list-style-type: none;
-  justify-content: space-between;
+  justify-content: space-around;
   column-gap: 20px;
   align-items: center;
   margin: 5px;
@@ -38,7 +38,7 @@
 .navbars_list {
   display: none;
   width: 100%;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
 }
 .header .a {
@@ -51,6 +51,21 @@
 .a:hover {
   cursor: pointer;
   text-decoration: underline;
+}
+.box_avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-left: 20px;
+}
+.sub_avatar {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 10px;
+  margin-right: 10px;
 }
 .box_dn_dky {
   display: flex;

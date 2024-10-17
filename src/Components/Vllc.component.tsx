@@ -15,6 +15,7 @@ function Vllc() {
       console.log("errr", error);
     }
   }, []);
+  // console.log("duLieuVLLC>>", duLieuVLLC);
   return (
     <div className={styles.vllc + " mt-10 "}>
       <div className="w-full">

@@ -198,6 +198,8 @@ function SearchJob() {
     </div>
   );
   const handleRouterSearch = async () => {
+    console.log("searchOption::", searchOption);
+    console.log("profession::", profession);
     //Chỉ search theo tag
     if (
       searchOption.key &&

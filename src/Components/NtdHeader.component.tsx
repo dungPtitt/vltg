@@ -42,7 +42,7 @@ function NtdHeader() {
           Bảng giá
         </a>
         <div className="cursor-pointer"> Đăng tin</div>
-        <Link href={`/danh-sach-ung-vien.html`} className="cursor-pointer">
+        <Link href={`/danh-sach-ung-vien`} className="cursor-pointer">
           {" "}
           Tìm kiếm ứng viên
         </Link>

@@ -5,6 +5,7 @@ import {
   renderPayrollMethods,
   renderSchedules,
 } from "@/constants/EditProfile.constant";
+import { tinh_thanh, quan_huyen } from "@/utils/vi_tri";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
@@ -56,7 +57,16 @@ function JobCard({ job }: any) {
               src="/images/map.svg"
               alt="dot"
             />{" "}
-            <p className={styles.city_address}>{job?.ntd_address}</p>
+            <p className="font-bold mb-2.5">
+              <span className="font-normal">
+                {quan_huyen[job?.quan_huyen - 66]?.cit_name}
+              </span> {", "}
+              <span className="font-normal">
+                {tinh_thanh[job?.dia_diem-1]?.cit_name}
+              </span>
+              
+              </p>
+            {/* <p className={styles.city_address}>{job?.ntd_address}</p> */}
           </div>
           <div className="flex">
             <img className="mr-2.5" src="/images/dola.svg" alt="$" />{" "}

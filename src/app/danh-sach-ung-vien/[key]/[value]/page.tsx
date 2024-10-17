@@ -28,7 +28,6 @@ function DanhSachUngVien({ params }: any) {
   const [danhSachUngVien, setDanhSachUngVien] = useState<any>([
     {
       _id: 1101082,
-      idTimViec365: 710702,
       district: 74,
       city: 1,
       userName: "Lê Đình Mạnh",
@@ -49,7 +48,6 @@ function DanhSachUngVien({ params }: any) {
     },
     {
       _id: 208513,
-      idTimViec365: 1178384,
       district: 84,
       city: 1,
       userName: "Lâm",
@@ -70,7 +68,6 @@ function DanhSachUngVien({ params }: any) {
     },
     {
       _id: 10004183,
-      idTimViec365: 1111112669,
       district: 699,
       city: 49,
       userName: "asdfasdf",
@@ -91,7 +88,6 @@ function DanhSachUngVien({ params }: any) {
     },
     {
       _id: 10003670,
-      idTimViec365: 1111112197,
       district: 2,
       city: 1,
       userName: "dũng xtvl 2",
@@ -112,7 +108,6 @@ function DanhSachUngVien({ params }: any) {
     },
     {
       _id: 10003669,
-      idTimViec365: 1111112196,
       district: 2,
       city: 1,
       userName: "dũng xtvl 2",

@@ -49,7 +49,7 @@ function ForNtdPage() {
                       {" "}
                       <Link
                         className="hover:underline"
-                        href={`https://apps.apple.com/vn/app/việc-làm-theo-giờ-timviec365/id1615489458`}
+                        href={`http://localhost:3000/dang-ky`}
                       >
                         Tải App trên IOS
                       </Link>
@@ -61,7 +61,7 @@ function ForNtdPage() {
                       {" "}
                       <Link
                         className="hover:underline"
-                        href={`https://play.google.com/store/apps/details?id=vn.timviec365.vieclamtheogio_vn`}
+                        href={`http://localhost:3000/dang-ky`}
                       >
                         Tải App trên Android
                       </Link>
@@ -72,7 +72,7 @@ function ForNtdPage() {
                   <button className={styles.btn_warning}>
                     <Link
                       className="hover:underline"
-                      href={"https://timviec365.vn/dang-nhap.html"}
+                      href={`http://localhost:3000/dang-ky`}
                     >
                       Đăng tuyển miễn phí ngay
                     </Link>
@@ -97,7 +97,7 @@ function ForNtdPage() {
               </p>
               <div className="flex sm:justify-center md:justify-start w-full ">
                 <button className={styles.btn_primary}>
-                  <Link href={"https://timviec365.vn/dang-nhap.html"}>
+                  <Link href={`http://localhost:3000/dang-ky`}>
                     Đăng tuyển miễn phí ngay
                   </Link>
                 </button>
@@ -240,7 +240,7 @@ function ForNtdPage() {
               </div>
               <div>
                 <button className={styles.btn_warning}>
-                  <a target="blank" href="https://timviec365.vn/dang-ky.html">
+                  <a target="blank" href={`http://localhost:3000/dang-ky`}>
                     Đăng ký ngay
                   </a>{" "}
                 </button>

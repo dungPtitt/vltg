@@ -15,14 +15,16 @@ function NtdTongTin({ setShowOption }: any) {
     try {
       axiosSauDN
         .post("/manageAccountCompany/danhSachTinDaDang")
-        .then((res) => setDuLieuCongViec([...res.data.data.data]));
+        .then((res) => {
+          setDuLieuCongViec([...res.data.data.data])
+        });
    
     } catch (error) {
       console.log("error-------" + error);
     }
   }, [recall]);
   return (
-    <div>
+    <div className={styles.block_tdd_new}>
       {" "}
       {showEdit ? (
         <NtdNewJob idEdit={idEdit} setShowEdit={setShowEdit} />

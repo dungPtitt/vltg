@@ -162,6 +162,7 @@
   flex-direction: column;
 }
 .block_ttd_new,
+.block_tdd_new,
 .block_ut_new {
   margin: 20px;
   width: 90%;

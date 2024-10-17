@@ -62,6 +62,7 @@ function ChiTietCViec({ id }: any) {
         axiosSauDN
           .post("/viecLam/chiTietViecLamSauDN", { id_vieclam: id })
           .then((res) => {
+            console.log("res sau::", res);
             setChiTietViecLam({ ...res.data.data.data[0] }),
               setViecLamTuongTu([...res.data.data.data[0].viecLamTuongTu]);
             setViecLamKhac([...res.data.data.data[0].viecLamKhac]);
@@ -80,8 +81,10 @@ function ChiTietCViec({ id }: any) {
         axiosTruocDN
           .post("/viecLam/chiTietViecLamTruocDN", { id_vieclam: id })
           .then((res) => {
+            console.log("res trc::", res);
             setChiTietViecLam({ ...res.data.data.data[0] }),
               setViecLamTuongTu([...res.data.data.data[0].viecLamTuongTu]);
+            setViecLamKhac([...res.data.data.data[0].viecLamKhac]);
           });
       }
     } catch (error) {
@@ -223,14 +226,14 @@ function ChiTietCViec({ id }: any) {
                 Việc Làm Theo Giờ
               </Link>{" "}
               /{" "}
-              <Link
+              {/* <Link
                 href={`/viec-lam-${convertNameToSlug(
                   renderProfession[chiTietViecLam.nganh_nghe]
                 )}-${chiTietViecLam.nganh_nghe}.html`}
                 className="cursor-pointer"
               >
                 {renderProfession[chiTietViecLam.nganh_nghe]}{" "}
-              </Link>
+              </Link> */}
               / {chiTietViecLam.vi_tri}
             </div>
           </div>
@@ -255,7 +258,7 @@ function ChiTietCViec({ id }: any) {
                   alt="photo"
                 />
                 <div>
-                  <Link
+                  {/* <Link
                     href={`/${convertNameToSlug(
                       chiTietViecLam.ntd_userName
                     )}-co${chiTietViecLam.id_ntd}.html`}
@@ -268,7 +271,7 @@ function ChiTietCViec({ id }: any) {
                       alt="cty"
                     />{" "}
                     <span className="ml-2">{chiTietViecLam.ntd_userName}</span>
-                  </Link>
+                  </Link> */}
                   <p>
                     <span style={{ fontWeight: "bold" }}>Địa chỉ: </span>{" "}
                     {chiTietViecLam.ntd_address}
@@ -370,21 +373,20 @@ function ChiTietCViec({ id }: any) {
                       {chiTietViecLam.so_luong}
                     </span>
                   </p>
-                  <div className="flex mb-2">
-                    <div className="flex w-40 items-center">
-                      <Image
-                        height={50}
-                        width={50}
-                        style={{ width: 25 }}
-                        alt="/"
-                        src="/images/pin.svg"
-                      />
-                      Nơi làm việc:{" "}
-                    </div>
-                    <div className={styles.detail_inf + " flex items-center"}>
-                      {chiTietViecLam.ntd_address}
-                    </div>
-                  </div>
+                  <p className="flex">
+                    <Image
+                      height={50}
+                      width={50}
+                      style={{ width: 25 }}
+                      alt="/"
+                      className="mr-1"
+                      src="/images/pin.svg"
+                    />
+                    Nơi làm việc:{"  "}
+                    <span className={styles.detail_inf}>
+                      {chiTietViecLam.address}
+                    </span>
+                  </p>
                   <p className="flex">
                     <Image
                       height={50}
@@ -655,7 +657,7 @@ function ChiTietCViec({ id }: any) {
               </div>
             </div>
           </div>
-          <div className="w-full">
+          {/* <div className="w-full">
             <picture>
               <source
                 media="max-width:768px"
@@ -673,7 +675,7 @@ function ChiTietCViec({ id }: any) {
                 className="w-full"
               />
             </picture>
-          </div>
+          </div> */}
           <div className="w-full mx-5">
             <div className="text-lg font-bold">Việc làm tương tự</div>
             <div className="grid grid-cols-2">
@@ -807,7 +809,7 @@ function ChiTietCViec({ id }: any) {
                   className={`${
                     chiTietViecLam.CaLamViec.sort(
                       (a: any, b: any) => a.ca_id - b.ca_id
-                    )[indexCaLam].day.includes(`${indexCaLam + 1}${day.value}`)
+                    )[indexCaLam]?.day?.includes(`${indexCaLam + 1}${day.value}`)
                       ? styles.mark
                       : `pointer-events-none`
                   }  mb-2 cursor-pointer w-4/5 bg-slate-200 text-center relative`}

@@ -80,7 +80,7 @@ function UvKNLV() {
                             alt="delete"
                           />
                           <p className="text-sm font-bold text-cyan-700	leading-4 ml-5">
-                            {exp.cty_name}
+                            {exp?.cty_name}
                           </p>
                         </div>
                         <div className="flex">
@@ -96,7 +96,7 @@ function UvKNLV() {
                             />
                           </div>
                           <div
-                            onClick={() => xoaKiNang(exp.id_knlv, ind)}
+                            onClick={() => xoaKiNang(exp?.id_knlv, ind)}
                             className="ml-5 leading-4 font-bold text-cyan-700 w-7 h-7 rounded-full bg-red-400 flex item-center justify-center cursor-pointer"
                           >
                             <Image
@@ -115,19 +115,19 @@ function UvKNLV() {
                               {" "}
                               Thời gian từ:{" "}
                             </span>{" "}
-                            {convertDateDMY(exp.time_fist)}
+                            {convertDateDMY(exp?.time_fist)}
                             <span className="text-cyan-700 font-bold ml-6">
                               Đến:{" "}
                             </span>
-                            {convertDateDMY(exp.time_end)}
+                            {convertDateDMY(exp?.time_end)}
                           </p>
                           <p>
                             <span className="text-cyan-700 font-bold">
                               Chức danh:{" "}
                             </span>
-                            {exp.chuc_danh}
+                            {exp?.chuc_danh}
                           </p>
-                          <p>{exp.mota}</p>
+                          <p>{exp?.mota}</p>
                         </div>
                       )}
                     </div>

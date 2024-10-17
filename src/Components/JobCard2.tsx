@@ -61,7 +61,7 @@ function JobCard2({ job }: any) {
       <div className={styles.about_job2_right}>
         <div className={styles.job2_right_img_box}>
           <img className="mr-2.5" src="/images/map.svg" alt="dot" />{" "}
-          <span className={styles.city_address2}>{job?.ntd_address}</span>
+          <span className={styles.city_address2}>{job?.address}</span>
         </div>
 
         <div className="flex">

@@ -9,8 +9,8 @@ export type TypeOptionSalary = {
 
 export type TypeAdminWorkShifts = {
   day: number[];
-  ca_fist: string;
-  ca_last: string;
+  ca_start_time: string;
+  ca_end_time: string;
 };
 export type TypeAdminTag = {
   jc_parent: number;

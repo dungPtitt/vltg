@@ -9,50 +9,64 @@ import { ToastContainer, toast } from "react-toastify";
 import Cookies from "js-cookie";
 import Link from "next/link";
 
-function LoginEmployerPage() {
+function RegisterCandidatePage() {
   const rouer = useRouter();
-  const [dataLogin, setDataLogin] = useState({
+  const [dataRegister, setDataRegister] = useState({
+    userName: "",
     email: "",
     password: "",
-    type: 1,
+    repassword: "",
+    type: 0,
   });
-  const handleLogin = () => {
-    if (!dataLogin.email) {
+  const handleRegister = () => {
+    if (!dataRegister.email) {
       toast.warning("Nhập Tài Khoản!!!", {
         position: toast.POSITION.TOP_RIGHT,
       });
-    } else if (!dataLogin.password) {
+    } else if (!dataRegister.password) {
       toast.warning("Nhập Mật Khẩu!!!", {
         position: toast.POSITION.TOP_RIGHT,
       });
+    }
+    else if (!dataRegister.userName) {
+      toast.warning("Nhập Họ và tên!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    else if (!dataRegister.repassword) {
+      toast.warning("Nhập lại Mật Khẩu!!!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }
+    else if (dataRegister.repassword !== dataRegister.password) {
+      toast.warning("Mật khẩu nhập lại chưa chính xác", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } else {
+      console.log("dataRegister", dataRegister);
       axiosTruocDN
-        .post("/manageAccountCompany/login", dataLogin)
+        .post("/manageAccountCompany/register", dataRegister)
         .then((res) => {
-          let user_type = res?.data?.data?.data?.type;
-          Cookies.set("accessToken", res?.data?.data?.data?.access_token);
-          Cookies.set("UT", user_type);
-          localStorage.setItem(
-            "accessToken",
-            JSON.stringify(res?.data?.data?.data?.access_token)
-          );
-          console.log("res::", res);
-          console.log("user_type", user_type);
-          if (res?.data?.data?.data?.type == 1) {
-            rouer.push("/ntd");
-          } else {
-            rouer.push("/ung-vien");
-          }
+          // Cookies.set("accessToken", res?.data?.data?.data?.access_token);
+          // Cookies.set("UT", "0");
+          // localStorage.setItem(
+          //   "accessToken",
+          //   JSON.stringify(res?.data?.data?.data?.access_token)
+          // );
+          toast.success("Đăng ký thành công", {
+            position: toast.POSITION.TOP_RIGHT,
+            onClose: () => rouer.push('/dang-nhap') // Replace '/login' with your login route
+          });
         })
         .catch((err) =>
           toast.error("Vui lòng thử lại sau !", {
-            position: toast.POSITION.TOP_LEFT,
+            position: toast.POSITION.TOP_RIGHT,
           })
         );
     }
   };
-  const handleDataLogin = (e: any) => {
-    setDataLogin({ ...dataLogin, [e.target.name]: e.target.value });
+  const handleDataRegister = (e: any) => {
+    setDataRegister({ ...dataRegister, [e.target.name]: e.target.value });
   };
   return (
     <div className={styles.login_container}>
@@ -64,14 +78,14 @@ function LoginEmployerPage() {
           Tìm việc làm theo giờ hiệu quả về di động của bạn và sẵn sàng nhận
           việc ngay hôm nay!
         </div>
-        <div className={styles.txt_mb}>Đăng nhập tài khoản ứng viên</div>
+        <div className={styles.txt_mb}>Đăng ký tài khoản ứng viên</div>
         {/* <div className={styles.box_btn_download}>
           <button className={styles.btn_download}>
             {" "}
             <Image
               height={100}
               width={100}
-              src="https://vieclamtheogio.timviec365.vn/images/playstore.png"
+              src="https://vieclamtheogio.vn/images/playstore.png"
               alt=""
             />
             Download for Android
@@ -81,7 +95,7 @@ function LoginEmployerPage() {
             <Image
               height={100}
               width={100}
-              src="https://vieclamtheogio.timviec365.vn/images/appstore.png"
+              src="https://vieclamtheogio.vn/images/appstore.png"
               alt=""
             />
             Download for IOS
@@ -94,7 +108,7 @@ function LoginEmployerPage() {
           <Image alt="/" height={100} width={100} src="/images/logo.png" />
         </div>
         <div className={styles.box_login}>
-          <p className={styles.title}>VIỆC LÀM THEO GIỜ</p>
+          <p className={styles.title}>ĐĂNG KÝ TÀI KHOẢN ỨNG VIÊN</p>
           <div className={styles.login_inp}>
             <Image
               alt="/"
@@ -103,35 +117,57 @@ function LoginEmployerPage() {
               src="/images/ico-user.svg"
             />
             <input
+              type="text"
+              placeholder="Họ và tên"
+              name="userName"
+              onChange={(e) => handleDataRegister(e)}
+            />
+          </div>
+          <div className={styles.login_inp}>
+            <Image
+              alt="/"
+              height={100}
+              width={100}
+              src="/images/email.svg"
+            />
+            <input
               type="email"
               placeholder="Nhập địa chỉ email"
               name="email"
-              onChange={(e) => handleDataLogin(e)}
+              onChange={(e) => handleDataRegister(e)}
             />
           </div>
           <div className={styles.login_inp}>
             <Image alt="/" height={100} width={100} src="/images/lock.svg" />
             <input
-              onChange={(e) => handleDataLogin(e)}
+              onChange={(e) => handleDataRegister(e)}
               type="password"
               placeholder="Nhập mật khẩu"
               name="password"
             />
           </div>
+          <div className={styles.login_inp}>
+            <Image alt="/" height={100} width={100} src="/images/lock.svg" />
+            <input
+              onChange={(e) => handleDataRegister(e)}
+              type="password"
+              placeholder="Nhập lại mật khẩu"
+              name="repassword"
+            />
+          </div>
         </div>
-        <button onClick={handleLogin} className={styles.btn_login}>
-          Đăng nhập
+        <button onClick={handleRegister} className={styles.btn_login}>
+          Đăng ký
         </button>
         <div className="mt-4 ">
           <p className="text-blue-500 text-base">Quên mật khẩu ?</p>
           <p>
-            Bạn chưa có tài khoản?{" "}
-            {/* <span className="text-blue-600">ĐĂNG KÝ NGAY</span> */}
+            Bạn đã có tài khoản?{" "}
             <Link
-              href="/dang-ky"
+              href="/dang-nhap"
               className="text-blue-600"
             >
-              ĐĂNG KÝ NGAY
+              ĐĂNG NHẬP NGAY
             </Link>
           </p>
         </div>
@@ -141,4 +177,4 @@ function LoginEmployerPage() {
   );
 }
 
-export default LoginEmployerPage;
+export default RegisterCandidatePage;

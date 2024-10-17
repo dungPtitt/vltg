@@ -14,8 +14,8 @@ function UvKNBT({ kn }: any) {
       axiosSauDN
         .post("/manageAccountCandidate/getCongViecMongMuon")
         .then((res) => {
-          setKyNang(res.data.data.data.ky_nang);
-          setKyNangMoi(res.data.data.data.ky_nang);
+          setKyNang(res?.data?.data?.data?.ky_nang);
+          setKyNangMoi(res?.data?.data?.data?.ky_nang);
         });
     } catch (error) {
       console.log("UvKNBT",error);

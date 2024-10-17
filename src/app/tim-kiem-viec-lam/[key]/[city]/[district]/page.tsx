@@ -46,6 +46,7 @@ function TimKiemViecLam({ params }: any) {
       console.log("errr", error);
     }
   }, [key, city, district, page]);
+  console.log("checkkk");
   return (
     <>
       <HeadSearchByProfessionAndAdress
