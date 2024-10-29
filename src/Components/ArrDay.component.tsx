@@ -4,6 +4,7 @@ import { axiosSauDN } from "@/utils/axios.config";
 import { notifyError, notifySuccess } from "@/utils/generalFunction";
 import { useState, useEffect } from "react";
 import stylesUV from "@/Css/uvProfile.module.css";
+import { ToastContainer } from "react-toastify";
 
 function ArrDay({ arrDay, showEdit, setShowEdit, setArrDay }: any) {
   const [buoiLam, setBuoiLam] = useState<any>(arrDay);
@@ -71,6 +72,7 @@ function ArrDay({ arrDay, showEdit, setShowEdit, setArrDay }: any) {
           </button>
         </div>
       )}
+      <ToastContainer autoClose={1500} />
     </div>
   );
 }

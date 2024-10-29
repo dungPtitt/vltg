@@ -46,6 +46,7 @@ export const convertAllTimeToHM = (times: string) => {
 };
 export const convertDateYMD = (value: any) => {
   let convert = "";
+  console.log("value::origin", value);
   const time = new Date(value);
   convert = `${time.getFullYear()}-${
     time.getMonth() + 1 < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1
@@ -65,6 +66,8 @@ export const convertDateYMDcheo = (value: any) => {
 export const convertDateDMY = (value: any) => {
   let convert = "";
   const time = new Date(value);
+  console.log("value::", value);
+  console.log("convertDateDMY", time);
   convert = `${time.getDate() < 10 ? `0${time.getDate()}` : time.getDate()}-${
     time.getMonth() + 1 < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1
   }-${time.getFullYear()}`;
@@ -88,6 +91,7 @@ export const convertTimestampToDatePicker = (times: any) => {
 };
 
 export const notifyWarning = (notification: string) => {
+  console.log("notifyWarning", notification);
   return toast.warning(notification, {
     position: toast.POSITION.TOP_RIGHT,
   });

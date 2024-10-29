@@ -4,6 +4,7 @@ import {
   renderCvStatus,
   renderPayrollMethods,
   renderSchedules,
+  renderProfession
 } from "@/constants/EditProfile.constant";
 import { tinh_thanh, quan_huyen } from "@/utils/vi_tri";
 import Image from "next/image";
@@ -21,6 +22,8 @@ function JobCard({ job }: any) {
   const id = useMemo(() => {
     return job ? job.id_vieclam : 0;
   }, []);
+
+  console.log("jobb:::", job);
   return (
     <div className="flex m-1">
       <div className={styles.about_job}>
@@ -30,17 +33,18 @@ function JobCard({ job }: any) {
           <Image
             height={80}
             width={80}
-            className="lazyload mr-3"
-            src="/images/no-avartar-user.png"
-            data-src={
-              job?.ntd_avatar != ""
-                ? job?.ntd_avatar
-                : "/images/no-avartar-user.png"
-            }
-            onError={(e: any) => {
-              e.target.onerror = null;
-              e.target.src = "/images/no-avartar-user.png";
-            }}
+            className={styles.avatar_ntd}
+            // src="/images/no-avartar-user.png"
+            // data-src={
+            //   job?.ntd_avatar != ""
+            //     ? job?.ntd_avatar
+            //     : "/images/no-avartar-user.png"
+            // }
+            src={job?.linkAvatar ? job?.linkAvatar : "/images/no-avartar-user.png"}
+            // onError={(e: any) => {
+            //   e.target.onerror = null;
+            //   e.target.src = "/images/no-avartar-user.png";
+            // }}
             alt="photo"
           />
         </div>
@@ -77,8 +81,14 @@ function JobCard({ job }: any) {
           </div>
           <div className="flex ">
             <img className="mr-2.5" src="/images/balo.svg" alt="balo" />
-            <span className={styles.working_time}>
+            <span className={styles.working_time}> Hình thức: {" "}
               {renderSchedules[job?.hinh_thuc]}
+            </span>
+          </div>
+          <div className="flex ">
+            <img className="mr-2.5" src="/images/balo.svg" alt="balo" />
+            <span className={styles.working_time}>Lĩnh vực: {" "}
+              {renderProfession[job?.nganh_nghe]}
             </span>
           </div>
         </div>

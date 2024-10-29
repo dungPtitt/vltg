@@ -22,8 +22,8 @@ function EditExp({
   setRecall,
 }: any) {
   const [duLieuKinhNghiem, setDuLieuKinhNghiem] = useState<any>({
-    chucdanh: "",
-    cty: "",
+    chuc_danh: "",
+    cty_name: "",
     id_knlv: -1,
     id_uv_knlv: -1,
     mota: "",
@@ -36,8 +36,8 @@ function EditExp({
     if (kinhNghiem?.id_knlv) {
       setDuLieuKinhNghiem({
         ...kinhNghiem,
-        chucdanh: kinhNghiem.chuc_danh,
-        cty: kinhNghiem.cty_name,
+        chuc_danh: kinhNghiem.chuc_danh,
+        cty_name: kinhNghiem.cty_name,
       });
     }
   }, []);
@@ -45,8 +45,8 @@ function EditExp({
   const taoMoiKinhNghiem = () => {
     console.log("duLieuKinhNghiem>>", duLieuKinhNghiem);
     if (
-      !duLieuKinhNghiem.chucdanh ||
-      !duLieuKinhNghiem.cty ||
+      !duLieuKinhNghiem.chuc_danh ||
+      !duLieuKinhNghiem.cty_name ||
       !duLieuKinhNghiem.mota ||
       !duLieuKinhNghiem.time_fist ||
       !duLieuKinhNghiem.time_end
@@ -67,7 +67,8 @@ function EditExp({
       .catch((err) => {
         console.log("EditEXP", err);
         if (err.response.status == 410) {
-          notifyWarning(err.response.data.error.message);
+          notifyWarning("Ngày bắt đầu phải nhỏ hơn ngày kết thúc");
+          // notifyWarning(err.response.data.error.message);
           return;
         }
         notifyError("Thêm mới không thành công. Vui lòng thử lại!");
@@ -105,13 +106,13 @@ function EditExp({
           <span className="text-red-500">*</span>Chức danh/ Vị trí
         </label>
         <Input
-          value={duLieuKinhNghiem.chucdanh}
+          value={duLieuKinhNghiem.chuc_danh}
           placeholder="Nhập chức danh"
           type="text"
           onChange={(e) =>
             setDuLieuKinhNghiem({
               ...duLieuKinhNghiem,
-              chucdanh: e.target.value,
+              chuc_danh: e.target.value,
             })
           }
         />
@@ -122,10 +123,11 @@ function EditExp({
             <span className="text-red-500">*</span>Từ
           </label>
           <DatePicker
-              name="time_fist"
-              onChange={(e) => convertDate(e, 'time_fist')}
-              className="w-full"
-              // defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
+            name="time_fist"
+            onChange={(e) => convertDate(e, 'time_fist')}
+            className="w-full"
+            value={convertTimestampToDatePicker(duLieuKinhNghiem.time_fist)}
+            // defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
             format={["DD/MM/YYYY"]}
             disabledDate={(current) => 
               !current || // Vô hiệu hóa các ngày không hợp lệ
@@ -138,9 +140,10 @@ function EditExp({
             <span className="text-red-500">*</span>Đến
           </label>
           <DatePicker
-              name="time_end"
-              onChange={(e) => convertDate(e, 'time_end')}
-              className="w-full"
+            name="time_end"
+            onChange={(e) => convertDate(e, 'time_end')}
+            className="w-full"
+            value={convertTimestampToDatePicker(duLieuKinhNghiem.time_end)}
             defaultValue={dayjs()}
             format={["DD/MM/YYYY"]}
             disabledDate={(current) => current && current > dayjs().endOf('day')}
@@ -152,13 +155,13 @@ function EditExp({
           <span className="text-red-500">*</span>Công ty
         </label>
         <Input
-          value={duLieuKinhNghiem.cty}
+          value={duLieuKinhNghiem.cty_name}
           placeholder="Nhập tên công ty"
           type="text"
           onChange={(e) =>
             setDuLieuKinhNghiem({
               ...duLieuKinhNghiem,
-              cty: e.target.value,
+              cty_name: e.target.value,
             })
           }
         />

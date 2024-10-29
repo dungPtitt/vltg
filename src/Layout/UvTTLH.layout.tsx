@@ -10,6 +10,7 @@ import {
   convertDateYMD,
   convertTimeStamp,
   convertTimestampToDatePicker,
+  ngayHomNay,
   notifySuccess,
   notifyWarning,
 } from "@/utils/generalFunction";
@@ -87,6 +88,7 @@ function UvTTLH() {
   if (!duLieuNguoiDung) {
     return <Loading />;
   }
+  console.log("duLieuNguoiDung", duLieuNguoiDung);
   return (
     <div className={styles.uv_ttlh}>
       {showEdit ? (
@@ -116,6 +118,7 @@ function UvTTLH() {
                   <span className="text-red-500">*</span> Địa chỉ Email
                 </label>
                 <Input
+                  disabled
                   placeholder="Nhập Email"
                   type="email"
                   name="email"
@@ -168,10 +171,12 @@ function UvTTLH() {
               </label>
               <DatePicker
                 className="w-full"
-                defaultValue={dayjs(
+                // defaultValue={dayjs(new Date(), "DD/MM/YYYY")}
+                value={dayjs(
                   convertTimestampToDatePicker(duLieuMoi.birthday),
                   "DD/MM/YYYY"
                 )}
+                defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
                 format={"DD/MM/YYYY"}
                 onChange={(e) =>
                   setDuLieuMoi({ ...duLieuMoi, birthday: convertDateYMD(e) })
@@ -245,9 +250,9 @@ function UvTTLH() {
                 style={{ width: "100%" }}
                 onChange={(e) => setDuLieuMoi({ ...duLieuMoi, gender: e })}
                 options={[
-                  { value: 0, label: "Nam" },
-                  { value: 1, label: "Nữ" },
-                  { value: 2, label: "Khác" },
+                  { value: 1, label: "Nam" },
+                  { value: 2, label: "Nữ" },
+                  { value: 3, label: "Khác" },
                 ]}
               />
             </div>

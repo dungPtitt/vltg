@@ -8,9 +8,11 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { Input } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 function LoginEmployerPage() {
-  const rouer = useRouter();
+  const router = useRouter();
   const [dataLogin, setDataLogin] = useState({
     email: "",
     password: "",
@@ -39,15 +41,18 @@ function LoginEmployerPage() {
           console.log("res::", res);
           console.log("user_type", user_type);
           if (res?.data?.data?.data?.type == 1) {
-            rouer.push("/ntd");
+            router.push("/ntd");
           } else {
-            rouer.push("/ung-vien");
+            router.push("/ung-vien");
           }
         })
         .catch((err) =>
-          toast.error("Vui lòng thử lại sau !", {
-            position: toast.POSITION.TOP_LEFT,
+        {
+          console.log("err::", err)
+          toast.error("Thông tin tài khoản hoặc mật khẩu không chính xác!", {
+            position: toast.POSITION.TOP_RIGHT,
           })
+        }
         );
     }
   };
@@ -95,34 +100,41 @@ function LoginEmployerPage() {
         </div>
         <div className={styles.box_login}>
           <p className={styles.title}>VIỆC LÀM THEO GIỜ</p>
-          <div className={styles.login_inp}>
-            <Image
-              alt="/"
-              height={100}
-              width={100}
-              src="/images/ico-user.svg"
-            />
-            <input
-              type="email"
-              placeholder="Nhập địa chỉ email"
-              name="email"
-              onChange={(e) => handleDataLogin(e)}
+          
+          <div className="mt-5" style={{width: "600px", marginBottom: "10px"}}>
+            <label className="flex justify-between" style={{marginBottom: "6px"}}>
+              <p className="text-sm font-semibold">
+                <span className="text-red-500">*</span>Email
+              </p>{" "}
+            </label>
+            <Input
+              value={dataLogin.email}
+              // className={styles.input_password}
+              onChange={(e) => setDataLogin({ ...dataLogin, email: e.target.value })}
+              placeholder="Email"
             />
           </div>
-          <div className={styles.login_inp}>
-            <Image alt="/" height={100} width={100} src="/images/lock.svg" />
-            <input
-              onChange={(e) => handleDataLogin(e)}
-              type="password"
-              placeholder="Nhập mật khẩu"
-              name="password"
+          <div className="mt-5" style={{width: "600px", marginBottom: "20px"}}>
+            <label className=" flex justify-between" style={{marginBottom: "6px"}}>
+              <p className="text-sm font-semibold">
+                <span className="text-red-500">*</span>Mật khẩu
+              </p>{" "}
+            </label>
+            <Input.Password
+              value={dataLogin.password}
+              className={styles.input_password}
+              onChange={(e) => setDataLogin({ ...dataLogin, password: e.target.value })}
+              placeholder="Mật khẩu"
+              iconRender={(visible) =>
+                visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+              }
             />
           </div>
         </div>
-        <button onClick={handleLogin} className={styles.btn_login}>
+        <button onClick={handleLogin} className={styles.btn_login} style={{ width: "600px", marginBottom: "20px" }}>
           Đăng nhập
         </button>
-        <div className="mt-4 ">
+        <div className="mt-4">
           <p className="text-blue-500 text-base">Quên mật khẩu ?</p>
           <p>
             Bạn chưa có tài khoản?{" "}

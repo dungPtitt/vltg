@@ -91,6 +91,7 @@ function ChiTietCViec({ id }: any) {
       console.log("Lỗi useEffect chi tiet viec lam", error);
     }
   }, []);
+  console.log("chitietvieclam", chiTietViecLam);
 
   const nhanViecLam = () => {
     try {
@@ -204,7 +205,7 @@ function ChiTietCViec({ id }: any) {
       })
       .catch((err) => notifyWarning("Thông tin đăng nhập không chính xác!"));
   };
-  console.log("chitietcalam", chiTietCaLam);
+  // console.log("chitietcalam", chiTietCaLam);
   if (!chiTietViecLam.id_vieclam) {
     return <Loading />;
   }
@@ -235,22 +236,31 @@ function ChiTietCViec({ id }: any) {
                 {renderProfession[chiTietViecLam.nganh_nghe]}{" "}
               </Link> */}
               / {chiTietViecLam.vi_tri}
+              
             </div>
           </div>
           <div className={styles.box_job}>
             <div className={styles.title}>{chiTietViecLam.vi_tri}</div>
-            <div className={styles.frame_box}>
+          </div>
+        </div>
+        <div className={styles.jd_job}>
+          <div className={styles.jd_content}>
+            <div className={styles.jd_detail_rg}>
+              
+              <div className={styles.frame_box}>
               <div className={styles.frame_box_lf + " items-center"}>
                 <Image
                   height={150}
                   width={150}
-                  className="lazyload"
-                  src="/images/no-avartar-user.png"
-                  data-src={
-                    chiTietViecLam.linkAvatar
-                      ? chiTietViecLam.linkAvatar
-                      : "/images/no-avartar-user.png"
-                  }
+                  className={styles.avatar_ntd}
+                  // src="/images/no-avartar-user.png"
+                  // src={userData?.linkAvatar ? userData?.linkAvatar : "/images/no-avartar-user.png"}
+                  src={chiTietViecLam?.linkAvatar ? chiTietViecLam?.linkAvatar : "/images/no-avartar-user.png"}
+                  // data-src={
+                  //   chiTietViecLam.linkAvatar
+                  //     ? chiTietViecLam.linkAvatar
+                  //     : "/images/no-avartar-user.png"
+                  // }
                   onError={(e: any) => {
                     e.target.onerror = null;
                     e.target.src = "/images/img_new/avt_daidien1.png";
@@ -273,30 +283,17 @@ function ChiTietCViec({ id }: any) {
                     <span className="ml-2">{chiTietViecLam.ntd_userName}</span>
                   </Link> */}
                   <p>
+                    <span style={{ fontWeight: "bold" }}>Tên công ty: </span>{" "}
+                    {chiTietViecLam.ntd_userName}
+                    </p>
+                  <p>
+                    <span style={{ fontWeight: "bold" }}>Quy mô: </span>{" "}
+                    {chiTietViecLam.ntd_quymo}
+                    </p>
+                    
+                    <p>
                     <span style={{ fontWeight: "bold" }}>Địa chỉ: </span>{" "}
                     {chiTietViecLam.ntd_address}
-                  </p>
-                  <p>
-                    Hạn nộp hồ sơ:{" "}
-                    {convertDateDMY(chiTietViecLam.time_td * 1000)}{" "}
-                    {Date.now() > chiTietViecLam.time_td * 1000 ? (
-                      <span className="text-red-400">(Hết hạn)</span>
-                    ) : (
-                      <span>
-                        Còn{" "}
-                        {differenceInDays(
-                          new Date(chiTietViecLam.time_td * 1000),
-                          new Date()
-                        )}{" "}
-                        ngày{" "}
-                      </span>
-                    )}
-                  </p>
-                  <p>
-                    Lượt xem:{" "}
-                    <span style={{ fontWeight: "bold" }}>
-                      {chiTietViecLam.luot_xem}
-                    </span>
                   </p>
                 </div>
               </div>
@@ -337,11 +334,6 @@ function ChiTietCViec({ id }: any) {
                 </button>
               </div>
             </div>
-          </div>
-        </div>
-        <div className={styles.jd_job}>
-          <div className={styles.jd_content}>
-            <div className={styles.jd_detail_rg}>
               <div className={styles.jd_title}>Thông tin tuyển dụng</div>
               <div className={styles.jd_detail_rg_box}>
                 <div className={styles.jd_detail_rg_list}>
@@ -519,6 +511,28 @@ function ChiTietCViec({ id }: any) {
               </div>
             </div>
             <div className={styles.jd_detail_lf}>
+              <p>
+                    Hạn nộp hồ sơ:{" "}
+                    {convertDateDMY(chiTietViecLam.time_td * 1000)}{" "}
+                    {Date.now() > chiTietViecLam.time_td * 1000 ? (
+                      <span className="text-red-400">(Hết hạn)</span>
+                    ) : (
+                      <span>
+                        Còn{" "}
+                        {differenceInDays(
+                          new Date(chiTietViecLam.time_td * 1000),
+                          new Date()
+                        )}{" "}
+                        ngày{" "}
+                      </span>
+                    )}
+                  </p>
+                  <p>
+                    Lượt xem:{" "}
+                    <span style={{ fontWeight: "bold" }}>
+                      {chiTietViecLam.luot_xem}
+                    </span>
+                  </p>
               <p className={styles.detail_title}>Lịch làm việc</p>
               <p className={styles.detail_txt}>
                 Công việc này có {chiTietViecLam.CaLamViec.length} ca làm, bạn
@@ -529,7 +543,7 @@ function ChiTietCViec({ id }: any) {
                   (a: any, b: any) => a.ca_id - b.ca_id
                 ).map((ca: any, index: number) => (
                   <div key={index}>
-                    <div>Ca {index + 1} :</div>
+                    <div style={{ fontWeight: "bold", marginTop: "10px" }}>Ca {index + 1} :</div>
                     <div className="my-3">
                       <span className="mr-3"> Giờ làm:</span>
                       {convertTimeHM(ca.ca_start_time)} -{" "}
@@ -737,18 +751,16 @@ function ChiTietCViec({ id }: any) {
                   Đăng nhập
                 </button>
                 <div className="mt-4 ">
-                  <a
+                  {/* <a
                     onClick={() => setOpenModalLogin(false)}
-                    href="https://timviec365.vn/quen-mat-khau-ung-vien.html"
-                    target="blank"
+                    href="/dang-nhap"
                     className="text-blue-500 text-base"
                   >
                     Quên mật khẩu ?
-                  </a>
+                  </a> */}
                   <a
                     onClick={() => setOpenModalLogin(false)}
-                    href="https://timviec365.vn/dang-ky.html"
-                    target="blank"
+                    href="/dang-ky"
                     className="text-blue-600"
                   >
                     ĐĂNG KÝ NGAY

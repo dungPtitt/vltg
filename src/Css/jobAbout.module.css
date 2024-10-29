@@ -14,6 +14,14 @@
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+.avatar_ntd {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  /* border-radius: 50%; */
+  object-fit: cover;
+}
+
 .about_job2_left {
   display: flex;
   width: 50%;

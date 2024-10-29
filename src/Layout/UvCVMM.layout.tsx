@@ -116,6 +116,7 @@ function UvCVMM() {
               <Input
                 placeholder="Nhập công việc mong muốn"
                 type="text"
+                value={duLieuMoi.cong_viec}
                 onChange={(e) =>
                   setDuLieuMoi({
                     ...duLieuMoi,
@@ -131,7 +132,8 @@ function UvCVMM() {
               </label>
               <Select
                 allowClear
-                defaultValue={1}
+                // defaultValue={1}
+                value={duLieuMoi.cap_bac}
                 style={{ width: "100%" }}
                 placeholder="Chọn cấp bậc mong muốn"
                 options={position}
@@ -145,7 +147,8 @@ function UvCVMM() {
               </label>
               <Select
                 allowClear
-                defaultValue={1}
+                // defaultValue={1}
+                value={duLieuMoi.hinh_thuc}
                 style={{ width: "100%" }}
                 placeholder="Chọn hình thức"
                 options={schedules}
@@ -179,7 +182,8 @@ function UvCVMM() {
               </label>
               <Select
                 allowClear
-                defaultValue={1}
+                // defaultValue={1}
+                value={duLieuMoi.luong}
                 style={{ width: "100%" }}
                 placeholder="Chọn mức lương"
                 options={salaryLevel}

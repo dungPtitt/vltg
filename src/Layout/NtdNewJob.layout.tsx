@@ -25,7 +25,7 @@ import { axiosSauDN, axiosTruocDN } from "@/utils/axios.config";
 import { TypeAdminWorkShifts } from "@/Styles/AdminType";
 import { ToastContainer } from "react-toastify";
 import { error } from "console";
-function NtdNewJob({ idEdit, setShowEdit }: any) {
+function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
   const [codeCity, setCodeCity] = useState(1);
   const [salaryLevel, setSalaryLevel] = useState(1);
   const [lichTuyenDung, setLichTuyenDung] = useState<TypeAdminWorkShifts[]>([
@@ -74,6 +74,12 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
     convert = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`;
     setTinMoi({ ...tinMoi, [name]: convert });
   };
+  const convertTimeStamp = (value: any) => {
+    let convert = "";
+    const time = new Date(value);
+    convert = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`;
+    return convert;
+  }
   const handleDeleteCa = (index: number) => {
     lichTuyenDung.splice(index, 1);
     setLichTuyenDung([...lichTuyenDung]);
@@ -99,6 +105,7 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
     setSalaryLevel(1);
   };
   const handleDangTin = () => {
+    
     try {
       if (
         !tinMoi.vi_tri ||
@@ -143,11 +150,14 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
               ...tinMoi,
               list_ca: [...lichTuyenDung],
             })
-            .then((res) => notifySuccess("Đăng tin thành công!"))
+            .then((res) => {
+              notifySuccess("Đăng tin thành công!");
+              setShowOption("tdd")
+            })
 
             .catch((error) =>
               {
-                console.log("error>>>",)
+              console.log("error>>>", error);
                 if (error.response.status == 410) {
                   notifyError("Có thể tiêu đề tin đã bị trùng. Vui lòng thử lại hoặc báo cho Admin!");
                 } else if (error.response.status == 400) {
@@ -495,6 +505,7 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
             <label className="text-sm font-semibold">Từ::</label>
             <DatePicker
               // value={convertTimeStamp(tinMoi.fist_time)}
+              // value={tinMoi.fist_time ? dayjs(tinMoi.fist_time, "YYYY-MM-DD") : null}
               name="fist_time"
               onChange={(e) => convertDate(e, "fist_time")}
               className="w-48 ml-3"
@@ -526,25 +537,35 @@ function NtdNewJob({ idEdit, setShowEdit }: any) {
               <div className="mt-6 flex items-center">
                 <label className="text-sm font-semibold">Từ:</label>
                 <TimePicker
-                  onChange={(e: any) => {
-                    lichTuyenDung[indexSL].ca_start_time = new Date(e).toString();
+                  onChange={(time, timeString) => {
+                    lichTuyenDung[indexSL].ca_start_time = timeString;
+                    setLichTuyenDung([...lichTuyenDung]);
+                  }}
+                  onSelect={(time) => {
+                    const formattedTime = time ? time.format('HH:mm') : '';
+                    lichTuyenDung[indexSL].ca_start_time = formattedTime;
                     setLichTuyenDung([...lichTuyenDung]);
                   }}
                   className="w-48 ml-3"
-                  value={dayjs(`${lichTuyenDung[indexSL].ca_start_time}:00`, "HH:mm:ss")}
-                  defaultValue={dayjs("00:00:00", "HH:mm:ss")}
+                  value={lichTuyenDung[indexSL].ca_start_time ? dayjs(lichTuyenDung[indexSL].ca_start_time, "HH:mm") : null}
+                  defaultValue={dayjs("00:00", "HH:mm")}
                 />
               </div>
               <div className="mt-6 flex">
                 <label className="text-sm font-semibold">Đến:</label>
                 <TimePicker
-                  onChange={(e: any) => {
-                    lichTuyenDung[indexSL].ca_end_time = new Date(e).toString();
+                  onChange={(time, timeString) => {
+                    lichTuyenDung[indexSL].ca_end_time = timeString;
+                    setLichTuyenDung([...lichTuyenDung]);
+                  }}
+                  onSelect={(time) => {
+                    const formattedTime = time ? time.format('HH:mm') : '';
+                    lichTuyenDung[indexSL].ca_end_time = formattedTime;
                     setLichTuyenDung([...lichTuyenDung]);
                   }}
                   className="w-48 ml-3"
-                  value={dayjs(`${lichTuyenDung[indexSL].ca_end_time}:00`, "HH:mm:ss")}
-                  defaultValue={dayjs("00:00:00", "HH:mm:ss")}
+                  value={lichTuyenDung[indexSL].ca_end_time ? dayjs(lichTuyenDung[indexSL].ca_end_time, "HH:mm") : null}
+                  defaultValue={dayjs("00:00:00", "HH:mm")}
                 />
                 {indexSL !== 0 && (
                   <div

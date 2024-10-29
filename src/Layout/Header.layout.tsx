@@ -234,7 +234,6 @@ export function Header() {
                   /
                   <Link
                     href="/dang-ky"
-                    target="blank"
                     className={styles.a + " ml-2"}
                   >
                     Đăng ký

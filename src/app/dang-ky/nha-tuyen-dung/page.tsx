@@ -52,11 +52,17 @@ function RegisterEmployerPage() {
             onClose: () => rouer.push('/dang-nhap') // Replace '/login' with your login route
           });
         })
-        .catch((err) =>
-          toast.error("Vui lòng thử lại sau !", {
-            position: toast.POSITION.TOP_RIGHT,
-          })
-        );
+        .catch((err) =>{
+          // console.log("err::", err);
+          let errorCode = err?.response?.data?.code;
+          if (errorCode === 400) {
+            toast.error("Vui lòng nhập đủ thông tin các trường!", { position: toast.POSITION.TOP_RIGHT, });
+          } else if (errorCode === 401) {
+            toast.error("Email đã được sử dụng!", { position: toast.POSITION.TOP_RIGHT, });
+          } else {
+            toast.error("Đã có lỗi xảy ra. Vui lòng thử lại sau !", { position: toast.POSITION.TOP_RIGHT, });
+          }
+        });
     }
   };
   const handleDataRegister = (e: any) => {

@@ -169,7 +169,7 @@ function NtdProfilePage() {
           <Supporter />
           <div className={styles.show_detail}>
             {showOption === "qlc" && <NtdQLC />}
-            {showOption === "dtm" && <NtdNewJob />}
+            {showOption === "dtm" && <NtdNewJob setShowOption={setShowOption}/>}
             {showOption === "tdd" && (
               <NtdTongTin setShowOption={setShowOption} />
             )}

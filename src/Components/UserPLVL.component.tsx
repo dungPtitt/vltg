@@ -2,6 +2,7 @@ import styles from "@/Css/homePage.module.css";
 import {
   renderProfession,
   renderSchedules,
+  profession
 } from "@/constants/EditProfile.constant";
 
 import { axiosTruocDN } from "@/utils/axios.config";
@@ -27,6 +28,7 @@ function UserPLVL() {
     setFullPath(`${hostname}:${port}`);
   }, []);
 
+  console.log("data", data);
   return (
     <div className={styles.plvl + " bg-white p-5"}>
       <div>

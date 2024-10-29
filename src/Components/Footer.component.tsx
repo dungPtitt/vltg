@@ -2,11 +2,11 @@
 import styles from "@/Css/homePage.module.css";
 import btnStyles from "@/Css/button.module.css";
 import { useState } from "react";
-import {
-  LIST_KEYWORDS,
-  LIST_MENU,
-  LIST_MXH,
-} from "@/constants/footer.constant";
+// import {
+//   LIST_KEYWORDS,
+//   LIST_MENU,
+//   LIST_MXH,
+// } from "@/constants/footer.constant";
 import Link from "next/link";
 import Image from "next/image";
 import TuKhoaCongViecLQ from "./TuKhoaCongViecLQ";
