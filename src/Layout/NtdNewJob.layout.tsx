@@ -20,11 +20,17 @@ import {
   notifyError,
   notifySuccess,
   notifyWarning,
+  convertTimestampToDatePicker,
+  convertMucLuong,
+  convertDateYMD,
+  convertDateToDatePicker
 } from "@/utils/generalFunction";
 import { axiosSauDN, axiosTruocDN } from "@/utils/axios.config";
 import { TypeAdminWorkShifts } from "@/Styles/AdminType";
 import { ToastContainer } from "react-toastify";
 import { error } from "console";
+import { set } from "date-fns";
+import { fi } from "date-fns/locale";
 function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
   const [codeCity, setCodeCity] = useState(1);
   const [salaryLevel, setSalaryLevel] = useState(1);
@@ -42,8 +48,11 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
         .then((res) => {
           setTinMoi({
             ...res.data.data.data[0],
-            luong: res.data.data.data[0].muc_luong,
+            time_td: convertTimestampToDatePicker(res.data.data.data[0].time_td),
+            fist_time: convertDateToDatePicker(res.data.data.data[0].fist_time),
+            last_time: convertDateToDatePicker(res.data.data.data[0].last_time),
           });
+          setSalaryLevel(res.data.data.data[0].ht_luong);
           setCodeCity(res.data.data.data[0].dia_diem);
           convertWorkShift(res.data.data.data[0].CaLamViec);
         })
@@ -53,6 +62,7 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
         });
     }
   }, [idEdit]);
+  console.log("tinMoi::", tinMoi);
   const convertWorkShift = (datas: any) => {
     const convertData: TypeAdminWorkShifts[] = [];
     if (datas.length > 0) {
@@ -65,20 +75,19 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
         });
       });
     }
+    // console.log("convertData::", convertData);
 
     setLichTuyenDung([...convertData]);
   };
+
   const convertDate = (value: any, name: any) => {
     let convert = "";
     const time = new Date(value);
     convert = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`;
     setTinMoi({ ...tinMoi, [name]: convert });
   };
-  const convertTimeStamp = (value: any) => {
-    let convert = "";
-    const time = new Date(value);
-    convert = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`;
-    return convert;
+  const convertTimeStamp = (value: any, name: any) => {
+    setTinMoi({ ...tinMoi, [name]: value });
   }
   const handleDeleteCa = (index: number) => {
     lichTuyenDung.splice(index, 1);
@@ -105,7 +114,6 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
     setSalaryLevel(1);
   };
   const handleDangTin = () => {
-    
     try {
       if (
         !tinMoi.vi_tri ||
@@ -127,10 +135,11 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
         !tinMoi.phone_lh ||
         !tinMoi.email_lh
       ) {
+        console.log("tinMoi::", tinMoi);
         notifyWarning("Vui lòng nhập đầy đủ Thông tin việc làm!");
       } else if (
         (tinMoi.ht_luong == 1 && !tinMoi.luong) ||
-        (tinMoi.ht_luong == 2 && (!tinMoi.luong_fist || !tinMoi.luong_end))
+        (tinMoi.ht_luong == 2 && (!tinMoi.luong_first || !tinMoi.luong_last))
       ) {
         notifyWarning("Nhập đầy đủ thông tin lương");
       } else {
@@ -171,6 +180,8 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
           axiosSauDN
             .post("/manageAccountCompany/suaTin", {
               ...tinMoi,
+              time_td: convertDateYMD(tinMoi.time_td),
+              time_fist: convertDateYMD(tinMoi.time_fist),
               list_ca: [...lichTuyenDung],
             })
             .then((res) => {
@@ -382,7 +393,7 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
             {salaryLevel === 1 ? (
               <div className="flex">
                 <Input
-                  value={idEdit ? tinMoi.muc_luong : tinMoi.luong}
+                  value={tinMoi.luong}
                   className="w-1/2 mr-5"
                   placeholder="VD: 25000"
                   type="number"
@@ -400,23 +411,23 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
             ) : (
               <div className="flex">
                 <Input
-                  value={tinMoi.luong_fist}
+                  value={tinMoi.luong_first}
                   required
                   className="w-1/4 mr-3"
                   placeholder="VD: 15000"
                   type="number"
                   onChange={(e) => handleTinMoi(e)}
-                  name="luong_fist"
+                  name="luong_first"
                 />{" "}
                 -
                 <Input
-                  value={tinMoi.luong_end}
+                  value={tinMoi.luong_last}
                   required
                   className="w-1/4 mx-3"
                   placeholder="VD: 30000"
                   type="number"
                   onChange={(e) => handleTinMoi(e)}
-                  name="luong_end"
+                  name="luong_last"
                 />
                 <Select
                   value={tinMoi.tra_luong}
@@ -471,11 +482,10 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
               <span className="text-red-500">*</span> Hạn tuyển dụng
             </label>
             <DatePicker
-              // value={convertDateDMYcheo(tinMoi.time_td*100) }
+              value={dayjs(tinMoi.time_td,"DD/MM/YYYY")}
               name="time_td"
-              onChange={(e) => convertDate(e, "time_td")}
+              onChange={(e) => convertTimeStamp(e, "time_td")}
               className="w-full"
-              defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
               format={["DD/MM/YYYY"]}
             />
           </div>
@@ -504,12 +514,10 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
           <div className="mt-6 flex items-center">
             <label className="text-sm font-semibold">Từ::</label>
             <DatePicker
-              // value={convertTimeStamp(tinMoi.fist_time)}
-              // value={tinMoi.fist_time ? dayjs(tinMoi.fist_time, "YYYY-MM-DD") : null}
+              value={dayjs(tinMoi.fist_time, "DD/MM/YYYY")}
               name="fist_time"
-              onChange={(e) => convertDate(e, "fist_time")}
+              onChange={(e) => convertTimeStamp(e, "fist_time")}
               className="w-48 ml-3"
-              defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
               format={["DD/MM/YYYY"]}
             />
           </div>
@@ -517,11 +525,10 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
           <div className="mt-6">
             <label className="text-sm font-semibold">Đến:</label>
             <DatePicker
-              // value={tinMoi.last_time}
-              onChange={(e) => convertDate(e, "last_time")}
+              value={dayjs(tinMoi.last_time, "DD/MM/YYYY")}
+              onChange={(e) => convertTimeStamp(e, "last_time")}
               name="last_time"
               className="w-48 ml-3"
-              defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
               format={["DD/MM/YYYY"]}
             />
           </div>
@@ -637,8 +644,8 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
             <label className=" block text-sm font-semibold">
               <span className="text-red-500">*</span> Giới tính
             </label>
-            <Radio.Group onChange={(e) => handleTinMoi(e)} name="gender">
-              <Radio value={1}>Nam</Radio>
+            <Radio.Group onChange={(e) => handleTinMoi(e)} name="gender" value={tinMoi.gender}>
+              <Radio value={1} >Nam</Radio>
               <Radio value={2}>Nữ</Radio>
               <Radio value={3}>Không yêu cầu</Radio>
             </Radio.Group>

@@ -17,18 +17,23 @@ export const convertTimeStamp = (value: any) => {
 
 export const convertTimeHM = (e: any) => {
   if (e.split(":").length == 2) {
-    console.log("convertTimeHM-----:-----", e);
+    // console.log("convertTimeHM-----:-----", e);
     return e;
   }
   if (e.split("-").length == 2) {
-    console.log("convertTimeHM----------", e);
+    // console.log("convertTimeHM----------", e);
 
     return e.replace("-", ":");
   }
   const time = new Date(e);
-  console.log("convertTimeHM----------", e, "---------------", time);
+  // console.log("convertTimeHM----------", e, "---------------", time);
   return `${time.getHours()}:${time.getMinutes()}`;
 };
+export const convertMucLuong = (value: any, index: any) => {
+  let a = value.split(" - ");
+  return a[index];
+}
+
 export const convertAllTimeToHM = (times: string) => {
   let result: any = times;
   if (result.split("-").length > 2) {
@@ -46,14 +51,19 @@ export const convertAllTimeToHM = (times: string) => {
 };
 export const convertDateYMD = (value: any) => {
   let convert = "";
-  console.log("value::origin", value);
+  // console.log("value::origin", value);
   const time = new Date(value);
   convert = `${time.getFullYear()}-${
     time.getMonth() + 1 < 10 ? `0${time.getMonth() + 1}` : time.getMonth() + 1
   }-${time.getDate() < 10 ? `0${time.getDate()}` : time.getDate()}`;
   return convert;
 };
-
+// const convertDate = (value: any, name: any) => {
+//     let convert = "";
+//     const time = new Date(value);
+//     convert = `${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}`;
+//     setTinMoi({ ...tinMoi, [name]: convert });
+//   };
 export const convertDateYMDcheo = (value: any) => {
   let convert = "";
   const time = new Date(value);
@@ -84,7 +94,16 @@ export const convertDateDMYcheo = (value: any) => {
 };
 
 export const convertTimestampToDatePicker = (times: any) => {
-  const time = new Date(times);
+  const time = new Date(times * 1000);
+  // console.log("convertTimestampToDatePicker", time);
+  const momentObj = moment.unix(time.getTime() / 1000);
+  const value = dayjs(momentObj.format("YYYY-MM-DD"));
+  return value; // Trả về đối tượng moment
+};
+
+export const convertDateToDatePicker = (date: any) => {
+  const time = new Date(date);
+  // console.log("convertDateToDatePicker", time);
   const momentObj = moment.unix(time.getTime() / 1000);
   const value = dayjs(momentObj.format("YYYY-MM-DD"));
   return value; // Trả về đối tượng moment
@@ -95,6 +114,11 @@ export const notifyWarning = (notification: string) => {
   return toast.warning(notification, {
     position: toast.POSITION.TOP_RIGHT,
   });
+};
+
+export const formatCurrencyVND = (amount: number): string => {
+  return amount?.toLocaleString('vi-VN');
+  // return amount.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }).replace('₫', 'VND');
 };
 
 export const notifySuccess = (notification: string) => {

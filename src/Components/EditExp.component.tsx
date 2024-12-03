@@ -126,7 +126,7 @@ function EditExp({
             name="time_fist"
             onChange={(e) => convertDate(e, 'time_fist')}
             className="w-full"
-            value={convertTimestampToDatePicker(duLieuKinhNghiem.time_fist)}
+            // value={convertTimestampToDatePicker(duLieuKinhNghiem.time_fist)}
             // defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
             format={["DD/MM/YYYY"]}
             disabledDate={(current) => 
@@ -143,7 +143,7 @@ function EditExp({
             name="time_end"
             onChange={(e) => convertDate(e, 'time_end')}
             className="w-full"
-            value={convertTimestampToDatePicker(duLieuKinhNghiem.time_end)}
+            // value={convertTimestampToDatePicker(duLieuKinhNghiem.time_end)}
             defaultValue={dayjs()}
             format={["DD/MM/YYYY"]}
             disabledDate={(current) => current && current > dayjs().endOf('day')}

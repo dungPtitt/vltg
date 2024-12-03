@@ -28,14 +28,15 @@ import {
 } from "@/utils/generalFunction";
 import { axiosSauDN, axiosTruocDN } from "@/utils/axios.config";
 import { TypeAdminWorkShifts, TypeOptionSalary } from "@/Styles/AdminType";
-function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
+function Admin_TTD_TM({ dataEdit, setShowEdit, setActiveKey }: any) {
+  console.log("dataEdit", dataEdit);
   const [codeCity, setCodeCity] = useState(0);
   const [salaryLevel, setSalaryLevel] = useState(1);
   const [jobId, setJobId] = useState<any>(dataEdit?.id_vieclam);
   const [optionSalary, setOptionSalary] = useState<TypeOptionSalary>({
     ht_luong: dataEdit?.ht_luong ? dataEdit.ht_luong : 1,
-    luong: dataEdit?.luong,
-    luong_fist: dataEdit?.luong_fist,
+    tra_luong: dataEdit?.tra_luong,
+    luong_first: dataEdit?.luong_first,
     luong_end: dataEdit?.luong_end,
   });
   const [duLieuMoi, setDuLieuMoi] = useState<any>({
@@ -47,7 +48,7 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
     dia_diem: dataEdit?.dia_diem,
     quan_huyen: dataEdit?.quan_huyen,
     hinh_thuc: dataEdit?.hinh_thuc,
-    tra_luong: dataEdit?.tra_luong,
+    // tra_luong: dataEdit?.tra_luong,
     hoc_van: dataEdit?.hoc_van,
     gender: dataEdit?.gender,
     mo_ta: dataEdit?.mo_ta,
@@ -61,9 +62,11 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
     phone_lh: dataEdit?.phone_lh,
     address_lh: dataEdit?.address_lh,
     email_lh: dataEdit?.email_lh,
+    thoi_gian: dataEdit?.thoi_gian,
+    hoa_hong: dataEdit?.hoa_hong
   });
   const [lichTuyenDung, setLichTuyenDung] = useState<TypeAdminWorkShifts[]>([
-    { day: [], ca_fist: "", ca_last: "" },
+    { day: [], ca_start_time: "", ca_end_time: "" },
   ]);
   useEffect(() => {
     dataEdit &&
@@ -74,8 +77,8 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
         .then((res) => {
           setOptionSalary({
             ht_luong: Number(res.data.data.data[0].ht_luong),
-            luong: Number(res.data.data.data[0].muc_luong),
-            luong_fist: Number(res.data.data.data[0].luong_fist),
+            tra_luong: Number(res.data.data.data[0].muc_luong),
+            luong_first: Number(res.data.data.data[0].luong_first),
             luong_end: Number(res.data.data.data[0].luong_end),
           });
           handleLichTuyenDung(res.data.data.data[0].CaLamViec);
@@ -95,6 +98,7 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
         });
       });
     }
+    console.log("convertData::", convertData);
 
     setLichTuyenDung([...convertData]);
   };
@@ -119,6 +123,7 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
     setLichTuyenDung([...lichTuyenDung]);
   };
   const convertDate = (value: any, name: any) => {
+    console.log("value", value, name);
     setDuLieuMoi({ ...duLieuMoi, [name]: convertDateYMD(value) });
   };
   const handleGuiData = () => {
@@ -129,33 +134,36 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
       }
     }
     if (optionSalary.ht_luong == 1) {
-      if (!optionSalary.luong) {
+      if (!optionSalary.tra_luong) {
         notifyWarning("Vui lòng nhập mức lương!");
         return;
       }
     } else {
-      if (!optionSalary.luong_fist || !optionSalary.luong_end) {
+      if (!optionSalary.luong_first || !optionSalary.luong_end) {
         notifyWarning("Vui lòng nhập khoảng lương!");
         return;
       }
     }
+    console.log("lichTuyenDung", lichTuyenDung);
     for (let i = 0; i < lichTuyenDung.length; i++) {
       if (
+        
         lichTuyenDung[i].day.length == 0 ||
-        !lichTuyenDung[i].ca_fist ||
-        !lichTuyenDung[i].ca_last
+        !lichTuyenDung[i].ca_start_time ||
+        !lichTuyenDung[i].ca_end_time
       ) {
         notifyWarning(`Vui lòng nhập đầy đủ thông tin ca ${i + 1}`);
         return;
       }
     }
+
     // lichTuyenDung.forEach((ca: any, index: number) => {});
     if (dataEdit?.id_ntd) {
       axiosSauDN
         .post("/admin/updateTin", {
           ...duLieuMoi,
           ...optionSalary,
-          list_ca: lichTuyenDung,
+          list_ca: [...lichTuyenDung],
           id_vieclam: jobId,
         })
         .then((res) => notifySuccess("Update Tin tuyển dụng thành công!"))
@@ -171,7 +179,10 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
 
           list_ca: lichTuyenDung,
         })
-        .then((res) => notifySuccess("Tạo mới Tin tuyển dụng thành công!"))
+        .then((res) => {
+          notifySuccess("Tạo mới Tin tuyển dụng thành công!");
+
+        })
         .catch(
           (err) =>
             console.log(
@@ -181,6 +192,8 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
         );
     }
   };
+  console.log("duLieuMoi::", duLieuMoi)
+  console.log("optionSalary::", optionSalary)
   return (
     <div>
       <div className="text-center w-1/2">
@@ -353,16 +366,16 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
           {salaryLevel === 1 ? (
             <div className="flex">
               <Input
-                value={optionSalary.luong}
+                value={optionSalary.tra_luong}
                 className="w-1/2 mr-5"
                 placeholder="VD: 25000"
                 type="number"
-                name="luong"
+                name="tra_luong"
                 required
                 onChange={(e) =>
                   setOptionSalary({
                     ...optionSalary,
-                    luong: Number(e.target.value),
+                    tra_luong: Number(e.target.value),
                   })
                 }
               />
@@ -377,7 +390,7 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
           ) : (
             <div className="flex">
               <Input
-                value={optionSalary.luong_fist}
+                value={optionSalary.luong_first}
                 required
                 className="w-1/4 mr-3"
                 placeholder="VD: 15000"
@@ -385,10 +398,10 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
                 onChange={(e) =>
                   setOptionSalary({
                     ...optionSalary,
-                    luong_fist: Number(e.target.value),
+                    luong_first: Number(e.target.value),
                   })
                 }
-                name="luong_fist"
+                name="luong_first"
               />{" "}
               -
               <Input
@@ -488,7 +501,7 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
             <DatePicker
               // value={duLieuMoi.fist_time}
               // value={duLieuMoi.time_td}
-              name="fist_time"
+              name="time_td"
               onChange={(e) => convertDate(e, "time_td")}
               className="w-48 ml-3"
               defaultValue={dayjs(ngayHomNay(), "DD/MM/YYYY")}
@@ -531,6 +544,52 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
                   {indexSL + 1}:
                 </div>
                 <div className="mt-6 flex items-center">
+                <label className="text-sm font-semibold">Từ:</label>
+                <TimePicker
+                  onChange={(time, timeString) => {
+                    lichTuyenDung[indexSL].ca_start_time = timeString;
+                    setLichTuyenDung([...lichTuyenDung]);
+                  }}
+                  onSelect={(time) => {
+                    const formattedTime = time ? time.format('HH:mm') : '';
+                    lichTuyenDung[indexSL].ca_start_time = formattedTime;
+                    setLichTuyenDung([...lichTuyenDung]);
+                  }}
+                  className="w-48 ml-3"
+                  value={lichTuyenDung[indexSL].ca_start_time ? dayjs(lichTuyenDung[indexSL].ca_start_time, "HH:mm") : null}
+                  defaultValue={dayjs("00:00", "HH:mm")}
+                />
+                </div>
+                <div className="mt-6 flex">
+                <label className="text-sm font-semibold">Đến:</label>
+                <TimePicker
+                  onChange={(time, timeString) => {
+                    lichTuyenDung[indexSL].ca_end_time = timeString;
+                    setLichTuyenDung([...lichTuyenDung]);
+                  }}
+                  onSelect={(time) => {
+                    const formattedTime = time ? time.format('HH:mm') : '';
+                    lichTuyenDung[indexSL].ca_end_time = formattedTime;
+                    setLichTuyenDung([...lichTuyenDung]);
+                  }}
+                  className="w-48 ml-3"
+                  value={lichTuyenDung[indexSL].ca_end_time ? dayjs(lichTuyenDung[indexSL].ca_end_time, "HH:mm") : null}
+                  defaultValue={dayjs("00:00:00", "HH:mm")}
+                />
+                {indexSL !== 0 && (
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => handleDeleteCa(indexSL)}
+                  >
+                    <img
+                      className="mt-1 ml-3"
+                      src="/images/delete-xam.svg"
+                      alt=""
+                    />
+                  </div>
+                )}
+              </div>
+                {/* <div className="mt-6 flex items-center">
                   <label className="text-sm font-semibold ">Từ:</label>
                   <TimePicker
                     onChange={(e: any) => {
@@ -541,8 +600,8 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
                     className="w-48 ml-3"
                     defaultValue={dayjs("00:00:00", "HH:mm:ss")}
                   />
-                </div>
-                <div className="mt-6 flex">
+                </div> */}
+                {/* <div className="mt-6 flex">
                   <label className="text-sm font-semibold ml-3">Đến:</label>
                   <TimePicker
                     onChange={(e: any) => {
@@ -565,7 +624,7 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
                       />
                     </div>
                   )}
-                </div>
+                </div> */}
               </div>
               <div className="grid grid-cols-7 mt-4">
                 {dayOfTheWeek.map((thu, index) => (
@@ -588,7 +647,7 @@ function Admin_TTD_TM({ dataEdit, setShowEdit }: any) {
           <div className="flex justify-end mt-3">
             <button
               onClick={() => {
-                lichTuyenDung.push({ day: [], ca_fist: "", ca_last: "" });
+                lichTuyenDung.push({ day: [], ca_start_time: "", ca_end_time: "" });
                 setLichTuyenDung([...lichTuyenDung]);
               }}
               className={styles.btn_add}

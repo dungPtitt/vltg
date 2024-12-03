@@ -8,7 +8,7 @@ import { notifySuccess, notifyWarning } from "@/utils/generalFunction";
 import { ToastContainer } from "react-toastify";
 import { axiosSauDN } from "@/utils/axios.config";
 
-function Adm_DSNTD_TM() {
+function Adm_DSNTD_TM({dataEdit, setShowEdit}: any) {
   const [codeCity, setCodeCity] = useState(0);
   const [duLieuMoi, setDuLieuMoi] = useState<any>({
     email: "",
@@ -18,7 +18,6 @@ function Adm_DSNTD_TM() {
     address: "",
     city: 0,
     district: 0,
-    avatar: "",
   });
   const handleInput = (e: any) => {
     setDuLieuMoi({ ...duLieuMoi, [e.target.name]: e.target.value });

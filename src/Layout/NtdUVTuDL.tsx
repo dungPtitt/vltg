@@ -41,8 +41,12 @@ function NtdUVTuDL() {
         })
         .then((res) => {
           setDanhSachUVTuDL([...res.data.data.data]);
-          setTotal(res.data.data.total);
           setDanhSachUVTuDL([...res.data.data.data]);
+          let total = res?.data?.data?.total;
+          let numberPage = Math.ceil(total / pageSize);
+          setTotal(numberPage);
+          // setTotal(res.data.data.total);
+
         });
     } catch (error) {
       console.log("err--------", error);
@@ -85,15 +89,35 @@ function NtdUVTuDL() {
     if (uv_day) {
       const showDay: any = [];
       {
+        // dayOfTheWeek.forEach((day) => {
+        //   console.log("day>>>>", day);
+        //   console.log("uv_day>>>>", uv_day);
+        //   timesOfDay.forEach((times) => {
+        //     if (uv_day.includes(`${day.value}${times.value}`)) {
+        //       showDay.push(`${times.label} ${day.label}`);
+        //     }
+        //   });
+        // });
         dayOfTheWeek.forEach((day) => {
+          let time = "";
+          let check = false;
           timesOfDay.forEach((times) => {
             if (uv_day.includes(`${day.value}${times.value}`)) {
-              showDay.push(`${times.label} ${day.label}`);
+              if (check == false) {
+                time = `${day.label}: ${times.label}`;
+                check = true;
+              } else {
+                time = `${time}, ${times.label}`;
+              }
+              // showDay.push(`${times.label} ${day.label}`);
             }
           });
+          if(check){
+            showDay.push(`${time} || `);
+          }
         });
       }
-      return showDay.join(", ");
+      return showDay.join(" ");
     } else {
       return "Chưa có thông tin";
     }
@@ -169,7 +193,7 @@ function NtdUVTuDL() {
                         router.push(
                           `/ung-vien-${convertNameToSlug(uv.uv_userName)}-ca${
                             uv.id_uv
-                          }.html$`
+                          }.html`
                         )
                       }
                       className="cursor-pointer text-yellow-600 block"
@@ -309,7 +333,26 @@ function NtdUVTuDL() {
               </div>
             </div>
           ))}
-        <Pagination
+        <div className="flex justify-center items-center mt-4 mb-5" style={{}}>
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-l.svg" alt="arrow-left" style={{width: '30px', height: '30px'}}/>
+          </button>
+          <span style={{marginRight: '10px'}}>
+            {page} / {total} {"trang"}
+          </span>
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, total))}
+            disabled={page === total}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-r.svg" alt="next" style={{width: '30px', height: '30px'}}/>
+          </button>
+        </div>
+        {/* <Pagination
           total={total}
           showQuickJumper
           showSizeChanger
@@ -321,7 +364,7 @@ function NtdUVTuDL() {
               setPage(current);
             }
           }}
-        />
+        /> */}
       </div>
       <ToastContainer autoClose={2000} />
     </div>

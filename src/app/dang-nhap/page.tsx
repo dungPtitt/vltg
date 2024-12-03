@@ -135,7 +135,14 @@ function LoginEmployerPage() {
           Đăng nhập
         </button>
         <div className="mt-4">
-          <p className="text-blue-500 text-base">Quên mật khẩu ?</p>
+          <p className="text-blue-500 text-base">
+            <Link
+              href="/quen-mat-khau"
+              className="text-blue-600"
+            >
+              Quên mật khẩu ?
+            </Link>
+          </p>
           <p>
             Bạn chưa có tài khoản?{" "}
             {/* <span className="text-blue-600">ĐĂNG KÝ NGAY</span> */}

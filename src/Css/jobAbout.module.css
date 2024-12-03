@@ -22,6 +22,14 @@
   object-fit: cover;
 }
 
+.avatar_ntd2 {
+  width: 70px;
+  height: 70px;
+  margin-right: 20px;
+  /* border-radius: 50%; */
+  object-fit: cover;
+}
+
 .about_job2_left {
   display: flex;
   width: 50%;

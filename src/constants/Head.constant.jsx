@@ -15,12 +15,12 @@ export const HeadHomePage = ({ fullPath }) => {
     <>
       <link rel="canonical" href={fullPath} />
       {/* <link rel="amphtml" href="https://vieclamtheogio.timviec365.vn/amp" /> */}
-      <meta charset="UTF-8" />
+      <meta charSet="UTF-8" />
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <title>Việc Làm Theo Giờ - Tìm Việc Theo Giờ Mới Nhất Lương Cao</title>
       <meta
         name="google-site-verification"
@@ -56,12 +56,12 @@ export const HeadHomePage = ({ fullPath }) => {
       <meta property="og:image:height" content="249" />
       <meta
         property="og:title"
-        itemprop="headline"
+        itemProp="headline"
         content="Việc Làm Theo Giờ - Tìm Việc Theo Giờ Mới Nhất Lương Cao"
       />
       <meta
         property="og:description"
-        itemprop="description"
+        itemProp="description"
         content=" Việc làm theo giờ mới nhất. Tổng hợp danh sách việc làm theo giờ lương cao từ các công ty hàng đầu dành cho người tìm việc. Tham khảo ngay tại Timviec365.vn"
       />
       <meta property="og:type" content="website" />
@@ -71,13 +71,13 @@ export const HeadHomePage = ({ fullPath }) => {
         rel="preload"
         href="/fonts/Roboto-Regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link
         rel="preload"
         href="/fonts/lato-v17-latin-regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
 
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
@@ -87,14 +87,14 @@ export const HeadHomePage = ({ fullPath }) => {
         rel="stylesheet"
         href="../css/select2.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link rel="preload" as="style" href="../css/style.css?v=1697855812" />
       <link
         rel="stylesheet"
         media="all"
         href="../css/style.css?v=1697855812"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <script async src="/js/tagsManager.js"></script>
     </>
@@ -103,14 +103,14 @@ export const HeadHomePage = ({ fullPath }) => {
 export const HeadDefault = ({ title, fullPath }) => {
   return (
     <>
-      <meta charset="UTF-8" />
+      <meta charSet="UTF-8" />
       <link rel="canonical" href={fullPath} />
 
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <meta
         name="robots"
         content={
@@ -124,7 +124,7 @@ export const HeadDefault = ({ title, fullPath }) => {
         rel="preload"
         href="/fonts/Roboto-Regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
       <link rel="preload" as="style" href="../css/select2.min.css" />
@@ -132,7 +132,7 @@ export const HeadDefault = ({ title, fullPath }) => {
         rel="stylesheet"
         href="../css/select2.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link rel="preload" as="style" href="../css/style.css?v=1697617770" />
       <link
@@ -140,7 +140,7 @@ export const HeadDefault = ({ title, fullPath }) => {
         media="all"
         href="../css/style.css?v=1697617770"
         // media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link
         rel="preload"
@@ -155,12 +155,12 @@ export const HeadDefault = ({ title, fullPath }) => {
 export const HeadListJob = ({ url, fullPath }) => {
   return (
     <>
-      <meta charset="UTF-8" />
+      <meta charSet="UTF-8" />
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <meta
         name="robots"
         content={
@@ -174,13 +174,13 @@ export const HeadListJob = ({ url, fullPath }) => {
         rel="preload"
         href="/fonts/Roboto-Regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link
         rel="preload"
         href="/fonts/lato-v17-latin-regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link rel="canonical" href={fullPath + "/" + url} />
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
@@ -189,14 +189,14 @@ export const HeadListJob = ({ url, fullPath }) => {
         rel="stylesheet"
         href="../css/select2.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link rel="preload" as="style" href="../css/style.css?v=1697771537" />
       <link
         rel="stylesheet"
         media="all"
         href="../css/style.css?v=1697771537"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link
         rel="preload"
@@ -212,12 +212,12 @@ export const HeadJobDetai = ({ job, company, fullPath }) => {
   const title = job;
   return (
     <>
-      <meta charset="UTF-8" />
+      <meta charSet="UTF-8" />
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <meta
         name="robots"
         content={
@@ -246,12 +246,12 @@ export const HeadJobDetai = ({ job, company, fullPath }) => {
       <meta property="og:image:height" content="249" />
       <meta
         property="og:title"
-        itemprop="headline"
+        itemProp="headline"
         content="chạy bàn nhà hàng"
       />
       <meta
         property="og:description"
-        itemprop="description"
+        itemProp="description"
         content={` ${job} đang tuyển dụng tại ${company} mới nhất trên timviec365.vn`}
       />
       <meta property="og:type" content="website" />
@@ -261,34 +261,34 @@ export const HeadJobDetai = ({ job, company, fullPath }) => {
         rel="preload"
         href="/fonts/Roboto-Regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link
         rel="preload"
         href="/fonts/lato-v17-latin-regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link rel="preload" as="style" href="../css/bootstrap.min.css" />
       <link
         rel="stylesheet"
         href="../css/bootstrap.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link rel="preload" as="style" href="../css/select2.min.css" />
       <link
         rel="stylesheet"
         href="../css/select2.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link rel="preload" as="style" href="../css/style.css?v=1697768990" />
       <link
         rel="stylesheet"
         media="all"
         href="../css/style.css?v=1697768990"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <script async src="/js/tagsManager.js"></script>
     </>
@@ -298,12 +298,12 @@ export const HeadCompanyDetail = ({ company, fullPath }) => {
   return (
     <>
       {" "}
-      <meta charset="UTF-8" />
+      <meta charSet="UTF-8" />
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <title>{company}</title>
       <meta
         name="robots"
@@ -330,10 +330,10 @@ export const HeadCompanyDetail = ({ company, fullPath }) => {
       />
       <meta property="og:image:width" content="476" />
       <meta property="og:image:height" content="249" />
-      <meta property="og:title" itemprop="headline" content={company} />
+      <meta property="og:title" itemProp="headline" content={company} />
       <meta
         property="og:description"
-        itemprop="description"
+        itemProp="description"
         content={` ${company} đang có nhu cầu tuyển dụng nhân viên`}
       />
       <meta property="og:type" content="website" />
@@ -342,13 +342,13 @@ export const HeadCompanyDetail = ({ company, fullPath }) => {
         rel="preload"
         href="/fonts/Roboto-Regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link
         rel="preload"
         href="/fonts/lato-v17-latin-regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
       <link rel="preload" as="style" href="../css/select2.min.css" />
@@ -356,14 +356,14 @@ export const HeadCompanyDetail = ({ company, fullPath }) => {
         rel="stylesheet"
         href="../css/select2.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link rel="preload" as="style" href="../css/style.css?v=1697769039" />
       <link
         rel="stylesheet"
         media="all"
         href="../css/style.css?v=1697769039"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link
         rel="preload"
@@ -379,12 +379,12 @@ export const HeadSearchByProfession = ({ hostName, profession, pathUrl }) => {
   const title = `Tìm việc ${profession?.toLowerCase()} mới nhất - T${month}/${year}`;
   return (
     <>
-      <meta charset="UTF-8" />
+      <meta charSet="UTF-8" />
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
       <meta
         name="robots"
         content={
@@ -417,12 +417,12 @@ export const HeadSearchByProfession = ({ hostName, profession, pathUrl }) => {
       <meta property="og:image:height" content="249" />
       <meta
         property="og:title"
-        itemprop="headline"
+        itemProp="headline"
         content={`Tìm việc làm ${profession.toLowerCase()}  mới nhất - T${month}/${year}`}
       />
       <meta
         property="og:description"
-        itemprop="description"
+        itemProp="description"
         content={` Tìm việc làm ${profession?.toLowerCase()}  mới nhất. Danh sách việc làm ${profession?.toLowerCase()}   lương cao được cập nhật liên tục tại Timviec365.vn. Tham khảo ngay`}
       />
       <meta property="og:type" content="website" />
@@ -434,13 +434,13 @@ export const HeadSearchByProfession = ({ hostName, profession, pathUrl }) => {
         rel="preload"
         href="/fonts/Roboto-Regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link
         rel="preload"
         href="/fonts/lato-v17-latin-regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
       <link rel="preload" as="style" href="../css/select2.min.css" />
@@ -448,14 +448,14 @@ export const HeadSearchByProfession = ({ hostName, profession, pathUrl }) => {
         rel="stylesheet"
         href="../css/select2.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link rel="preload" as="style" href="../css/style.css?v=1697769076" />
       <link
         rel="stylesheet"
         media="all"
         href="../css/style.css?v=1697769076"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <script async src="/js/tagsManager.js"></script>
     </>
@@ -468,12 +468,12 @@ export const HeadSearchByAdress = ({ city, district, fullPath }) => {
   ${month}/${year}`;
   return (
     <>
-      <meta charset="UTF-8" />
+      <meta charSet="UTF-8" />
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
 
       <meta
         name="robots"
@@ -520,12 +520,12 @@ export const HeadSearchByAdress = ({ city, district, fullPath }) => {
       <meta property="og:image:height" content="249" />
       <meta
         property="og:title"
-        itemprop="headline"
+        itemProp="headline"
         content={`Tìm việc làm theo giờ tại ${district} ${city} mới nhất - T${month}/${year}`}
       />
       <meta
         property="og:description"
-        itemprop="description"
+        itemProp="description"
         content={` Tìm việc làm theo giờ tại ${district} ${city} mới nhất. Danh sách tuyển dụng việc làm theo giờ tại ${district} ${city} được cập nhật thường xuyên và liên tục`}
       />
       <meta property="og:type" content="website" />
@@ -544,13 +544,13 @@ export const HeadSearchByAdress = ({ city, district, fullPath }) => {
         rel="preload"
         href="/fonts/Roboto-Regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link
         rel="preload"
         href="/fonts/lato-v17-latin-regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
       <link rel="preload" as="style" href="../css/select2.min.css" />
@@ -558,14 +558,15 @@ export const HeadSearchByAdress = ({ city, district, fullPath }) => {
         rel="stylesheet"
         href="../css/select2.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
+        //  onLoad="if (media != 'all')media='all'"
       />
       <link rel="preload" as="style" href="../css/style.css?v=1697770608" />
       <link
         rel="stylesheet"
         media="all"
         href="../css/style.css?v=1697770608"
-        onload="if (media != 'all')media='all'"
+        onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <script async src="/js/tagsManager.js"></script>
     </>
@@ -579,12 +580,12 @@ export const HeadSearchByProfessionAndAdress = ({
   const title = ` Việc làm ${profession.toLowerCase()} tại ${city} - Timviec365.vn `;
   return (
     <>
-      <meta charset="UTF-8" />
+      <meta charSet="UTF-8" />
       <meta
         name="viewport"
         content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
       />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+      <meta httpEquiv="X-UA-Compatible" content="ie=edge" />
 
       <title>{title}</title>
       <meta
@@ -617,12 +618,12 @@ export const HeadSearchByProfessionAndAdress = ({
       <meta property="og:image:height" content="249" />
       <meta
         property="og:title"
-        itemprop="headline"
+        itemProp="headline"
         content={`Việc làm ${profession.toLowerCase()} tại ${city} - Timviec365.vn`}
       />
       <meta
         property="og:description"
-        itemprop="description"
+        itemProp="description"
         content={` Danh sách việc ${profession.toLowerCase()} tại ${city}. Tham khảo ngay danh sách tin tuyển dụng ${profession.toLowerCase()} tại ${city} trên timviec365.vn`}
       />
       <meta property="og:type" content="website" />
@@ -632,13 +633,13 @@ export const HeadSearchByProfessionAndAdress = ({
         rel="preload"
         href="/fonts/Roboto-Regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link
         rel="preload"
         href="/fonts/lato-v17-latin-regular.woff2"
         as="font"
-        crossorigin="anonymous"
+        crossOrigin="anonymous"
       />
       <link rel="stylesheet" href="../css/bootstrap.min.css" />
       <link rel="preload" as="style" href="../css/select2.min.css" />
@@ -646,14 +647,14 @@ export const HeadSearchByProfessionAndAdress = ({
         rel="stylesheet"
         href="../css/select2.min.css"
         media="all"
-        onload="if (media != 'all')media='all'"
+       onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <link rel="preload" as="style" href="../css/style.css?v=1697770848" />
       <link
         rel="stylesheet"
         media="all"
         href="../css/style.css?v=1697770848"
-        onload="if (media != 'all')media='all'"
+       onLoad={() => { if (this.media !== 'all') this.media = 'all'; }}
       />
       <script async src="/js/tagsManager.js"></script>
     </>

@@ -1,5 +1,5 @@
 import { Input, Radio, Select } from "antd";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import btnStyles from "@/Css/button.module.css";
 
 import TextArea from "antd/es/input/TextArea";
@@ -10,9 +10,10 @@ import {
 } from "@/constants/EditProfile.constant";
 import { quan_huyen, tinh_thanh } from "@/utils/vi_tri";
 import { axiosSauDN } from "@/utils/axios.config";
-import { notifySuccess, notifyWarning } from "@/utils/generalFunction";
+import { notifyError, notifySuccess, notifyWarning } from "@/utils/generalFunction";
 import { ToastContainer } from "react-toastify";
-function Admin_DSUV_TM() {
+import { set } from "date-fns";
+function Admin_DSUV_TM({ dataEdit, setShowEdit }: any) {
   const keys = [
     "userName",
     "phone",
@@ -24,10 +25,46 @@ function Admin_DSUV_TM() {
     "uv_congviec",
   ];
   const [codeCity, setCodeCity] = useState(0);
-  const [duLieuMoi, setDuLieuMoi] = useState<any>({});
+  const [duLieuMoi, setDuLieuMoi] = useState<any>({
+    userName: dataEdit?.userName ?? "",
+    phone: dataEdit?.phone ?? "",
+    email: dataEdit?.email ?? "",
+    password: "",
+    city: dataEdit?.city ?? 0,
+    district: dataEdit?.district ?? 0,
+    address: dataEdit?.address ?? "",
+    uv_congviec: dataEdit?.uv_congviec ?? "",
+    cong_viec: dataEdit?.cong_viec ?? "",
+  });
   const [jobValues, setJobValues] = useState([]);
   const [adressValues, setAdressValues] = useState([]);
   const [arrDay, setArrDay] = useState<any>([]);
+
+  // console.log("arrDay", arrDay);
+  console.log("dataEdit", dataEdit);
+  useEffect(() => {
+    dataEdit &&
+      axiosSauDN
+        .post("/admin/getDetailUngVien", {
+          _id: dataEdit?._id,
+        })
+        .then((res) => {
+          console.log("DSUV_TM", res);
+          let arrDiaDiem = res?.data?.data?.uvCvmm?.dia_diem.split(",").map((e: any) => Number(e));
+          let arrNganhNghe = res?.data?.data?.uvCvmm?.nganh_nghe.split(",").map((e: any) => Number(e));
+          let arrDay = res?.data?.data?.data.uv_day.split(",").map((e: any) => Number(e));
+          setAdressValues(arrDiaDiem);
+          setJobValues(arrNganhNghe);
+          setArrDay(arrDay);
+          setDuLieuMoi({
+            ...duLieuMoi,
+            uv_congviec: res?.data?.data?.uvCvmm.cong_viec
+          });
+
+        })
+        .catch((err) => notifyError(err.response.data.error.message));
+  }, []);
+  console.log("duLieuMoi", duLieuMoi);
   const handleInput = (e: any) => {
     setDuLieuMoi({ ...duLieuMoi, [e.target.name]: e.target.value });
   };
@@ -41,8 +78,9 @@ function Admin_DSUV_TM() {
   const handleChangeAddress = (selected: any) => {
     // Kiểm tra số lượng mục đã chọn và giới hạn nó
     if (selected.length <= 3) {
+      // console.log("dulieucu", selected);
       setAdressValues(selected);
-      console.log("dulieumoi", adressValues);
+      // console.log("dulieumoi", adressValues);
     }
   };
   const handleChonBuoiCTDL = (day: number, buoi: number) => {
@@ -66,10 +104,27 @@ function Admin_DSUV_TM() {
     if (flagCheck) {
       if (adressValues.length == 0 || jobValues.length == 0) {
         notifyWarning("Vui lòng nhập đầy đủ thông tin!");
+        return;
       } else if (arrDay.length == 0) {
         notifyWarning("Vui lòng chọn ca có thể đi làm!");
+        return;
       } else {
-        axiosSauDN
+        if (dataEdit?._id) {
+          axiosSauDN
+            .post("/admin/updateUngVien", {
+              ...duLieuMoi,
+              _id: dataEdit?._id,
+              day: arrDay,
+              uv_diadiem: adressValues,
+              uv_nganhnghe: jobValues,
+            })
+            .then((res) => {
+              setShowEdit(false);
+              notifySuccess("Cập nhập thành công!")
+            })
+            .catch((err) => console.log("DSUV_TM", err));
+        } else {
+          axiosSauDN
           .post("/admin/createUngVien", {
             ...duLieuMoi,
             day: arrDay,
@@ -78,6 +133,8 @@ function Admin_DSUV_TM() {
           })
           .then((res) => notifySuccess("Thêm mới thành công!"))
           .catch((err) => console.log("DSUV_TM", err));
+        }
+        
       }
     }
   };
@@ -275,7 +332,7 @@ function Admin_DSUV_TM() {
             className={btnStyles.btn_update + " mr-3"}
           >
             {" "}
-            Cập nhập
+            {dataEdit?._id ? "Cập nhập" : "Thêm mới"}
           </div>
           <div className={btnStyles.btn_redo}> Làm lại</div>
         </div>

@@ -38,7 +38,7 @@ function UvTTLH() {
         .post("/manageAccountCandidate/getInfoCandidate")
         .then((res) => {
           setDuLieuNguoiDung({ ...res.data.data.data });
-          setDuLieuMoi({ ...res.data.data.data });
+          setDuLieuMoi({ ...res.data.data.data, birthday: res.data.data.data.birthday *10000 });
           setCodeCity(res.data.data.data.city);
           setNewAvatar(res.data.data.data.linkAvatar);
         });
@@ -89,6 +89,7 @@ function UvTTLH() {
     return <Loading />;
   }
   console.log("duLieuNguoiDung", duLieuNguoiDung);
+  console.log("duLieuMoi", duLieuMoi);
   return (
     <div className={styles.uv_ttlh}>
       {showEdit ? (
@@ -310,7 +311,7 @@ function UvTTLH() {
                 Ngày sinh:
                 <span className="font-normal">
                   {duLieuMoi.birthday
-                    ? convertDateDMY(duLieuMoi.birthday * 1000)
+                    ? convertDateDMY(duLieuMoi.birthday)
                     : ""}
                 </span>
               </p>

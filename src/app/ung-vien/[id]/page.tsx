@@ -33,6 +33,8 @@ function UVDetail({ params }: any) {
   const [uvLienQuan, setUVLienQuan] = useState([]);
   const [arrDay, setArrDay] = useState<number[]>([]);
   const [diemLoc, setDiemLoc] = useState(0);
+  const [diemLocFree, setDiemLocFree] = useState(0);
+  const [diemLocMua, setDiemLocMua] = useState(0);
   const [showModalXemTT, setShowModalXemTT] = useState(false);
   const [fullPath, setFullPath] = useState<any>("");
 
@@ -78,12 +80,15 @@ function UVDetail({ params }: any) {
     setShowModalXemTT(true);
     axiosSauDN
       .post("/manageAccountCompany/getDiem")
-      .then((res) =>
+      .then((res) => {
+        // console.log("handleGetDiemLoc:::", res);
+        setDiemLocFree(res?.data?.data?.data?.diem_free);
+        setDiemLocMua(res?.data?.data?.data?.diem_mua);
         setDiemLoc(
-          res.data.data.data.inforVLTG.diem_mua +
-            res.data.data.data.inforVLTG.diem_free
+          res?.data?.data?.data?.diem_mua +
+          res?.data?.data?.data?.diem_free
         )
-      )
+      })
       .catch((err) => console.log("handleGetDiemLoc", err));
   };
   const handleXemTTLH = () => {
@@ -378,18 +383,18 @@ function UVDetail({ params }: any) {
           <div>
             <div className="font-bold text-xl mb-6">Mua điểm</div>
             <div className="mb-8">
-              Bạn có <span className="text-yellow-500">{diemLoc}</span> điểm
-              lọc. Bạn có muốn dùng 1 điểm lọc để xem thông tin ứng viên không?
+              Bạn có <span className="text-yellow-500">{diemLocFree}</span> điểm
+              lọc free và <span className="text-yellow-500">{diemLocMua}</span> điểm lọc mua. Bạn có muốn dùng 1 điểm lọc để xem thông tin ứng viên không?
             </div>
             <div className="flex justify-center">
-              {diemLoc && (
+              {diemLoc ? (
                 <button
                   onClick={handleXemTTLH}
                   className={btnStyle.btn_primary + ` mr-3`}
                 >
                   Đồng ý
                 </button>
-              )}
+              ): null}
 
               <button
                 className={btnStyle.btn_default + ` hover:color-white mr-3`}

@@ -21,6 +21,8 @@ import { notifyError, notifyWarning } from "@/utils/generalFunction";
 import Image from "next/image";
 import Admin_TTTK from "@/Layout/Admin_TTTK";
 import { axiosSauDN, axiosTruocDN } from "@/utils/axios.config";
+import Cookies from "js-cookie";
+
 function AdminPage() {
   const [activeKey, setActiveKey] = useState("1");
   const [dataAdmin, setDataAdmin] = useState<any>();
@@ -62,6 +64,7 @@ function AdminPage() {
       setActiveKey(e.value);
     }
   };
+  console.log("tabPanes>>>>", tabPanes);
   const handleLogin = () => {
     if (!dataLogin.loginName || !dataLogin.password) {
       notifyWarning("Nhập đầy đủ thông tin đăng nhập!");
@@ -70,6 +73,7 @@ function AdminPage() {
         .post("/admin/loginAdmin", dataLogin)
         .then((res) => {
           setCheckLogin(true);
+          Cookies.set("accessToken", res?.data?.data?.token);
           console.log("res>>>>", res);
           // localStorage.setItem(
           //   "accessToken",
@@ -195,7 +199,7 @@ function AdminPage() {
                           Danh sách ứng viên{" "}
                         </div>
 
-                        <div
+                        {/* <div
                           className="flex items-center"
                           onClick={() =>
                             handleActiveKey(
@@ -220,7 +224,7 @@ function AdminPage() {
                             alt=""
                           />
                           Ứng viên đăng ký lỗi{" "}
-                        </div>
+                        </div> */}
                       </div>
                     ),
                   },
@@ -275,7 +279,7 @@ function AdminPage() {
                           />
                           Danh sách NTD{" "}
                         </div>
-                        <div
+                        {/* <div
                           className="flex items-center"
                           onClick={() =>
                             handleActiveKey(
@@ -300,7 +304,7 @@ function AdminPage() {
                             alt=""
                           />
                           NTD đăng ký lỗi{" "}
-                        </div>
+                        </div> */}
                       </div>
                     ),
                   },
@@ -322,7 +326,7 @@ function AdminPage() {
                                   Thêm mới
                                 </p>
                               </div>,
-                              { label: <Admin_TTD_TM />, value: "8" }
+                              { label: <Admin_TTD_TM setActiveKey={ setActiveKey } />, value: "8" }
                             )
                           }
                         >
@@ -364,66 +368,66 @@ function AdminPage() {
                       </div>
                     ),
                   },
-                  {
-                    key: "4",
-                    label: "Tag",
-                    children: (
-                      <div>
-                        <div
-                          className="flex items-center"
-                          onClick={() =>
-                            handleActiveKey(
-                              <div className="flex ">
-                                <p className="text-red-500">
-                                  Tag
-                                  <span className="text-blue-500 mx-1">
-                                    »
-                                  </span>{" "}
-                                  Thêm mới
-                                </p>
-                              </div>,
-                              { label: <Admin_Tag_TM />, value: "10" }
-                            )
-                          }
-                        >
-                          <Image
-                            height={5}
-                            width={5}
-                            className="mx-3"
-                            src="/images/4.gif"
-                            alt=""
-                          />
-                          Thêm mới{" "}
-                        </div>
-                        <div
-                          className="flex items-center"
-                          onClick={() =>
-                            handleActiveKey(
-                              <div className="flex ">
-                                <p className="text-red-500">
-                                  Tag
-                                  <span className="text-blue-500 mx-1">
-                                    »
-                                  </span>{" "}
-                                  Danh sách
-                                </p>
-                              </div>,
-                              { label: <Admin_Tag_DS />, value: "11" }
-                            )
-                          }
-                        >
-                          <Image
-                            height={5}
-                            width={5}
-                            className="mx-3"
-                            src="/images/4.gif"
-                            alt=""
-                          />
-                          Danh sách{" "}
-                        </div>
-                      </div>
-                    ),
-                  },
+                  // {
+                  //   key: "4",
+                  //   label: "Tag",
+                  //   children: (
+                  //     <div>
+                  //       <div
+                  //         className="flex items-center"
+                  //         onClick={() =>
+                  //           handleActiveKey(
+                  //             <div className="flex ">
+                  //               <p className="text-red-500">
+                  //                 Tag
+                  //                 <span className="text-blue-500 mx-1">
+                  //                   »
+                  //                 </span>{" "}
+                  //                 Thêm mới
+                  //               </p>
+                  //             </div>,
+                  //             { label: <Admin_Tag_TM />, value: "10" }
+                  //           )
+                  //         }
+                  //       >
+                  //         <Image
+                  //           height={5}
+                  //           width={5}
+                  //           className="mx-3"
+                  //           src="/images/4.gif"
+                  //           alt=""
+                  //         />
+                  //         Thêm mới{" "}
+                  //       </div>
+                  //       <div
+                  //         className="flex items-center"
+                  //         onClick={() =>
+                  //           handleActiveKey(
+                  //             <div className="flex ">
+                  //               <p className="text-red-500">
+                  //                 Tag
+                  //                 <span className="text-blue-500 mx-1">
+                  //                   »
+                  //                 </span>{" "}
+                  //                 Danh sách
+                  //               </p>
+                  //             </div>,
+                  //             { label: <Admin_Tag_DS />, value: "11" }
+                  //           )
+                  //         }
+                  //       >
+                  //         <Image
+                  //           height={5}
+                  //           width={5}
+                  //           className="mx-3"
+                  //           src="/images/4.gif"
+                  //           alt=""
+                  //         />
+                  //         Danh sách{" "}
+                  //       </div>
+                  //     </div>
+                  //   ),
+                  // },
                   {
                     key: "5",
                     label: "Ngành nghề",
@@ -484,72 +488,72 @@ function AdminPage() {
                       </div>
                     ),
                   },
-                  {
-                    key: "6",
-                    label: "Tỉnh thành",
-                    children: (
-                      <div>
-                        <div
-                          className="flex items-center"
-                          onClick={() =>
-                            handleActiveKey(
-                              <div className="flex ">
-                                <p className="text-red-500">
-                                  Tỉnh thành
-                                  <span className="text-blue-500 mx-1">»</span>
-                                  Danh sách
-                                </p>
-                              </div>,
-                              { label: <Admin_TT_DS />, value: "14" }
-                            )
-                          }
-                        >
-                          <Image
-                            height={5}
-                            width={5}
-                            className="mx-3"
-                            src="/images/4.gif"
-                            alt=""
-                          />
-                          Danh sách{" "}
-                        </div>
-                      </div>
-                    ),
-                  },
-                  {
-                    key: "7",
-                    label: "Quận huyện",
-                    children: (
-                      <div>
-                        <div
-                          className="flex items-center"
-                          onClick={() =>
-                            handleActiveKey(
-                              <div className="flex ">
-                                <p className="text-red-500">
-                                  Quận huyện
-                                  <span className="text-blue-500 mx-1">
-                                    »
-                                  </span>{" "}
-                                  Danh sách
-                                </p>
-                              </div>,
-                              { label: <Admin_QH_DS />, value: "15" }
-                            )
-                          }
-                        >
-                          <Image
-                            height={5}
-                            width={5}
-                            className="mx-3"
-                            src="/images/4.gif"
-                            alt=""
-                          />
-                          Danh sách{" "}
-                        </div>
-                      </div>
-                    ),
-                  },
+                  // {
+                  //   key: "6",
+                  //   label: "Tỉnh thành",
+                  //   children: (
+                  //     <div>
+                  //       <div
+                  //         className="flex items-center"
+                  //         onClick={() =>
+                  //           handleActiveKey(
+                  //             <div className="flex ">
+                  //               <p className="text-red-500">
+                  //                 Tỉnh thành
+                  //                 <span className="text-blue-500 mx-1">»</span>
+                  //                 Danh sách
+                  //               </p>
+                  //             </div>,
+                  //             { label: <Admin_TT_DS />, value: "14" }
+                  //           )
+                  //         }
+                  //       >
+                  //         <Image
+                  //           height={5}
+                  //           width={5}
+                  //           className="mx-3"
+                  //           src="/images/4.gif"
+                  //           alt=""
+                  //         />
+                  //         Danh sách{" "}
+                  //       </div>
+                  //     </div>
+                  //   ),
+                  // },
+                  // {
+                  //   key: "7",
+                  //   label: "Quận huyện",
+                  //   children: (
+                  //     <div>
+                  //       <div
+                  //         className="flex items-center"
+                  //         onClick={() =>
+                  //           handleActiveKey(
+                  //             <div className="flex ">
+                  //               <p className="text-red-500">
+                  //                 Quận huyện
+                  //                 <span className="text-blue-500 mx-1">
+                  //                   »
+                  //                 </span>{" "}
+                  //                 Danh sách
+                  //               </p>
+                  //             </div>,
+                  //             { label: <Admin_QH_DS />, value: "15" }
+                  //           )
+                  //         }
+                  //       >
+                  //         <Image
+                  //           height={5}
+                  //           width={5}
+                  //           className="mx-3"
+                  //           src="/images/4.gif"
+                  //           alt=""
+                  //         />
+                  //         Danh sách{" "}
+                  //       </div>
+                  //     </div>
+                  //   ),
+                  // },
                 ]}
               />
             </div>
@@ -610,6 +614,7 @@ function AdminPage() {
           </div>
         </div>
       )}
+      <ToastContainer autoClose={2000} />
     </div>
   );
 }

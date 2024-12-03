@@ -121,7 +121,7 @@
   align-items: center;
   margin: 0 auto;
   height: 35px;
-  width: 80%;
+  /* width: 80%; */
   border: solid 1px #aaaaaa;
   margin-bottom: 10px;
   border-radius: 5px;
@@ -141,7 +141,7 @@
   justify-content: center;
 }
 .btn_login {
-  width: 170px;
+  width: 600px;
   height: 43px;
   color: #fff;
   font-weight: 400;
@@ -234,5 +234,14 @@
     width: 60%;
     margin: 0 auto;
     text-align: center;
+  }
+  .link_bottom {
+    display: flex;
+    width: 600px;
+    /* flex-direction: row;
+    flex-wrap: nowrap; */
+    justify-content: space-between;
+    margin-top: 20px;
+    color: #4c5bd4;
   }
 }

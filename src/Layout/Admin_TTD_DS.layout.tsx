@@ -36,15 +36,16 @@ function Admin_TTD_DS() {
       })
       .catch((err) => console.log("TTD", err));
   }, [pageShow, recall]);
+
   const columns: ColumnsType<any> = [
     { title: "Stt", dataIndex: "stt" },
     { title: <img src="/images/save.png" />, dataIndex: "save" },
     { title: "ID", dataIndex: "id_vieclam" },
     { title: "ID Cty", dataIndex: "id_ntd" },
     { title: "Tiêu đề", dataIndex: "vi_tri" },
-    { title: "Tên công ty", dataIndex: "companyName" },
+    { title: "Tên công ty", dataIndex: "userName" },
     { title: "Mô tả", dataIndex: "mo_ta" },
-    { title: "Yêu cầu", dataIndex: "yeu_cau" },
+    // { title: "Yêu cầu", dataIndex: "yeu_cau" },
     { title: "Ngày đăng tin", dataIndex: "created_at" },
     {
       title: "Active",
@@ -112,6 +113,7 @@ function Admin_TTD_DS() {
       .catch((res) => notifyError("Vui lòng thử lại sau!"));
   };
   const handleData = async (data: any) => {
+    console.log(" dataaaa:", data);
     const exportData = [];
     for (let i = 0; i < data.length; i++) {
       exportData.push({
@@ -148,9 +150,28 @@ function Admin_TTD_DS() {
             {data[i].vi_tri}
           </div>
         ),
-        companyName: data[i].userName,
-        mo_ta: data[i].mo_ta,
-        yeu_cau: data[i].yeu_cau,
+        userName: data[i].userName,
+        // mo_ta: data[i].mo_ta,
+        mo_ta: (
+          <p>
+            {data[i]?.mo_ta?.split('\n').map((line: any, index: any) => (
+              <span key={index}>
+                {line}
+                <br />
+              </span>
+            ))}
+          </p>
+        ),
+        // yeu_cau: (
+        //   <p>
+        //     {data[i]?.yeu_cau?.split('\n').map((line: any, index: any) => (
+        //       <span key={index}>
+        //         {line}
+        //         <br />
+        //       </span>
+        //     ))}
+        //   </p>
+        // ),
         created_at: convertDateDMYcheo(data[i].created_at * 1000),
         active: (
           <Checkbox

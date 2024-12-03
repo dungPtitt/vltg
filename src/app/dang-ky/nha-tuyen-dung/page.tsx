@@ -8,6 +8,8 @@ import { useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { Input } from "antd";
+import { EyeInvisibleOutlined, EyeTwoTone } from "@ant-design/icons";
 
 function RegisterEmployerPage() {
   const rouer = useRouter();
@@ -87,54 +89,101 @@ function RegisterEmployerPage() {
         </div>
         <div className={styles.box_login}>
           <p className={styles.title}>ĐĂNG KÝ TÀI KHOẢN NGƯỜI TUYỂN DỤNG</p>
-          <div className={styles.form_login}>
-            <div className={styles.item_form_login}>
-              {/* <p className={styles.label_form_login}>Họ và tên</p> */}
-              <div className={styles.login_inp}>
-                <Image
-                  alt="/"
-                  height={100}
-                  width={100}
-                  src="/images/ico-user.svg"
-                />
-                <input
-                  type="text"
-                  placeholder="Họ và tên"
-                  name="userName"
-                  onChange={(e) => handleDataRegister(e)}
-                />
-              </div>
-            </div>
+          <div style={{ width: "600px" }}>
+            <label className="flex justify-between" style={{marginBottom: "6px"}}>
+              <p className="text-sm font-semibold">
+                <span className="text-red-500">*</span>Tên công ty
+              </p>{" "}
+            </label>
             <div className={styles.login_inp}>
               <Image
                 alt="/"
-                height={100}
-                width={100}
+                height={20}
+                width={20}
+                src="/images/ico-user.svg"
+              />
+              <Input
+                value={dataRegister.userName}
+                onChange={(e) => setDataRegister({ ...dataRegister, userName: e.target.value })}
+                bordered={false}
+                placeholder="Tên công ty"
+              />
+            </div>
+          </div>
+          <div style={{ width: "600px" }}>
+            <label className="flex justify-between" style={{marginBottom: "6px"}}>
+              <p className="text-sm font-semibold">
+                <span className="text-red-500">*</span>Email
+              </p>{" "}
+            </label>
+            <div className={styles.login_inp}>
+              <Image
+                alt="/"
+                height={20}
+                width={20}
                 src="/images/email.svg"
               />
-              <input
-                type="email"
-                placeholder="Nhập địa chỉ email"
-                name="email"
-                onChange={(e) => handleDataRegister(e)}
+              <Input
+                value={dataRegister.email}
+                onChange={(e) => setDataRegister({ ...dataRegister, email: e.target.value })}
+                bordered={false}
+                placeholder="Email"
               />
             </div>
+          </div>
+          <div style={{ width: "600px" }}>
+            <label className="flex justify-between" style={{marginBottom: "6px"}}>
+              <p className="text-sm font-semibold">
+                <span className="text-red-500">*</span>Mật khẩu
+              </p>{" "}
+            </label>
             <div className={styles.login_inp}>
-              <Image alt="/" height={100} width={100} src="/images/lock.svg" />
-              <input
-                onChange={(e) => handleDataRegister(e)}
-                type="password"
+              <Image
+                alt="/"
+                height={20}
+                width={20}
+                src="/images/lock.svg"
+              />
+              <Input.Password
+                value={dataRegister.password}
+                bordered={false}
+                style={{border: "none"}}
+                
+                className={styles.input_password}
+                onChange={(e) => setDataRegister({ ...dataRegister, password: e.target.value })}
                 placeholder="Nhập mật khẩu"
-                name="password"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone
+                  /> : <EyeInvisibleOutlined />
+                }
               />
             </div>
+          </div>
+          <div style={{ width: "600px" }}>
+            <label className="flex justify-between" style={{marginBottom: "6px"}}>
+              <p className="text-sm font-semibold">
+                <span className="text-red-500">*</span>Xác nhận mật khẩu
+              </p>{" "}
+            </label>
             <div className={styles.login_inp}>
-              <Image alt="/" height={100} width={100} src="/images/lock.svg" />
-              <input
-                onChange={(e) => handleDataRegister(e)}
-                type="password"
+              <Image
+                alt="/"
+                height={20}
+                width={20}
+                src="/images/lock.svg"
+              />
+              <Input.Password
+                value={dataRegister.repassword}
+                bordered={false}
+                style={{border: "none"}}
+                
+                className={styles.input_password}
+                onChange={(e) => setDataRegister({ ...dataRegister, repassword: e.target.value })}
                 placeholder="Nhập lại mật khẩu"
-                name="repassword"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone
+                  /> : <EyeInvisibleOutlined />
+                }
               />
             </div>
           </div>
@@ -143,7 +192,7 @@ function RegisterEmployerPage() {
           Đăng ký
         </button>
         <div className="mt-4 ">
-          <p className="text-blue-500 text-base">Quên mật khẩu ?</p>
+          {/* <p className="text-blue-500 text-base">Quên mật khẩu ?</p> */}
           <p>
             Bạn đã có tài khoản?{" "}
             <Link

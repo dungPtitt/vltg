@@ -15,12 +15,20 @@ import {
 import { ToastContainer } from "react-toastify";
 function NtdUVDL() {
   const router = useRouter();
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
   const [danhSachUV, setDanhSachUV] = useState<any>([]);
   useEffect(() => {
     try {
       axiosSauDN
-        .post("/manageAccountCompany/ungVienDaLuu")
-        .then((res) => setDanhSachUV([...res.data.data.data]));
+        .post("/manageAccountCompany/ungVienDaLuu", {page, pageSize})
+        .then((res) => {
+          setDanhSachUV([...res.data.data.data]);
+          let total = res?.data?.data?.total;
+          let numberPage = Math.ceil(total / pageSize);
+          setTotal(numberPage);
+        });
     } catch (error) {
       console.log("first", error);
     }
@@ -79,7 +87,7 @@ function NtdUVDL() {
                       className="text-blue-500 cursor-pointer block"
                       onClick={() =>
                         router.push(
-                          `/ung-vien-${convertNameToSlug(data.userName)}-${
+                          `/ung-vien-${convertNameToSlug(data.uv_userName)}-${
                             data.id_uv
                           }.html`
                         )
@@ -144,6 +152,25 @@ function NtdUVDL() {
             </div>
           ))}
       </div>
+      <div className="flex justify-center items-center mt-4 mb-5" style={{}}>
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-l.svg" alt="arrow-left" style={{width: '30px', height: '30px'}}/>
+          </button>
+          <span style={{marginRight: '10px'}}>
+            {page} / {total} {"trang"}
+          </span>
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, total))}
+            disabled={page === total}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-r.svg" alt="next" style={{width: '30px', height: '30px'}}/>
+          </button>
+        </div>
       <ToastContainer autoClose={2000} />
     </div>
   );

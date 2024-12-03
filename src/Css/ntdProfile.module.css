@@ -434,6 +434,8 @@
   }
   .profile_navbars {
     width: 280px;
+    /* height: auto; */
+    height: 100vh;
   }
   .navbars_header {
     height: 50px;

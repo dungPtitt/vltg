@@ -6,10 +6,12 @@ import {
   renderSchedules,
   renderProfession
 } from "@/constants/EditProfile.constant";
+import { convertDateDMY, formatCurrencyVND } from "@/utils/generalFunction";
 import { tinh_thanh, quan_huyen } from "@/utils/vi_tri";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { differenceInDays } from "date-fns";
 
 function JobCard({ job }: any) {
   const [fullPath, setFullPath] = useState<any>("");
@@ -75,22 +77,42 @@ function JobCard({ job }: any) {
           <div className="flex">
             <img className="mr-2.5" src="/images/dola.svg" alt="$" />{" "}
             <span className={styles.salary}>
-              {job?.muc_luong} VND/
+              {job?.ht_luong == 1 ? formatCurrencyVND(job?.luong) : `${formatCurrencyVND(job?.luong_first)} - ${formatCurrencyVND(job?.luong_last)}`}  VND/
               {renderPayrollMethods[job?.tra_luong]}
             </span>
           </div>
-          <div className="flex ">
+          {/* <div className="flex ">
             <img className="mr-2.5" src="/images/balo.svg" alt="balo" />
             <span className={styles.working_time}> Hình thức: {" "}
               {renderSchedules[job?.hinh_thuc]}
             </span>
-          </div>
+          </div> */}
           <div className="flex ">
             <img className="mr-2.5" src="/images/balo.svg" alt="balo" />
             <span className={styles.working_time}>Lĩnh vực: {" "}
               {renderProfession[job?.nganh_nghe]}
             </span>
           </div>
+          <div className="flex ">
+            <img className="mr-2.5" src="/images/time-blue.svg" alt="balo" />
+            <p>
+            Hạn nộp hồ sơ:{" "}
+            {convertDateDMY(job.time_td * 1000)}{" "}
+            {Date.now() > job.time_td * 1000 ? (
+              <span className="text-red-400">(Hết hạn)</span>
+            ) : (
+              <span>
+                Còn{" "}
+                {differenceInDays(
+                  new Date(job.time_td * 1000),
+                  new Date()
+                )}{" "}
+                ngày{" "}
+              </span>
+            )}
+          </p>
+          </div>
+          
         </div>
       </div>
     </div>

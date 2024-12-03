@@ -9,12 +9,12 @@ function BlockTVLTG() {
         <p className={styles.main1_content_m}>Tìm việc làm theo giờ </p>
         <p className={styles.main1_content_xl}>ĐƠN GIẢN, DỄ DÀNG</p>
         <p className={styles.main1_content_s}>
-          Chủ động ứng tuyển công việc theo
-          <span>
+          Chủ động ứng tuyển công việc theo Ngày, Giờ
+          {/* <span>
             <Image
               height={20}
               width={20}
-              src="https://vieclamtheogio.timviec365.vn/images/day.svg"
+              src="/images/lock.svg"
               alt="day"
             />
             Ngày
@@ -25,13 +25,13 @@ function BlockTVLTG() {
               alt="time"
             />
             Giờ
-          </span>
+          </span> */}
         </p>
 
         <p className={styles.main1_content_l}>
           PHÙ HỢP{" "}
           <button className={styles.btn_warning}>
-            <Link href="https://timviec365.vn/dang-ky.html">
+            <Link href="/dang-ky/ung-vien">
               Đăng ký tìm việc theo giờ ngay
             </Link>{" "}
           </button>

@@ -23,8 +23,11 @@ function NtdUVDX() {
           pageSize: pageSize,
         })
         .then((res) => {
-          setTotal(res.data.data.total);
           setDuLieuUVDX([...res.data.data.data]);
+          // setTotal(res.data.data.total);
+          let total = res?.data?.data?.total;
+          let numberPage = Math.ceil(total / pageSize);
+          setTotal(numberPage);
         });
     } catch (error) {
       console.log("NTDUVDX", error);
@@ -124,7 +127,26 @@ function NtdUVDX() {
               </div>
             ))}
         </div>
-        <Pagination
+        <div className="flex justify-center items-center mt-4 mb-5" style={{}}>
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-l.svg" alt="arrow-left" style={{width: '30px', height: '30px'}}/>
+          </button>
+          <span style={{marginRight: '10px'}}>
+            {page} / {total} {"trang"}
+          </span>
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, total))}
+            disabled={page === total}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-r.svg" alt="next" style={{width: '30px', height: '30px'}}/>
+          </button>
+        </div>
+        {/* <Pagination
           total={total}
           showQuickJumper
           showSizeChanger
@@ -136,7 +158,7 @@ function NtdUVDX() {
               setPage(current);
             }
           }}
-        />
+        /> */}
       </div>
     </div>
   );

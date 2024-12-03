@@ -2,8 +2,8 @@ import { type } from "os";
 
 export type TypeOptionSalary = {
   ht_luong: number | undefined;
-  luong: number | undefined;
-  luong_fist: number | undefined;
+  tra_luong: number | undefined;
+  luong_first: number | undefined;
   luong_end: number | undefined;
 };
 

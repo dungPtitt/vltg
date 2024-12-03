@@ -224,7 +224,7 @@ function ChiTietCViec({ id }: any) {
           <div className={styles.folder_job}>
             <div>
               <Link href={"/"} className="cursor-pointer">
-                Việc Làm Theo Giờ
+                Trang chủ
               </Link>{" "}
               /{" "}
               {/* <Link
@@ -567,19 +567,50 @@ function ChiTietCViec({ id }: any) {
               </div>
               <div className={styles.job_content}>
                 <p className={styles.detail_title}>Mô tả công việc</p>
-                <p className={styles.detail_txt}> {chiTietViecLam.mo_ta}</p>
+                {/* <p className={styles.detail_txt}> {chiTietViecLam.mo_ta}</p> */}
+                <p className={styles.detail_txt}>
+                  {chiTietViecLam?.mo_ta?.split('\n').map((line: any, index: any) => (
+                    <span key={index}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
+                </p>
               </div>
               <div className={styles.job_content}>
                 <p className={styles.detail_title}>Yêu cầu công việc</p>
-                <p className={styles.detail_txt}>{chiTietViecLam.yeu_cau}</p>
+                {/* <p className={styles.detail_txt}>{chiTietViecLam.yeu_cau}</p> */}
+                <p className={styles.detail_txt}>
+                  {chiTietViecLam?.yeu_cau?.split('\n').map((line: any, index: any) => (
+                    <span key={index}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
+                </p>
               </div>
               <div className={styles.job_content}>
                 <p className={styles.detail_title}>Quyền lợi được hưởng</p>
-                <p className={styles.detail_txt}>{chiTietViecLam.quyen_loi}</p>
+                <p className={styles.detail_txt}>
+                  {chiTietViecLam?.quyen_loi?.split('\n').map((line: any, index: any) => (
+                    <span key={index}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
+                </p>
               </div>
               <div className={styles.job_content}>
                 <p className={styles.detail_title}>Hồ sơ bao gồm</p>
-                <p className={styles.detail_txt}>{chiTietViecLam.ho_so}</p>
+                {/* <p className={styles.detail_txt}>{chiTietViecLam.ho_so}</p> */}
+                <p className={styles.detail_txt}>
+                  {chiTietViecLam?.ho_so?.split('\n').map((line: any, index: any) => (
+                    <span key={index}>
+                      {line}
+                      <br />
+                    </span>
+                  ))}
+                </p>
               </div>
               <div className={styles.job_content}>
                 <p className={styles.detail_title}>Thông tin liên hệ</p>

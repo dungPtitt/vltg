@@ -875,6 +875,8 @@ export const tinh_thanh = [
     cit_type: 3,
   },
 ];
+
+// Hà Nội 10 1 48593 1
 export const quan_huyen = [
   {
     _id: "650e54d1aa8abec7a686b8b1",

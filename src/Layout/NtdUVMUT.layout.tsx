@@ -36,12 +36,15 @@ function NtdUVMUT() {
       axiosSauDN
         .post("/manageAccountCompany/ungVienMoiUngTuyen", {
           page: page,
-          pageSize: 6,
+          pageSize: pageSize,
           status: statusCV,
         })
         .then((res) => {
-          setDuLieuUVMUT([...res.data.data.data]);
-          setTotal(res.data.data.total);
+          console.log("UVMUT", res.data);
+          setDuLieuUVMUT([...res?.data?.data?.data]);
+          let total = res?.data?.data?.total;
+          let numberPage = Math.ceil(total / pageSize);
+          setTotal(numberPage);
           setDuLieuShow([...res.data.data.data]);
         });
     } catch (error) {
@@ -344,19 +347,41 @@ function NtdUVMUT() {
               </div>
             </div>
           ))}
-        <Pagination
+        <div className="flex justify-center items-center mt-4 mb-5" style={{}}>
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-l.svg" alt="arrow-left" style={{width: '30px', height: '30px'}}/>
+          </button>
+          <span style={{marginRight: '10px'}}>
+            {page} / {total} {"trang"}
+          </span>
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, total))}
+            disabled={page === total}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-r.svg" alt="next" style={{width: '30px', height: '30px'}}/>
+          </button>
+        </div>
+        {/* <Pagination
           total={total}
           showQuickJumper
           showSizeChanger
           onChange={(current, newPageSize) => {
-            if (newPageSize != pageSize) {
-              setPage(1);
-              setPageSize(newPageSize);
-            } else {
-              setPage(current);
-            }
+            console.log("current", current);
+            setPage(current+1);
+            // if (newPageSize != pageSize) {
+            //   console.log("newPageSize", newPageSize);
+            //   setPage(page);
+            //   // setPageSize(newPageSize);
+            // } else {
+            //   setPage(current+1);
+            // }
           }}
-        />
+        /> */}
       </div>
       <ToastContainer autoClose={2000} />
     </div>

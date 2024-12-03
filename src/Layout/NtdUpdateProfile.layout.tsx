@@ -27,14 +27,16 @@ function NtdUpdateProfile() {
     setDuLieuNTD({ ...duLieuNTD, [e.target.name]: e.target.value });
   };
   const handleChangePhoto = (e: any) => {
+    // console.log("e.target.files[0]", e.target.files[0]);
     setAvatar(e.target.files[0]);
     setNewAvatar(URL.createObjectURL(e.target.files[0]));
+    handleUpdateAvatar(e.target.files[0]);
   };
   const handleUpdateInfor = () => {
    
-    if (newAvatar != duLieuNTD.linkAvatar) {
-      handleUpdateAvatar();
-    }
+    // if (newAvatar != duLieuNTD.linkAvatar) {
+    //   handleUpdateAvatar();
+    // }
     console.log("duLieuNTD::", duLieuNTD);
     if (
       !duLieuNTD.userName ||
@@ -53,17 +55,25 @@ function NtdUpdateProfile() {
     } else {
       axiosSauDN
         .post("/manageAccountCompany/updateInfoCompany", duLieuNTD)
-        .then((res) => notifySuccess("Cập nhập thông tin thành công !"))
-        .catch((err) => console.log("UpdateProfileNTD", err));
+        .then((res) => {
+          notifySuccess("Cập nhập thông tin thành công !")
+        })
+        .catch((err) => {
+          notifyWarning("Đã có lỗi xảy ra! Vui lòng thử lại sau!");
+          console.log("UpdateProfileNTD", err);
+        });
     }
   };
-  const handleUpdateAvatar = () => {
+  const handleUpdateAvatar = (avatar: any) => {
     const formData = new FormData();
     formData.append("avatar", avatar);
     privateAxiosUpload
       .post("/manageAccountCompany/updateAvatarCompany", formData)
       .then((res) => notifySuccess("Thay đổi avatar thành công !"))
-      .catch((err) => console.log("ChangeAvatar", err));
+      .catch((err) => {
+        notifyWarning("Đã có lỗi xảy ra! Vui lòng thử lại sau!");
+        console.log("ChangeAvatar", err);
+      });
   };
   return (
     <div className={styles.ntd_update_profile}>
@@ -81,12 +91,12 @@ function NtdUpdateProfile() {
               disabled
             />
           </div>
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <label className="text-sm font-semibold block mb-2">
               <span className="text-red-500">*</span>Mật khẩu
             </label>
             <Input placeholder="********" type="password" disabled />
-          </div>
+          </div> */}
         </div>
         <div className="flex justify-center items-center">
           <label htmlFor="updateAvatar">

@@ -1,116 +1,67 @@
 import { axiosSauDN } from "@/utils/axios.config";
-import { convertDateDMYcheo, notifySuccess } from "@/utils/generalFunction";
-import { DatePicker, Input, Select } from "antd";
+import {
+  convertDateDMYcheo,
+  convertDateYMDcheo,
+  convertNameToSlug,
+  notifyError,
+} from "@/utils/generalFunction";
+import { Checkbox, DatePicker, Input, Select } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { useEffect, useState } from "react";
-
+import Admin_DSUV_TM from "./Admin_DSUV_TM.layout";
+import btnStyles from "@/Css/button.module.css";
+import { useRouter } from "next/navigation";
 function Admin_DSUV_DSUV() {
+  const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
+  const [danhSachTTD, setDanhSachTTD] = useState<any>([]);
+  const [tongDuLieu, setTongDuLieu] = useState<number>();
   const [pageSize, setPageSize] = useState(10);
   const [pageShow, setPageShow] = useState(1);
   const [optionSearch, setOptionSearch] = useState<any>({});
-  const [danhSachUngVien, setDanhSachUngVien] = useState<any>([]);
-  const [tongDuLieu, setTongDuLieu] = useState<number>();
-  const handleData = async (data: any) => {
-    const exportData = [];
-    for (let i = 0; i < data.length; i++) {
-      exportData.push({
-        // key: (pageShow - 1) * pageSize + i + 1,
-        key: data[i]._id,
-        stt: (pageShow - 1) * pageSize + i + 1,
-        id: data[i]._id,
-        avatar: data[i].avatarUser,
-        userName: data[i].userName,
-        userPhone: data[i].phone,
-        email: data[i].email,
-        adress: data[i].address,
-        job: data[i].cong_vic,
-        date: convertDateDMYcheo(data[i].createdAt * 1000),
-        for: `Từ Web`,
-        active: (
-          <input checked={data[i].active == 0 ? false : true} type="checkbox" />
-        ),
-        edit: (
-          <div className="cursor-pointer">
-            <img src="/images/edit.png" alt="" />
-          </div>
-        ),
-        xoa: (
-          <div className="cursor-pointer" onClick={() => handleXoaUV(i)}>
-            <img src="/images/delete.gif" alt="" />
-          </div>
-        ),
-      });
-    }
-    setDanhSachUngVien([...exportData]);
-  };
-  const [dataTest, setDataTets] = useState<any>([]);
+  const [dataEdit, setDataEdit] = useState<any>();
+  const [showEdit, setShowEdit] = useState<boolean>(false);
+  const [recall, setRecall] = useState(true);
+
   useEffect(() => {
+    axiosSauDN
+      .post("/admin/danhSachUngVien", {
+        ...optionSearch,
+        type: 1,
+        page: pageShow,
+        pageSize: pageSize,
+      })
+      .then((res) => {
+        console.log("DSNTD", res);
+        setTongDuLieu(res.data.data.total);
+        handleData(res.data.data.data);
+      })
+      .catch((err) => console.log("TTD", err));
+  }, [pageShow, recall]);
 
-    for (let i = 0; i < 50; i++) {
-      console.log("first", i);
-      dataTest.push({
-        key: i,
-        stt: i,
-        id: i,
-        avatar: i,
-        userName: i,
-        userPhone: i,
-        email: i,
-        adress: i,
-        job: i,
-        date: i,
-        for: `Từ Web`,
-        active: (
-          <input
-            /* checked={data[i].active == 0 ? false : true} */ type="checkbox"
-          />
-        ),
-        edit: (
-          <div className="cursor-pointer">
-            <img src="/images/edit.png" alt="" />
-          </div>
-        ),
-      });
-    }
-    setDataTets([...dataTest]);
-  }, []);
-
-  // useEffect(() => {
-  //   axiosSauDN
-  //     .post("/admin/danhSachUngVien", {
-  //       ...optionSearch,
-  //       page: pageShow,
-  //       pageSize: pageSize,
-  //       type: 1,
-  //     })
-  //     .then((res) => {
-  //       setTongDuLieu(res.data.data.total);
-  //       handleData(res.data.data.data);
-  //     })
-  //     .catch((err) => console.log("errDSUV", err));
-  // }, [pageShow]);
   const columns: ColumnsType<any> = [
     { title: "Stt", dataIndex: "stt" },
-    { title: "ID", dataIndex: "id" },
-    { title: "Ảnh đại diện", dataIndex: "avatar" },
-    { title: "Tên ứng viên", dataIndex: "userName" },
-    { title: "Số điện thoại", dataIndex: "userPhone" },
+    { title: <img src="/images/save.png" />, dataIndex: "save" },
+    { title: "ID", dataIndex: "_id" },
+    { title: "Họ và tên", dataIndex: "userName" },
+    { title: "Số điện thoại", dataIndex: "phone" },
     { title: "Email", dataIndex: "email" },
-    { title: "Địa chỉ", dataIndex: "adress" },
-    { title: "Công việc", dataIndex: "job" },
-    { title: "Ngày đăng ký", dataIndex: "date" },
-    { title: "Nguồn", dataIndex: "for" },
-    { title: "Active", dataIndex: "active" },
-    { title: "Sửa", dataIndex: "edit" },
+    { title: "Địa chỉ", dataIndex: "address" },
+    { title: "Ngày tạo tài khoản", dataIndex: "createdAt" },
     {
-      title: "Action",
-      dataIndex: "delete",
-      key: "delete",
-      render: (data) => {
-        return <a onClick={() => console.log(data)}>Delete</a>;
+      title: "Active",
+      dataIndex: "active",
+      render: (_: any, record: any) => {
+     
+        return (
+          <Checkbox
+            onChange={(e) => handleChangeActive(e, record)}
+            checked={record.active.props.checked == 0 ? false : true}
+          />
+        );
       },
     },
+    { title: "Sửa", dataIndex: "edit" },
   ];
   const handleChangeTable = (current: number, newPageSize: number) => {
     if (newPageSize != pageSize) {
@@ -128,98 +79,189 @@ function Admin_DSUV_DSUV() {
     selectedRowKeys,
     onChange: onSelectChange,
   };
-  const handleXoaUV = (id: number) => {
-
-
-
-    /*     axiosSauDN
-      .post("/admin/deleteUngVien", { moduleId: 95, arrId: [id] })
+  const handleXoaTin = () => {
+    axiosSauDN
+      .post("/admin/deleteTin", { moduleId: 97, arrId: selectedRowKeys })
       .then((res) => {
-        setDanhSachUngVien([
-          ...danhSachUngVien.filter((uv: any) => uv._id != id),
-        ]);
+        setRecall(!recall);
       })
-      .catch((err) => console.log("DSUV", err)); */
-    // setDanhSachUngVien([...danhSachUngVien.filter((uv: any) => uv.id != id)]);
-    // const newDS = danhSachUngVien.filter((uv: any) => uv.id != id);
-    // setDanhSachUngVien([...newDS]);
-    // dataTest.filter((data: any) => data.stt != id);
-    // const filterd = dataTest.filter((uv: any) => uv.id != id);
-    // console.log("filterd", filterd);
-
-    setDataTets(dataTest[0]);
-    // const i = 2;
-    // setDataTets([
-    //   {
-    //     key: i,
-    //     stt: i,
-    //     id: i,
-    //     avatar: i,
-    //     userName: i,
-    //     userPhone: i,
-    //     email: i,
-    //     adress: i,
-    //     job: i,
-    //     date: i,
-    //     for: `Từ Web`,
-    //     active: (
-    //       <input
-    //         /* checked={data[i].active == 0 ? false : true} */ type="checkbox"
-    //       />
-    //     ),
-    //     edit: (
-    //       <div className="cursor-pointer">
-    //         <img src="/images/edit.png" alt="" />
-    //       </div>
-    //     ),
-    //     xoa: (
-    //       <div className="cursor-pointer" onClick={() => handleXoaUV(i)}>
-    //         <img src="/images/delete.gif" alt="" />
-    //       </div>
-    //     ),
-    //   },
-    // ]);
+      .catch((err) => notifyError("Vui lòng thử lại sau!"));
   };
-  // console.log("danhssac", dataTest);
-  return (
+  const handleChangeActive = (e: any, record: any) => {
+    axiosSauDN
+      .post("/admin/activeTin", {
+        id_vieclam: record.key,
+        active: e.target.checked ? 1 : 0,
+      })
+      .then((res) => {
+  
+        const recordIndex = danhSachTTD.findIndex(
+          (ttd: any) => ttd.key == record.key
+        );
+        danhSachTTD[recordIndex] = {
+          ...danhSachTTD[recordIndex],
+          active: {
+            ...danhSachTTD[recordIndex].active,
+            props: {
+              ...danhSachTTD[recordIndex].active.props,
+              checked: e.target.checked,
+            },
+          },
+        };
+
+        setDanhSachTTD([...danhSachTTD]);
+      })
+      .catch((res) => notifyError("Vui lòng thử lại sau!"));
+  };
+  const handleData = async (data: any) => {
+    console.log(" dataaaa:", data);
+    const exportData = [];
+    for (let i = 0; i < data.length; i++) {
+      exportData.push({
+        // key: (pageShow - 1) * pageSize + i + 1,
+        key: data[i].id_vieclam,
+        stt: (pageShow - 1) * pageSize + i + 1,
+        save: <img className="cursor-pointer" src="/images/save.png" />,
+        _id: (
+          <div
+            onClick={() =>
+              router.push(
+                `/${convertNameToSlug(data[i].vi_tri)}-co${
+                  data[i]._id
+                }.html`
+              )
+            }
+            className="cursor-pointer hover:text-blue-500"
+          >
+            {data[i]._id}
+          </div>
+        ),
+        userName: data[i].userName,
+        phone: (
+          <div
+            onClick={() =>
+              router.push(
+                `/${convertNameToSlug(data[i].vi_tri)}-co${
+                  data[i]._id
+                }.html`
+              )
+            }
+            className="cursor-pointer hover:text-blue-500"
+          >
+            {data[i].vi_tri}
+          </div>
+        ),
+        email: data[i].email,
+        address: data[i].address,
+        createdAt: convertDateDMYcheo(data[i].createdAt * 1000),
+        active: (
+          <Checkbox
+            onChange={(e) => handleChangeActive(e, data[i]._id)}
+            checked={data[i].active == 0 ? false : true}
+          />
+        ),
+        edit: (
+          <div
+            onClick={() => (setShowEdit(true), setDataEdit(data[i]))}
+            className="cursor-pointer"
+          >
+            <img src="/images/edit.png" alt="" />
+          </div>
+        ),
+      });
+    }
+    setDanhSachTTD([...exportData]);
+  };
+  return showEdit ? (
+    <Admin_DSUV_TM dataEdit={dataEdit} setShowEdit={setShowEdit} />
+  ) : (
     <div>
       <div className="flex items-center">
+        <Input
+          style={{ width: "10%", marginRight: "6px" }}
+          type="text"
+          placeholder="ID"
+          onChange={(e) =>
+            setOptionSearch({
+              ...optionSearch,
+              _id: e.target.value,
+            })
+          }
+        />
+        <Input
+          style={{ width: "10%", marginRight: "6px" }}
+          type="text"
+          placeholder="Họ và tên"
+          onChange={(e) =>
+            setOptionSearch({ ...optionSearch, userName: e.target.value })
+          }
+        />
         <Input
           style={{ width: "15%", marginRight: "6px" }}
           type="text"
           placeholder="Số điện thoại"
+          onChange={(e) =>
+            setOptionSearch({ ...optionSearch, phone: e.target.value })
+          }
         />
         <Input
           style={{ width: "15%", marginRight: "6px" }}
           type="text"
           placeholder="Email"
+          onChange={(e) =>
+            setOptionSearch({
+              ...optionSearch,
+              email: e.target.value,
+            })
+          }
         />
         <label className="mr-2">Từ :</label>
-        <DatePicker />
-        <label className="mr-2">Từ :</label>
-        <DatePicker />
-        <label className="mr-2"> Chọn nguồn:</label>
-        <Select
-          defaultValue={"1"}
-          style={{ width: 130 }}
-          options={[
-            { value: "1", label: "Chọn nguồn" },
-            { value: "2", label: "Web" },
-            { value: "3", label: "App" },
-          ]}
+        <DatePicker
+          onChange={(e) =>
+            setOptionSearch({
+              ...optionSearch,
+              fromDate: convertDateYMDcheo(e),
+            })
+          }
         />
-        <button className="bg-red-600 text-white ml-3 px-1"> Tìm kiếm</button>
+        <label className="m-2">đến :</label>
+        <DatePicker
+          onChange={(e) =>
+            setOptionSearch({ ...optionSearch, toDate: convertDateYMDcheo(e) })
+          }
+        />
+        <button
+            onClick={() => {
+              console.log("optionSearch", optionSearch);
+              setRecall(!recall);
+          }}
+          className="bg-blue-500 text-white ml-3 rounded-md px-2 py-1"
+        >
+          {" "}
+          Tìm kiếm
+        </button>
+        <button
+          onClick={handleXoaTin}
+          className={`${
+            selectedRowKeys.length == 0 && "hidden"
+          }  bg-red-500 text-white ml-3 rounded-md px-2 py-1`}
+        >
+          {" "}
+          Xóa {selectedRowKeys.length} tin tuyển dụng
+        </button>
       </div>
+
       <Table
+        className="mt-3"
         rowSelection={rowSelection}
         columns={columns}
-        dataSource={dataTest}
+        dataSource={danhSachTTD}
         pagination={{
-          total: 200,
+          total: tongDuLieu,
           showSizeChanger: true,
           showQuickJumper: true,
-          onShowSizeChange: (current, newSize) => {
-            handleChangeTable(current, newSize);
+          onChange(page, pageSize) {
+            handleChangeTable(page, pageSize);
           },
         }}
       />

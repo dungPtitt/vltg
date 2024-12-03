@@ -63,7 +63,6 @@ function UvCVMM() {
       setAdressValues(selected);
     }
   };
-  console.log("duLieuCVMM>>", duLieuCVMM);
   const capNhapCongViec = () => {
     if (jobValues.length == 0) {
       notifyWarning("Vui lòng chọn ít nhất 1 ngành nghề!");

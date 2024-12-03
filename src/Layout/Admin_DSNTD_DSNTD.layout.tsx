@@ -1,165 +1,217 @@
 
-import { Button, Table, Modal, Input } from "antd";
-import { useState } from "react";
+import { Button, Modal, Input, Checkbox, DatePicker } from "antd";
+import { use, useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { axiosSauDN } from "@/utils/axios.config";
+import { convertDateDMYcheo, convertNameToSlug, convertDateYMDcheo, notifyError } from "@/utils/generalFunction";
+import { useRouter } from "next/navigation";
+import Table, { ColumnsType } from "antd/es/table";
+import Admin_DSNTD_TM from "./Admin_DSNTD_TM.layout";
+
 
 function App() {
+  const router = useRouter();
+  const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [isEditing, setIsEditing] = useState(false);
   const [editingStudent, setEditingStudent] = useState(null);
-  const [dataSource, setDataSource] = useState([
+  const [danhSachNTD, setDanhSachNTD] = useState<any>([]);
+  const [tongDuLieu, setTongDuLieu] = useState<number>();
+  const [pageSize, setPageSize] = useState(10);
+  const [pageShow, setPageShow] = useState(1);
+  const [optionSearch, setOptionSearch] = useState<any>({});
+  const [dataEdit, setDataEdit] = useState<any>();
+  const [showEdit, setShowEdit] = useState<boolean>(false);
+  const [recall, setRecall] = useState(true);
+  
+  useEffect(() => {
+    axiosSauDN
+      .post("/admin/danhSachCompany", {
+        ...optionSearch,
+        page: pageShow,
+        pageSize: pageSize,
+      })
+      .then((res) => {
+        console.log("DSNTD", res);
+        // setTongDuLieu(res.data.data.total);
+        handleData(res?.data?.data?.data);
+      })
+      .catch((err) => console.log("DSNTD", err));
+  }, [pageShow, recall]);
+  const columns: ColumnsType<any> = [
+    { title: "Stt", dataIndex: "stt" },
+    { title: "ID", dataIndex: "_id" },
+    { title: "Tên công ty", dataIndex: "userName" },
+    { title: "Email", dataIndex: "email" },
+    { title: "Địa chỉ", dataIndex: "address" },
+    { title: "Ngày tạo", dataIndex: "createdAt" },
     {
-      id: 1,
-      name: "John",
-      email: "john@gmail.com",
-      address: "John Address",
-    },
-    {
-      id: 2,
-      name: "David",
-      email: "david@gmail.com",
-      address: "David Address",
-    },
-    {
-      id: 3,
-      name: "James",
-      email: "james@gmail.com",
-      address: "James Address",
-    },
-    {
-      id: 4,
-      name: "Sam",
-      email: "sam@gmail.com",
-      address: "Sam Address",
-    },
-  ]);
-  const columns = [
-    {
-      key: "1",
-      title: "ID",
-      dataIndex: "id",
-    },
-    {
-      key: "2",
-      title: "Name",
-      dataIndex: "name",
-    },
-    {
-      key: "3",
-      title: "Email",
-      dataIndex: "email",
-    },
-    {
-      key: "4",
-      title: "Address",
-      dataIndex: "address",
-    },
-    {
-      key: "5",
-      title: "Actions",
-      render: (record: any) => {
+      title: "Active",
+      dataIndex: "active",
+      render: (_: any, record: any) => {
+     
         return (
-          <>
-            <EditOutlined
-              onClick={() => {
-                onEditStudent(record);
-              }}
-            />
-            <DeleteOutlined
-              onClick={() => {
-                onDeleteStudent(record);
-              }}
-              style={{ color: "red", marginLeft: 12 }}
-            />
-          </>
+          <Checkbox
+            // onChange={(e) => handleChangeActive(e, record)}
+            checked={record.active.props.checked == 0 ? false : true}
+          />
         );
       },
     },
+    { title: "Sửa", dataIndex: "edit" },
   ];
+  const handleData = async (data: any) => {
+    const exportData = [];
+    for (let i = 0; i < data.length; i++) {
+      exportData.push({
+        // key: (pageShow - 1) * pageSize + i + 1,
+        key: data[i]._id,
+        stt: (pageShow - 1) * pageSize + i + 1,
+        _id: data[i]._id,
+        userName: (
+          <div
+            onClick={() =>
+              router.push(
+                `/${convertNameToSlug(data[i].userName)}-co${
+                  data[i]._id
+                }.html`
+              )
+            }
+            className="cursor-pointer hover:text-blue-500"
+          >
+            {data[i].userName}
+          </div>
+        ),
+        email: data[i].email,
+        address: data[i].address,
+        createdAt: convertDateDMYcheo(data[i].createdAt * 1000),
+        active: (
+          <Checkbox
+            // onChange={(e) => handleChangeActive(e, data[i].id_vieclam)}
+            checked={data[i].active == 0 ? false : true}
+          />
+        ),
+        edit: (
+          <div
+            onClick={() => (setShowEdit(true), setDataEdit(data[i]))}
+            className="cursor-pointer"
+          >
+            <img src="/images/edit.png" alt="" />
+          </div>
+        ),
+      });
+    }
+    setDanhSachNTD([...exportData]);
+  };
 
-  const onAddStudent = () => {
-    // const randomNumber = parseInt(Math.random() * 1000);
-    // const newStudent = {
-    //   id: randomNumber,
-    //   name: "Name " + randomNumber,
-    //   email: randomNumber + "@gmail.com",
-    //   address: "Address " + randomNumber,
-    // };
-    // setDataSource((pre) => {
-    //   return [...pre, newStudent];
-    // });
+  const handleChangeTable = (current: number, newPageSize: number) => {
+    if (newPageSize != pageSize) {
+      setPageShow(1);
+      setPageSize(newPageSize);
+    } else {
+      setPageShow(current);
+    }
   };
-  const onDeleteStudent = (record: any) => {
+  const onSelectChange = (newSelectedRowKeys: React.Key[]) => {
 
-    Modal.confirm({
-      title: "Are you sure, you want to delete this student record?",
-      okText: "Yes",
-      okType: "danger",
-      onOk: () => {
-        setDataSource((pre) => {
-          return pre.filter((student) => student.id !== record.id);
-        });
-      },
-    });
+    setSelectedRowKeys(newSelectedRowKeys);
   };
-  const onEditStudent = (record: any) => {
-    setIsEditing(true);
-    setEditingStudent({ ...record });
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectChange,
   };
-  const resetEditing = () => {
-    setIsEditing(false);
-    setEditingStudent(null);
+
+  const handleXoaTin = () => {
+    axiosSauDN
+      .post("/admin/deleteTin", { moduleId: 97, arrId: selectedRowKeys })
+      .then((res) => {
+        setRecall(!recall);
+      })
+      .catch((err) => notifyError("Vui lòng thử lại sau!"));
   };
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Button onClick={onAddStudent}>Add a new Student</Button>
-        <Table columns={columns} dataSource={dataSource}></Table>
-        {/* <Modal
-          title="Edit Student"
-          visible={isEditing}
-          okText="Save"
-          onCancel={() => {
-            resetEditing();
-          }}
-          onOk={() => {
-            setDataSource((pre:any) => {
-              return pre.map((student) => {
-                if (student.id === editingStudent.id) {
-                  return editingStudent;
-                } else {
-                  return student;
-                }
-              });
-            });
-            resetEditing();
-          }}
+  
+  return showEdit ? (
+    <Admin_DSNTD_TM dataEdit={dataEdit} setShowEdit={setShowEdit} />
+  ) : (
+    <div>
+      <div className="flex items-center">
+        <Input
+          style={{ width: "10%", marginRight: "6px" }}
+          type="text"
+          placeholder="ID"
+          onChange={(e) =>
+            setOptionSearch({
+              ...optionSearch,
+              _id: e.target.value,
+            })
+          }
+        />
+        <Input
+          style={{ width: "15%", marginRight: "6px" }}
+          type="text"
+          placeholder="Tên công ty"
+          onChange={(e) =>
+            setOptionSearch({
+              ...optionSearch,
+              userName: e.target.value,
+            })
+          }
+        />
+        <Input
+          style={{ width: "15%", marginRight: "6px" }}
+          type="text"
+          placeholder="Email"
+          onChange={(e) =>
+            setOptionSearch({ ...optionSearch, email: e.target.value })
+          }
+        />
+        
+        <label className="mr-2">Từ :</label>
+        <DatePicker
+          onChange={(e) =>
+            setOptionSearch({
+              ...optionSearch,
+              fromDate: convertDateYMDcheo(e),
+            })
+          }
+        />
+        <label className="m-2">đến :</label>
+        <DatePicker
+          onChange={(e) =>
+            setOptionSearch({ ...optionSearch, toDate: convertDateYMDcheo(e) })
+          }
+        />
+        <button
+          onClick={() => setRecall(!recall)}
+          className="bg-blue-500 text-white ml-3 rounded-md px-2 py-1"
         >
-          <Input
-            value={editingStudent?.name}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, name: e.target.value };
-              });
-            }}
-          />
-          <Input
-            value={editingStudent?.email}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, email: e.target.value };
-              });
-            }}
-          />
-          <Input
-            value={editingStudent?.address}
-            onChange={(e) => {
-              setEditingStudent((pre) => {
-                return { ...pre, address: e.target.value };
-              });
-            }}
-          />
-        </Modal> */}
-      </header>
+          {" "}
+          Tìm kiếm
+        </button>
+        <button
+          onClick={handleXoaTin}
+          className={`${
+            selectedRowKeys.length == 0 && "hidden"
+          }  bg-red-500 text-white ml-3 rounded-md px-2 py-1`}
+        >
+          {" "}
+          Xóa {selectedRowKeys.length} tin tuyển dụng
+        </button>
+      </div>
+
+      <Table
+        className="mt-3"
+        rowSelection={rowSelection}
+        columns={columns}
+        dataSource={danhSachNTD}
+        pagination={{
+          total: tongDuLieu,
+          showSizeChanger: true,
+          showQuickJumper: true,
+          onChange(page, pageSize) {
+            handleChangeTable(page, pageSize);
+          },
+        }}
+      />
     </div>
   );
 }

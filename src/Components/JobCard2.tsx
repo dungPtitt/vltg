@@ -4,10 +4,14 @@ import {
   renderCvStatus,
   renderPayrollMethods,
   renderSchedules,
+  renderProfession
 } from "@/constants/EditProfile.constant";
+import { tinh_thanh, quan_huyen } from "@/utils/vi_tri";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import { convertDateDMY, formatCurrencyVND } from "@/utils/generalFunction";
+import { differenceInDays } from "date-fns";
 
 function JobCard2({ job }: any) {
   const id = useMemo(() => {
@@ -25,19 +29,11 @@ function JobCard2({ job }: any) {
       <div className={styles.about_job2_left}>
         <div className=" flex justify-center items-center">
           <Image
-            height={70}
-            width={70}
-            className={styles.img + " lazyload mr-3"}
-            src="/images/no-avartar-user.png"
-            data-src={
-              job?.ntd_avatar != ""
-                ? job?.ntd_avatar
-                : "/images/no-avartar-user.png"
-            }
-            onError={(e: any) => {
-              e.target.onerror = null;
-              e.target.src = "/images/no-avartar-user.png";
-            }}
+            height={60}
+            width={60}
+            // className={styles.img + " lazyload mr-3"}
+            className={styles.avatar_ntd2}
+            src={job?.linkAvatar ? job?.linkAvatar : "/images/no-avartar-user.png"}
             alt="photo"
           />
         </div>
@@ -46,12 +42,30 @@ function JobCard2({ job }: any) {
             <Link href={`/${job.alias}-${id}.html`}>{job?.vi_tri}</Link>
           </h3>
 
-          <p className={styles.city_name}>{job?.ntd_userName}</p>
+          <div className="flex">
+            <Image
+              width={13}
+              height={13}
+              className="mr-2.5 inline-block"
+              src="/images/map.svg"
+              alt="dot"
+            />{" "}
+            <p className="font-bold mb-2.5">
+              <span className="font-normal">
+                {quan_huyen[job?.quan_huyen - 66]?.cit_name}
+              </span> {", "}
+              <span className="font-normal">
+                {tinh_thanh[job?.dia_diem-1]?.cit_name}
+              </span>
+              
+              </p>
+            {/* <p className={styles.city_address}>{job?.ntd_address}</p> */}
+          </div>
 
           <div className="flex">
             <img className="mr-2.5" src="/images/dola.svg" alt="$" />{" "}
             <span className={styles.salary}>
-              {job?.muc_luong} VND/
+              {job?.ht_luong == 1 ? formatCurrencyVND(job?.luong) : `${formatCurrencyVND(job?.luong_first)} - ${formatCurrencyVND(job?.luong_last)}`}  VND/
               {renderPayrollMethods[job?.tra_luong]}
             </span>
           </div>
@@ -59,16 +73,37 @@ function JobCard2({ job }: any) {
       </div>
 
       <div className={styles.about_job2_right}>
-        <div className={styles.job2_right_img_box}>
-          <img className="mr-2.5" src="/images/map.svg" alt="dot" />{" "}
-          <span className={styles.city_address2}>{job?.address}</span>
-        </div>
-
-        <div className="flex">
+        
+        {/* <div className="flex">
           <img className="mr-2.5" src="/images/balo.svg" alt="balo" />
           <span className={styles.working_time}>
             {renderSchedules[job?.hinh_thuc]}
           </span>
+        </div> */}
+        <div className="flex ">
+          <img className="mr-2.5" src="/images/balo.svg" alt="balo" />
+          <span className={styles.working_time}>Lĩnh vực: {" "}
+            {renderProfession[job?.nganh_nghe]}
+          </span>
+        </div>
+        <div className="flex ">
+          <img className="mr-2.5" src="/images/time-blue.svg" alt="balo" />
+          <p>
+            Hạn nộp hồ sơ:{" "}
+            {convertDateDMY(job.time_td * 1000)}{" "}
+            {Date.now() > job.time_td * 1000 ? (
+              <span className="text-red-400">(Hết hạn)</span>
+            ) : (
+              <span>
+                Còn{" "}
+                {differenceInDays(
+                  new Date(job.time_td * 1000),
+                  new Date()
+                )}{" "}
+                ngày{" "}
+              </span>
+            )}
+          </p>
         </div>
       </div>
     </div>
