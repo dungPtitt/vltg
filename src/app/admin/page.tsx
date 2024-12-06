@@ -22,8 +22,10 @@ import Image from "next/image";
 import Admin_TTTK from "@/Layout/Admin_TTTK";
 import { axiosSauDN, axiosTruocDN } from "@/utils/axios.config";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 function AdminPage() {
+  const router = useRouter();
   const [activeKey, setActiveKey] = useState("1");
   const [dataAdmin, setDataAdmin] = useState<any>();
   const [checkLogin, setCheckLogin] = useState(false);
@@ -44,6 +46,9 @@ function AdminPage() {
   ]);
   const [dataLogin, setDataLogin] = useState({ loginName: "", password: "" });
 
+  const handleRefresh = () => {
+    router.refresh();
+  }
   useEffect(() => {
     axiosSauDN
       .post("/admin/getInfoAdmin")
@@ -178,6 +183,9 @@ function AdminPage() {
                         </div>
                         <div
                           className="flex items-center"
+                          // onClick={() => {
+                          //   router.refresh();
+                          // }}
                           onClick={() =>
                             handleActiveKey(
                               <div className="flex ">
@@ -185,7 +193,7 @@ function AdminPage() {
                                   Danh sách ứng viên
                                 </p>
                               </div>,
-                              { label: <Admin_DSUV_DSUV />, value: "3" }
+                              { label: <Admin_DSUV_DSUV handleRefresh={handleRefresh}/>, value: "3" }
                             )
                           }
                         >

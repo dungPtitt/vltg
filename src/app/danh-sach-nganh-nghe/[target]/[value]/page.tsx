@@ -35,13 +35,13 @@ function DanhSachNganhNghe({ params }: any) {
   const [luaChonShow, setLuaChonShow] = useState<number>(0);
   const [blog, setBlog] = useState<any>();
   const [duLieuViecLam, setDuLieuViecLam] = useState<any>([]);
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   //1 hình thức làm việc
   //2 ngành nghề
   //3 city
 
   const [chonHead, setChonHead] = useState<Number>(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(9);
   const [total, setTotal] = useState(0);
   const [fullPath, setFullPath] = useState<any>("");
   useEffect(() => {
@@ -61,10 +61,15 @@ function DanhSachNganhNghe({ params }: any) {
         axiosTruocDN
           .post("/viecLam/thongKeDanhSachViecLam", {
             id_hinhthuc: Number(value),
+            page,
+            pageSize
           })
           .then((res) => {
-            setBlog(res.data.data.listBlog[0]);
-            setDuLieuViecLam([...res.data.data.data]);
+            setBlog(res?.data?.data?.listBlog[0]);
+            setDuLieuViecLam([...res?.data?.data?.data]);
+            let total = res?.data?.data?.total;
+            let numberPage = Math.ceil(total / pageSize);
+            setTotal(numberPage);
           });
       } else if (
         profession.some((pf) => target?.includes(convertNameToSlug(pf.label)))
@@ -75,10 +80,15 @@ function DanhSachNganhNghe({ params }: any) {
         axiosTruocDN
           .post("/viecLam/thongKeDanhSachViecLam", {
             id_nganh: Number(value),
+            page,
+            pageSize
           })
           .then((res) => {
             setBlog(res.data.data.listBlog[0]);
             setDuLieuViecLam([...res.data.data.data]);
+            let total = res?.data?.data?.total;
+            let numberPage = Math.ceil(total / pageSize);
+            setTotal(numberPage);
           });
         // setLuaChonTimKiem({ id_nganh: value });
       } else if (
@@ -90,12 +100,17 @@ function DanhSachNganhNghe({ params }: any) {
         axiosTruocDN
           .post("/viecLam/thongKeDanhSachViecLam", {
             id_city: Number(value),
+            page,
+            pageSize
           })
           .then((res) => {
             setLuaChonShow(2);
             setTotal(res.data.data.total);
             setBlog(res.data.data.listBlog[0]);
             setDuLieuViecLam([...res.data.data.data]);
+            let total = res?.data?.data?.total;
+            let numberPage = Math.ceil(total / pageSize);
+            setTotal(numberPage);
           });
         setNoiTimKiem([...cityOption]);
         setLuaChonShow(1);
@@ -143,7 +158,26 @@ function DanhSachNganhNghe({ params }: any) {
               ))}
           </div>
         </div>
-        <Pagination
+        <div className="flex justify-center items-center mt-4 mb-5" style={{}}>
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-l.svg" alt="arrow-left" style={{width: '30px', height: '30px'}}/>
+          </button>
+          <span style={{marginRight: '10px'}}>
+            {page} / {total} {"trang"}
+          </span>
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, total))}
+            disabled={page === total}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-r.svg" alt="next" style={{width: '30px', height: '30px'}}/>
+          </button>
+        </div>
+        {/* <Pagination
           total={total}
           showQuickJumper
           showSizeChanger
@@ -155,7 +189,7 @@ function DanhSachNganhNghe({ params }: any) {
               setPage(current);
             }
           }}
-        />
+        /> */}
         {/* <BlockDownApp />
         <div className="w-9/12 mt-3">
           <TuKhoaCongViecLQ />

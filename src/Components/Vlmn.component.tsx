@@ -19,13 +19,13 @@ function Vlmn({ check }: any) {
   useEffect(() => {
     try {
       axiosTruocDN
-        .post("/viecLam/timKiemViecLam", {page, pageSize})
+        .post("/viecLam/trangChu", {page, pageSize})
         .then((res) => {
-          setViecLamMoiNhat(res?.data?.data?.data);
-          let total = res?.data?.data?.total;
+          setViecLamMoiNhat(res?.data?.data?.viecLamMoiNhat);
+          let total = res?.data?.data?.total1;
           let numberPage = Math.ceil(total / pageSize);
           setTotal(numberPage);
-          console.log("ViecLamMoiNhat", res?.data?.data?.total);
+          // console.log("ViecLamMoiNhat", res?.data?.data?.total);
         });
     } catch (error) {
       console.log("Vlmn", error);

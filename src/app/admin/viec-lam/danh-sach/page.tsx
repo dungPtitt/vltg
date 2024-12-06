@@ -1,3 +1,4 @@
+"use client";
 import { axiosSauDN } from "@/utils/axios.config";
 import {
   convertDateDMYcheo,
@@ -8,10 +9,10 @@ import {
 import { Checkbox, DatePicker, Input, Select } from "antd";
 import Table, { ColumnsType } from "antd/es/table";
 import { useEffect, useState } from "react";
-import Admin_DSUV_TM from "./Admin_DSUV_TM.layout";
+import Admin_DSUV_TM from "../../../../Layout/Admin_DSUV_TM.layout";
 import btnStyles from "@/Css/button.module.css";
 import { useRouter } from "next/navigation";
-function Admin_DSUV_DSUV({handleRefresh}: any) {
+function Admin_DSUV_DSUV() {
   const router = useRouter();
   const [selectedRowKeys, setSelectedRowKeys] = useState<React.Key[]>([]);
   const [danhSachTTD, setDanhSachTTD] = useState<any>([]);
@@ -137,7 +138,20 @@ function Admin_DSUV_DSUV({handleRefresh}: any) {
           </div>
         ),
         userName: data[i].userName,
-        phone: data[i].phone,
+        phone: (
+          <div
+            onClick={() =>
+              router.push(
+                `/${convertNameToSlug(data[i].vi_tri)}-co${
+                  data[i]._id
+                }.html`
+              )
+            }
+            className="cursor-pointer hover:text-blue-500"
+          >
+            {data[i].vi_tri}
+          </div>
+        ),
         email: data[i].email,
         address: data[i].address,
         createdAt: convertDateDMYcheo(data[i].createdAt * 1000),

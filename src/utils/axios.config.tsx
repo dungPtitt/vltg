@@ -1,5 +1,6 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+// const baseURL = "https://apivieclamtheogio.devopszero.id.vn/api/vltg";
 const baseURL = "http://localhost:3011/api/vltg";
 export const axiosTruocDN = axios.create({
   baseURL,

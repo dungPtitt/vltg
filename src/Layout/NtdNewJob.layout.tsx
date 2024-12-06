@@ -30,7 +30,7 @@ import { TypeAdminWorkShifts } from "@/Styles/AdminType";
 import { ToastContainer } from "react-toastify";
 import { error } from "console";
 import { set } from "date-fns";
-import { fi } from "date-fns/locale";
+import { da, fi } from "date-fns/locale";
 function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
   const [codeCity, setCodeCity] = useState(1);
   const [salaryLevel, setSalaryLevel] = useState(1);
@@ -166,13 +166,17 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
 
             .catch((error) =>
               {
-              console.log("error>>>", error);
-                if (error.response.status == 410) {
+              console.log("error>>>", error.response.data.error);
+                if (error?.response?.status == 410) {
                   notifyError("Có thể tiêu đề tin đã bị trùng. Vui lòng thử lại hoặc báo cho Admin!");
-                } else if (error.response.status == 400) {
+                } else if (error?.response?.status == 400) {
                   notifyError("thoi gian tuyen dun phai lon hon thoi gian hien tai");
-                } else {
-                  notifyError("Vui lòng nhập đầy đủ thông tin!");
+                }
+                  else if (error?.response?.status == 411) {
+                  notifyError("Mỗi tin của bạn cần đăng cách nhau 10 phút tối đa 24 tin/ngày!");
+                }
+                else {
+                  notifyError(error?.response?.data.error);
                 }
               }
             );
@@ -482,7 +486,7 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
               <span className="text-red-500">*</span> Hạn tuyển dụng
             </label>
             <DatePicker
-              value={dayjs(tinMoi.time_td,"DD/MM/YYYY")}
+              value={tinMoi.time_td ? dayjs(tinMoi.time_td,"DD/MM/YYYY"): dayjs(ngayHomNay(), "DD/MM/YYYY")}
               name="time_td"
               onChange={(e) => convertTimeStamp(e, "time_td")}
               className="w-full"
@@ -514,7 +518,7 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
           <div className="mt-6 flex items-center">
             <label className="text-sm font-semibold">Từ::</label>
             <DatePicker
-              value={dayjs(tinMoi.fist_time, "DD/MM/YYYY")}
+              value={tinMoi.fist_time ? dayjs(tinMoi.fist_time, "DD/MM/YYYY") : dayjs(ngayHomNay(), "DD/MM/YYYY")}
               name="fist_time"
               onChange={(e) => convertTimeStamp(e, "fist_time")}
               className="w-48 ml-3"
@@ -525,7 +529,7 @@ function NtdNewJob({ idEdit, setShowEdit, setShowOption }: any) {
           <div className="mt-6">
             <label className="text-sm font-semibold">Đến:</label>
             <DatePicker
-              value={dayjs(tinMoi.last_time, "DD/MM/YYYY")}
+              value={tinMoi.last_time ? dayjs(tinMoi.last_time, "DD/MM/YYYY") : dayjs(ngayHomNay(), "DD/MM/YYYY")}
               onChange={(e) => convertTimeStamp(e, "last_time")}
               name="last_time"
               className="w-48 ml-3"

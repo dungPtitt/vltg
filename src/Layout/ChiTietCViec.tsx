@@ -613,12 +613,12 @@ function ChiTietCViec({ id }: any) {
                 </p>
               </div>
               <div className={styles.job_content}>
-                <p className={styles.detail_title}>Thông tin liên hệ</p>
+                <p className={styles.detail_title}>Thông tin người liên hệ để biết thêm thông tin về công việc</p>
                 <p className={styles.detail_txt}>
-                  Hỗ trợ khách đến và mua hàng, báo giá sản phẩm
+                  Họ và tên: {chiTietViecLam.name_lh}
                 </p>
                 <p className={styles.detail_txt}>
-                  Hỗ trợ khách đến và mua hàng, báo giá sản phẩm
+                  Địa chỉ email: {chiTietViecLam.email_lh}
                 </p>
               </div>
               <div className={styles.contact_share}>

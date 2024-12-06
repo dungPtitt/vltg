@@ -65,12 +65,11 @@ function NtdProfilePage() {
                 >
                   Tin đã đăng
                 </div>
-                <div className="cursor-pointer">
-                  <Link href={`/ung-vien-tim-viec-lam-theo-gio`}></Link>
-                  Tìm kiếm ứng viên theo giờ
-                </div>
               </div>
             )}
+          </div>
+          <div className="cursor-pointer">
+            <Link href={`/danh-sach-ung-vien`}>Tìm kiếm ứng viên</Link>
           </div>
           <div
             className="cursor-pointer"

@@ -82,19 +82,38 @@ function TimKiemViecLam({ params }: any) {
               ))}
           </div>
         </div>
-        <Pagination
+        {/* <Pagination
           total={total}
           showQuickJumper
           showSizeChanger
           onChange={(current, newPageSize) => {
             if (newPageSize != pageSize) {
-              setPage(1);
+              setPage(page+1);
               setPageSize(newPageSize);
             } else {
               setPage(current);
             }
           }}
-        />
+        /> */}
+        <div className="flex justify-center items-center mt-4 mb-5" style={{}}>
+          <button
+            onClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            disabled={page === 1}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-l.svg" alt="arrow-left" style={{width: '30px', height: '30px'}}/>
+          </button>
+          <span style={{marginRight: '10px'}}>
+            {page} / {total} {"trang"}
+          </span>
+          <button
+            onClick={() => setPage((prev) => Math.min(prev + 1, total))}
+            disabled={page === total}
+            className="disabled:opacity-50"
+          >
+            <img className="mr-2.5" src="/images/arrow-r.svg" alt="next" style={{width: '30px', height: '30px'}}/>
+          </button>
+        </div>
         <BlockDownApp />
         <Footer />
       </div>

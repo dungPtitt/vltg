@@ -54,7 +54,7 @@ function NtdQLC() {
                 <div className={styles.cvguv}>
                   <div>
                     <div className={styles.item_label}>
-                      Chuyên viên gửi ứng viên
+                      Tổng số việc làm
                     </div>
                     <div className={styles.gach}></div>
                   </div>
@@ -62,7 +62,7 @@ function NtdQLC() {
                   <div className={styles.so}>
                     {" "}
                     {duLieuQLC?.info
-                      ? duLieuQLC?.info?.totalChuyenVienGuiUv
+                      ? duLieuQLC?.info?.totalViecLam
                       : 0}
                   </div>
                 </div>
@@ -71,22 +71,23 @@ function NtdQLC() {
             </div>
             <div className={styles.tkct}>
               <div className="w-1/2">
-                <p className="mb-4">
+                {/* <p className="mb-4">
                   Việc làm sắp hết hạn:{" "}
                   <span>
                     {duLieuQLC?.info ? duLieuQLC?.info?.vlSapHetHan : 0}
                   </span>
-                </p>
+                </p> */}
                 <p className="mb-4">
                   Việc làm hết hạn:{" "}
                   <span>{duLieuQLC?.info ? duLieuQLC?.info?.vlHetHan : 0}</span>
                 </p>
-              </div>
-              <div className="w-1/2">
                 <p className="mb-4">
                   Việc làm còn lại:{" "}
                   <span>{duLieuQLC?.info ? duLieuQLC?.info?.vlConHan : 0}</span>
                 </p>
+              </div>
+              <div className="w-1/2">
+                
                 <p className="mb-4">
                   Số tin đăng trong ngày:{" "}
                   <span>
@@ -121,7 +122,7 @@ function NtdQLC() {
             <thead>
               <tr>
                 <th>Tiêu đề</th>
-                <th> Thời gian</th>
+                <th> Thời gian làm việc</th>
                 <th> Hạn nộp</th>
                 <th> Lượt ứng tuyển</th>
                 <th> Quản lý</th>
@@ -160,9 +161,9 @@ function NtdQLC() {
                           alt="time"
                         />
                         <span
-                          className={`${now > job.time_td && "text-red-500"}`}
+                          className={`${now > job.time_td*1000 && "text-red-500"}`}
                         >
-                          {now < job.time_td ? "Còn hạn" : "Hết hạn"}
+                          {now < job.time_td*1000 ? "Còn hạn" : "Hết hạn"}
                         </span>
 
                         <img

@@ -29,30 +29,22 @@ function NtdHeader() {
   return (
     <div className="flex justify-end mt-2">
       <div className={styles.uv_header_rg}>
-        <div className="cursor-pointer">
+        <div className="cursor-pointer underline">
           {" "}
           <Link href="/">Trang chủ</Link>
         </div>
-        <a
-          href="https://timviec365.vn/bang-gia-dich-vu.html"
-          target="blank"
-          className="cursor-pointer"
-        >
-          {" "}
-          Bảng giá
-        </a>
-        <div className="cursor-pointer"> Đăng tin</div>
-        <Link href={`/danh-sach-ung-vien`} className="cursor-pointer">
+        {/* <div className="cursor-pointer"> Đăng tin</div> */}
+        <Link href={`/danh-sach-ung-vien`} className="cursor-pointer underline">
           {" "}
           Tìm kiếm ứng viên
         </Link>
-        <a
+        {/* <a
           className="cursor-pointer"
           target="blank"
           href="https://timviec365.vn/mail365/"
         >
           Email
-        </a>
+        </a> */}
         <div>
           <img className="text-black" src="/images/bell.svg" alt="" />
         </div>

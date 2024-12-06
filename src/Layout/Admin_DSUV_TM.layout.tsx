@@ -18,7 +18,6 @@ function Admin_DSUV_TM({ dataEdit, setShowEdit }: any) {
     "userName",
     "phone",
     "email",
-    "password",
     "city",
     "district",
     "address",
@@ -122,7 +121,10 @@ function Admin_DSUV_TM({ dataEdit, setShowEdit }: any) {
               setShowEdit(false);
               notifySuccess("Cập nhập thành công!")
             })
-            .catch((err) => console.log("DSUV_TM", err));
+            .catch((err) => {
+              console.log("DSUV_TM", err);
+              notifyError(err.response.data.error.message);
+            });
         } else {
           axiosSauDN
           .post("/admin/createUngVien", {
@@ -132,7 +134,11 @@ function Admin_DSUV_TM({ dataEdit, setShowEdit }: any) {
             uv_nganhnghe: jobValues,
           })
           .then((res) => notifySuccess("Thêm mới thành công!"))
-          .catch((err) => console.log("DSUV_TM", err));
+            .catch((err) => {
+              // console.log("err:::::", err);
+              notifyError(err.response.data.error.message);
+              // console.log("DSUV_TM", err);
+          });
         }
         
       }
@@ -172,6 +178,8 @@ function Admin_DSUV_TM({ dataEdit, setShowEdit }: any) {
             style={{ width: 500, marginLeft: "20px" }}
           />
         </div>
+        {dataEdit?._id ? null : (
+        
         <div className="flex items-center mt-3">
           <span className="text-red-500 mx-2">*</span> Mật khẩu ứng viên:{" "}
           <Input
@@ -181,6 +189,7 @@ function Admin_DSUV_TM({ dataEdit, setShowEdit }: any) {
             style={{ width: 500, marginLeft: "20px" }}
           />
         </div>
+        )}
         <div className="flex items-center mt-3">
           Tỉnh thành:{" "}
           <Select

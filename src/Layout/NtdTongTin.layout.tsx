@@ -1,16 +1,20 @@
 "use client";
 import styles from "@/Css/ntdProfile.module.css";
 import { axiosSauDN } from "@/utils/axios.config";
-import { convertDateDMY, convertNameToSlug } from "@/utils/generalFunction";
+import { convertDateDMY, convertNameToSlug, notifyError, notifySuccess } from "@/utils/generalFunction";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import NtdNewJob from "./NtdNewJob.layout";
+import { Checkbox } from "antd";
+import { ToastContainer } from "react-toastify";
+
 function NtdTongTin({ setShowOption }: any) {
   const router = useRouter();
   const [idEdit, setIdEdit] = useState(0);
   const [showEdit, setShowEdit] = useState(false);
   const [recall, setRecall] = useState(false);
   const [duLieuCongViec, setDuLieuCongViec] = useState<any>([]);
+
   useEffect(() => {
     try {
       axiosSauDN
@@ -23,6 +27,31 @@ function NtdTongTin({ setShowOption }: any) {
       console.log("error-------" + error);
     }
   }, [recall]);
+
+  const handleChangeActive = (e: any, id: Number) => {
+    console.log("idddd::", id);
+    axiosSauDN
+      .post("/manageAccountCompany/activeTin", {
+        id_vieclam: id,
+        active: e.target.checked ? 1 : 0,
+      })
+      .then((res) => {
+        setRecall(!recall);
+        notifySuccess("Thay đổi trạng thái active thành công!");
+      })
+      .catch((res) => notifyError("Vui lòng thử lại sau!"));
+  }
+  const handleLamMoiTin = (id: Number) => {
+    axiosSauDN
+      .post("/manageAccountCompany/lamMoiTin", {
+        id_vieclam: id,
+      })
+      .then((res) => {
+        notifySuccess("Làm mới tin thành công!");
+        setRecall(!recall);
+      })
+      .catch((res) => notifyError("Vui lòng thử lại sau!"));
+  }
   return (
     <div className={styles.block_tdd_new}>
       {" "}
@@ -39,7 +68,7 @@ function NtdTongTin({ setShowOption }: any) {
                   <th> Thời gian</th>
                   <th> Trạng thái</th>
                   <th> Hạn nộp</th>
-                  <th> Giải pháp</th>
+                  <th> Ẩn tin</th>
                   <th> Hành động</th>
                 </tr>
               </thead>
@@ -71,11 +100,17 @@ function NtdTongTin({ setShowOption }: any) {
                         )}
                       </td>
                       <td>{convertDateDMY(cv.time_td * 1000)}</td>
-                      <td className="text-sky-500">Giải pháp</td>
+                      <td className="text-sky-500">
+                        <Checkbox
+                          onChange={(e) => handleChangeActive(e, cv.id_vieclam)}
+                          checked={cv.active == 0 ? false : true}
+                        />
+                      </td>
                       <td>
                         <div className={styles.conhan}>
                           <img
-                            onClick={() => setRecall(!recall)}
+                            // onClick={() => setRecall(!recall)}
+                            onClick={() => handleLamMoiTin(cv.id_vieclam)}
                             className="mr-3 cursor-pointer"
                             src="/images/refresh-den.svg"
                             alt="time"
@@ -125,8 +160,10 @@ function NtdTongTin({ setShowOption }: any) {
               </div>
             </div>
           </div>
+          <ToastContainer autoClose={1500} />
         </div>
       )}
+      <ToastContainer autoClose={1500} />
     </div>
   );
 }

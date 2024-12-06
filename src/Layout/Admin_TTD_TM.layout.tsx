@@ -5,6 +5,7 @@ import { DatePicker, Input, Select, TimePicker } from "antd";
 import btnStyles from "@/Css/button.module.css";
 import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 
 import {
   literacy,
@@ -183,13 +184,11 @@ function Admin_TTD_TM({ dataEdit, setShowEdit, setActiveKey }: any) {
           notifySuccess("Tạo mới Tin tuyển dụng thành công!");
 
         })
-        .catch(
-          (err) =>
-            console.log(
-              "Admin tạo mới tin",
-              err
-            ) 
-        );
+        .catch((err) =>
+        {
+          console.log("err::::;", err);
+          notifyError(err.response.data.error.message);
+        });
     }
   };
   console.log("duLieuMoi::", duLieuMoi)
@@ -716,7 +715,9 @@ function Admin_TTD_TM({ dataEdit, setShowEdit, setActiveKey }: any) {
             </button>
           )}
         </div>
+        {/* <ToastContainer autoClose={2000} /> */}
       </div>
+      <ToastContainer autoClose={2000} />
     </div>
   );
 }
