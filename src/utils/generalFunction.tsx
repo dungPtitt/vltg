@@ -83,6 +83,14 @@ export const convertDateDMY = (value: any) => {
   }-${time.getFullYear()}`;
   return convert;
 };
+export const showYear = (date: any) => {
+  const time = new Date(date * 1000);
+  const momentObj = moment.unix(time.getTime() / 1000);
+  let value = dayjs(momentObj.format("YYYY-MM-DD"));
+  // console.log("showYear", value);
+  // const newTime = new Date(value);
+  return time.getFullYear();
+};
 
 export const convertDateDMYcheo = (value: any) => {
   let convert = "";

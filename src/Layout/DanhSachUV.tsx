@@ -7,11 +7,13 @@ import TuKhoaCongViecLQ from "@/Components/TuKhoaCongViecLQ";
 import DiaDiemLQ from "@/Components/DiaDiemLQ";
 import BlockCVDep from "@/Components/BlockCVDep";
 import UVCard from "@/Components/UVCard";
-import { Pagination } from "antd";
+import { Button, Pagination } from "antd";
 import SearchUV from "@/Components/SearchUV";
 import { useSearchParams } from "next/navigation";
 import NTDTKUV from "@/Components/NtdTKUV";
 import { HeadDefault } from "@/constants/Head.constant";
+import { profession, schedules } from "@/constants/EditProfile.constant";
+import { cityOption } from "@/utils/vi_tri";
 
 function DanhSachUv() {
   const [page, setPage] = useState(1);
@@ -20,114 +22,25 @@ function DanhSachUv() {
   const city = searchParams.get("city");
   const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
-  // const [danhSachUngVien, setDanhSachUngVien] = useState<any>([
-  //   {
-  //     _id: 208513,
-  //     district: 84,
-  //     city: 1,
-  //     userName: "Lâmm",
-  //     phone: "0869516978",
-  //     type: 0,
-  //     phoneTK: "0869516978",
-  //     address: "hà đông hà nội",
-  //     avatarUser: "1684227547-user-Screenshot 2023-03-19 213846.png",
-  //     createdAt: 1684227547,
-  //     updatedAt: 1697252888,
-  //     uv_cong_viec: "keo",
-  //     uv_hinh_thuc: 1,
-  //     uv_nganh_nghe: "12, 13, 15",
-  //     uv_dia_diem: "1, 23",
-  //     check_ntd_xem_uv: true,
-  //     check_xem_uv: true,
-  //     check_ntd_save_uv: false,
-  //   },
-  //   {
-  //     _id: 10004183,
-  //     district: 699,
-  //     city: 49,
-  //     userName: "asdfasdf",
-  //     phone: "fasdf",
-  //     type: 0,
-  //     phoneTK: null,
-  //     address: "fsadfasdf",
-  //     avatarUser: "",
-  //     createdAt: 1696474390,
-  //     updatedAt: 1696474390,
-  //     uv_cong_viec: "fasdfasdf",
-  //     uv_hinh_thuc: 0,
-  //     uv_nganh_nghe: "4",
-  //     uv_dia_diem: "4",
-  //     check_ntd_xem_uv: false,
-  //     check_xem_uv: false,
-  //     check_ntd_save_uv: false,
-  //   },
-  //   {
-  //     _id: 1101082,
-  //     district: 74,
-  //     city: 1,
-  //     userName: "Lê Đình Mạnhhh",
-  //     phone: "0966037772",
-  //     type: 0,
-  //     phoneTK: "",
-  //     address: "194 Giải Phóng, Phương Liệt, Thanh Xuân, Hà Nội",
-  //     avatarUser: "",
-  //     createdAt: 1632069257,
-  //     updatedAt: 1695875180,
-  //     uv_cong_viec: "hihih",
-  //     uv_hinh_thuc: 1,
-  //     uv_nganh_nghe: "2, 3",
-  //     uv_dia_diem: "3",
-  //     check_ntd_xem_uv: true,
-  //     check_xem_uv: false,
-  //     check_ntd_save_uv: false,
-  //   },
-  //   {
-  //     _id: 10003670,
-  //     district: 2,
-  //     city: 1,
-  //     userName: "dũng xtvl 2",
-  //     phone: "0355961899",
-  //     type: 0,
-  //     phoneTK: null,
-  //     address: "thanh xuân hà nội",
-  //     avatarUser: "",
-  //     createdAt: 1695809106,
-  //     updatedAt: 1695809106,
-  //     uv_cong_viec: "ceo",
-  //     uv_hinh_thuc: 0,
-  //     uv_nganh_nghe: "11, 2",
-  //     uv_dia_diem: "1, 2",
-  //     check_ntd_xem_uv: false,
-  //     check_xem_uv: false,
-  //     check_ntd_save_uv: false,
-  //   },
-  //   {
-  //     _id: 10003669,
-  //     district: 2,
-  //     city: 1,
-  //     userName: "dũng xtvl 2",
-  //     phone: "0355961899",
-  //     type: 0,
-  //     phoneTK: null,
-  //     address: "thanh xuân hà nội",
-  //     avatarUser: "",
-  //     createdAt: 1695809104,
-  //     updatedAt: 1695809104,
-  //     uv_cong_viec: "ceo",
-  //     uv_hinh_thuc: 0,
-  //     uv_nganh_nghe: "11, 2",
-  //     uv_dia_diem: "1, 2",
-  //     check_ntd_xem_uv: false,
-  //     check_xem_uv: false,
-  //     check_ntd_save_uv: false,
-  //   },
-  // ]);
   const [danhSachUngVien, setDanhSachUngVien] = useState<any>([]);
   const [fullPath, setFullPath] = useState<any>("");
-  useEffect(() => {const hostname = window.location.hostname;
+  const [recall, setReCall] = useState(false);
+  const [searchOption, setSearchOption] = useState<any>({
+    id_hinhthuc: "",
+    id_nganh: "",
+    id_city: "",
+  });
+  useEffect(() => {
+    // console.log("page:::", 111);
+    const hostname = window.location.hostname;
     const port = window.location.port;
     localStorage.setItem("hostname", hostname + port);
     setFullPath(`${hostname}:${port}`);
+    handleGetData()
+  }, [page, recall, searchOption]);
+
+  const handleGetData = () => {
+    console.log("option", searchOption)
     try {
       axiosSauDN
         .post("/manageAccountCompany/thongKeDanhSachUngVien", {
@@ -135,6 +48,7 @@ function DanhSachUv() {
           pageSize: pageSize,
           key,
           id_city: city,
+          ...searchOption
         })
         .then((res) => {
           setTotal(res.data.data.total);
@@ -143,8 +57,9 @@ function DanhSachUv() {
     } catch (error) {
       console.log("errr", error);
     }
-  }, [page]);
+  }
   console.log("danhSachUngVien:::", danhSachUngVien);
+  // console.log("recalll::::", recall)
   return (
     <>
       <HeadDefault fullPath={fullPath} title={"Danh sách ứng viên"} />
@@ -156,11 +71,75 @@ function DanhSachUv() {
             <div className="font-bold text-xl text-blue-900">
               Danh sách ứng viên theo giờ
             </div>
+            {/* <Button
+              onClick={() => { 
+                setReCall(!recall);
+              }}
+            >
+              Load lại
+            </Button> */}
+            <div className="flex">
+              <div className="w-full">
+                {/* <label htmlFor="uv_nganh_nghe" className="block text-sm font-medium text-gray-700">
+                  Ngành nghề
+                </label> */}
+                <select
+                  onChange={(e)=> setSearchOption({...searchOption, id_hinhthuc: e.target.value})}
+                  id="id_hinhthuc"
+                  name="id_hinhthuc"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                >
+                  <option value="">Hình thức</option>
+                  {schedules.map((schedule) => (
+                    <option key={schedule.value} value={schedule.value}>
+                      {schedule.label}
+                    </option>
+                  ))
 
+                  }
+                </select>
+              </div>
+              <div className=" w-full">
+                
+                <select
+                  onChange={(e)=> setSearchOption({...searchOption, id_nganh: e.target.value})}
+                  id="id_nganh"
+                  name="id_nganh"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                >
+                  <option value="">Chọn ngành nghề</option>
+                  {profession.map((pro) => (
+                    <option key={pro.value} value={pro.value}>
+                      {pro.label}
+                    </option>
+                  ))
+                  }
+                </select>
+              </div>
+              <div className="w-full">
+                
+                <select
+                  onChange={(e)=> setSearchOption({...searchOption, id_city: e.target.value})}
+                  id="id_city"
+                  name="id_city"
+                  className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
+                >
+                  <option value="">Chọn địa điểm</option>
+                  {cityOption.map((city) => (
+                    <option key={city.value} value={city.value}>
+                      {city.label}
+                    </option>
+                  ))
+
+                  }
+                </select>
+              </div>
+            </div>
+            
             <div className="w-full">
               {danhSachUngVien.length > 0 &&
                 danhSachUngVien.map((data: any) => (
-                  <UVCard key={data._id} data={data} />
+                  <UVCard key={data._id} data={data} setReCall={setReCall} recall={recall} />
                 ))}
             </div>
             <Pagination
@@ -177,7 +156,7 @@ function DanhSachUv() {
               }}
             />
           </div>
-          <NTDTKUV />
+          {/* <NTDTKUV /> */}
         </div>
 
         {/* <div className="4/5">

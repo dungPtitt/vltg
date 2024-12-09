@@ -170,6 +170,15 @@
   padding: 5px 10px;
   margin-left: 10px;
 }
+.uv_primary {
+  /* background: #4c5bd4;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 500;
+  display: inline-block; */
+  padding: 5px 10px;
+  margin-left: 2px;
+}
 .supporter_contact {
   color: #6074dd;
   font-weight: 400;

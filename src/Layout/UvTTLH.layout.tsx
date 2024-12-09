@@ -38,7 +38,7 @@ function UvTTLH() {
         .post("/manageAccountCandidate/getInfoCandidate")
         .then((res) => {
           setDuLieuNguoiDung({ ...res.data.data.data });
-          setDuLieuMoi({ ...res.data.data.data, birthday: res.data.data.data.birthday *10000 });
+          setDuLieuMoi({ ...res.data.data.data, birthday: convertTimestampToDatePicker(res.data.data.data.birthday) });
           setCodeCity(res.data.data.data.city);
           setNewAvatar(res.data.data.data.linkAvatar);
         });
@@ -49,6 +49,9 @@ function UvTTLH() {
   const handleEditInfor = (e: any) => {
     setDuLieuMoi({ ...duLieuMoi, [e.target.name]: e.target.value });
   };
+  const setDateData = (value: any, name: any) => {
+    setDuLieuMoi({ ...duLieuMoi, [name]: value });
+  }
   const handleUpDateInfor = () => {
     if (newAvatar != duLieuNguoiDung.linkAvatar) {
       handleUpdateAvatar();
@@ -62,7 +65,10 @@ function UvTTLH() {
       notifyWarning("Vui lòng nhập đủ thông tin!");
     } else {
       axiosSauDN
-        .post("/manageAccountCandidate/updateInfoCandidate", duLieuMoi)
+        .post("/manageAccountCandidate/updateInfoCandidate", {
+          ...duLieuMoi,
+          birthday: convertDateYMD(duLieuMoi.birthday),
+        })
         .then((res) => {
           notifySuccess("Cập nhập thông tin thành công!!");
           setDuLieuNguoiDung({ ...duLieuMoi });
@@ -110,7 +116,7 @@ function UvTTLH() {
                   style={{ width: "100%" }}
                   placeholder="Nhập họ và tên"
                   type="text"
-                  name="useName"
+                  name="userName"
                   onChange={(e) => handleEditInfor(e)}
                 />
               </div>
@@ -170,7 +176,7 @@ function UvTTLH() {
               <label className="text-sm font-semibold block">
                 <span className="text-red-500">*</span> Ngày sinh
               </label>
-              <DatePicker
+              {/* <DatePicker
                 className="w-full"
                 // defaultValue={dayjs(new Date(), "DD/MM/YYYY")}
                 value={dayjs(
@@ -183,6 +189,13 @@ function UvTTLH() {
                   setDuLieuMoi({ ...duLieuMoi, birthday: convertDateYMD(e) })
                 }
                 name="birthday"
+              /> */}
+              <DatePicker
+                value={duLieuMoi.birthday ? dayjs(duLieuMoi.birthday,"DD/MM/YYYY"): dayjs(ngayHomNay(), "DD/MM/YYYY")}
+                name="birthday"
+                onChange={(e) => setDateData(e, "birthday")}
+                className="w-full"
+                format={["DD/MM/YYYY"]}
               />
             </div>
             <div className="mt-6">
